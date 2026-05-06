@@ -1,0 +1,23 @@
+# Variables sensibles
+.env
+
+# Logs
+*.log
+logs/
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Fichiers temporaires
+*.tmp
+*.cache
+
+# Tests temporaires
+hash.php
+test_password.php
+hash_client.php
