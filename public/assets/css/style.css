@@ -69,6 +69,16 @@ a {
     color: var(--vg-cta) !important;
 }
 
+.page-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
 /* Boutons*/
 
 .btn-primary {
@@ -89,7 +99,32 @@ a {
 
 /* Footer*/
 
-footer {
+.site-footer {
     background-color: var(--bs-primary);
     color: var(--vg-white);
+    font-size: 0.9rem;
+}
+
+.footer-link {
+    color: var(--vg-white);
+    margin: 0 0.5rem;
+}
+
+.footer-link:hover {
+    color: var(--bs-warning);
+}
+
+.site-footer i {
+    color: var(--vg-white);
+    font-size: 1.2rem;
+}
+
+.footer-contact-link {
+    color: var(--vg-white);
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.footer-contact-link:hover {
+    color: var(--bs-warning);
 }
