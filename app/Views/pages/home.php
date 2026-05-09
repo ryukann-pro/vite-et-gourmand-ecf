@@ -5,6 +5,7 @@
     <p class="lead">Le MVC fonctionne correctement avec Bootstrap.</p>
 
     <a href="#" class="btn btn-primary">Voir les menus</a>
+    
 </main>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
