@@ -33,7 +33,7 @@
                 <!-- Logo -->
                 <a class="navbar-brand" href="/vite-et-gourmand-ecf/public/">
 
-                    <img src="/vite-et-gourmand-ecf/public/assets/images/logo.svg" alt="Logo Vite et Gourmand"
+                    <img src="/vite-et-gourmand-ecf/public/assets/images/logo/logo.svg" alt="Logo Vite et Gourmand"
                         class="logo-header">
 
                 </a>
