@@ -128,3 +128,111 @@ main {
 .footer-contact-link:hover {
     color: var(--bs-warning);
 }
+
+/* =========================
+HERO HOME
+========================= */
+
+.hero-home {
+    background-image: url('../images/home/logo-vite-gourmand.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 650px;
+}
+
+.hero-overlay {
+    background-color: rgba(0, 0, 0, 0.45);
+    min-height: 650px;
+}
+
+.hero-content-left,
+.hero-content-right {
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-title,
+.hero-contact-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    color: #ffffff;
+}
+
+.hero-text {
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.hero-phone {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.hero-btn {
+    width: fit-content;
+    background-color: #F4C542;
+    border: none;
+    color: #1F2A44;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+}
+
+.hero-btn:hover {
+    background-color: #ddb132;
+    color: #1F2A44;
+}
+
+
+.hero-content-left {
+    align-items: center;
+    text-align: center;
+}
+
+.hero-content-left {
+    min-height: 650px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.hero-content-right {
+    align-items: center;
+    text-align: center;
+}
+
+@media screen and (max-width: 992px) {
+
+    .hero-home,
+    .hero-overlay {
+        min-height: auto;
+    }
+
+    .hero-overlay {
+        padding: 4rem 0;
+    }
+
+    .hero-title,
+    .hero-contact-title {
+        font-size: 2.2rem;
+    }
+
+    .hero-content-left,
+    .hero-content-right {
+        min-height: auto;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    .hero-home {
+        background-position: center;
+    }
+}
