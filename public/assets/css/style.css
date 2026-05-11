@@ -291,13 +291,43 @@ TEAM SECTION
     color: var(--bs-dark);
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 992px) {
+    .team-section {
+        padding: 3rem 1rem;
+    }
+
     .team-card {
-        padding: 2rem 1rem;
+        padding: 2.5rem 1.25rem;
+    }
+
+    .team-subtitle {
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+
+    .team-intro {
+        margin-bottom: 3rem;
+    }
+
+    .team-card .row {
+        row-gap: 4rem;
     }
 
     .team-img {
         width: 220px;
         height: 220px;
+        margin-bottom: 1.5rem;
+    }
+
+    .team-name {
+        margin-bottom: 0.75rem;
+    }
+
+    .team-role {
+        margin-bottom: 2rem;
+    }
+
+    .team-duo {
+        margin-top: 2rem;
     }
 }
