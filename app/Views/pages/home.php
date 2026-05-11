@@ -44,6 +44,53 @@
             </div>
         </div>
     </section>
+    <section class="team-section py-5">
+        <div class="container">
+            <div class="team-card text-center">
+
+                <h2 class="team-title mb-4">- Notre équipe -</h2>
+
+                <h3 class="team-subtitle mb-4">
+                    Derrière chaque plat, deux passionnés en action
+                </h3>
+
+                <p class="team-intro mb-5">
+                    Julie et José mettent leur savoir-faire et leur créativité au service de vos événements.
+                    Chaque plat est pensé avec soin pour allier goût, générosité et convivialité.
+                </p>
+
+                <div class="row justify-content-center align-items-start g-5 mb-4">
+
+                    <div class="col-md-5">
+                        <img src="/vite-et-gourmand-ecf/public/assets/images/equipe/julie.jpg"
+                            alt="Julie, cheffe et cofondatrice" class="team-img mb-4">
+
+                        <h4 class="team-name">Julie</h4>
+                        <p class="team-role">cheffe et cofondatrice</p>
+                    </div>
+
+                    <div class="col-md-5">
+                        <img src="/vite-et-gourmand-ecf/public/assets/images/equipe/josé.jpg"
+                            alt="José, chef et cofondateur" class="team-img mb-4">
+
+                        <h4 class="team-name">José</h4>
+                        <p class="team-role">chef et co-fondateur</p>
+                    </div>
+
+                </div>
+
+                <p class="team-duo mb-3">
+                    Julie & José, le duo de Vite & Gourmand
+                </p>
+
+                <p class="team-text mb-0">
+                    Entre créativité et maîtrise, ils imaginent ensemble une cuisine authentique
+                    qui rend chaque événement mémorable.
+                </p>
+
+            </div>
+        </div>
+    </section>
 </main>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
