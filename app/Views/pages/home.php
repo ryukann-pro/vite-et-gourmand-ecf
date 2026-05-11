@@ -61,7 +61,7 @@
 
                 <div class="row justify-content-center align-items-start g-5 mb-4">
 
-                    <div class="col-md-5">
+                    <div class="col-lg-5">
                         <img src="/vite-et-gourmand-ecf/public/assets/images/equipe/julie.jpg"
                             alt="Julie, cheffe et cofondatrice" class="team-img mb-4">
 
@@ -69,7 +69,7 @@
                         <p class="team-role">cheffe et cofondatrice</p>
                     </div>
 
-                    <div class="col-md-5">
+                    <div class="col-lg-5">
                         <img src="/vite-et-gourmand-ecf/public/assets/images/equipe/josé.jpg"
                             alt="José, chef et cofondateur" class="team-img mb-4">
 
