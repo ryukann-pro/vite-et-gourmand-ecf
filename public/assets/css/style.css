@@ -702,3 +702,98 @@ TEAM SECTION
         gap: 0.5rem;
     }
 }
+
+
+/* ===========================================
+            PAGES MENU DETAIL
+=========================================== */
+
+.menu-detail-page {
+    background-color: var(--vg-bg);
+}
+
+.menu-carousel {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.menu-detail-img {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    object-position: center;
+}
+
+.menu-detail-title {
+    font-size: 1.8rem;
+}
+
+.menu-detail-price {
+    color: var(--vg-cta);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.menu-detail-condition {
+    color: var(--bs-secondary);
+    font-size: 0.9rem;
+}
+
+.menu-composition {
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.menu-composition h2 {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    font-size: 1.4rem;
+    padding: 1rem 1.5rem;
+    margin: 0;
+}
+
+.menu-composition-body {
+    padding: 1.5rem;
+}
+
+.menu-composition-body h3 {
+    color: var(--vg-cta);
+    font-size: 1.3rem;
+    margin-top: 1rem;
+}
+
+.dish-name {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.dish-description,
+.dish-allergens {
+    color: var(--bs-secondary);
+    font-size: 0.9rem;
+}
+
+.menu-order-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    padding: 0.7rem 4rem;
+    border-radius: 5px;
+}
+
+.menu-order-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+@media screen and (max-width: 992px) {
+    .menu-detail-title,
+    .menu-detail-price {
+        text-align: center;
+    }
+
+    .menu-detail-content .d-flex {
+        flex-direction: column;
+        align-items: center !important;
+    }
+}
+
