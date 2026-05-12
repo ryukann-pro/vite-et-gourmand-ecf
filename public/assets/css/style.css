@@ -492,3 +492,56 @@ TEAM SECTION
         font-size: 0.9rem;
     }
 }
+
+
+/* ===========================================
+            PAGES MENUS
+=========================================== */
+
+
+/* =========================
+   FILTRES
+========================= */
+.menus-page {
+    background-color: var(--vg-bg);
+}
+
+.filters-card {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 2.5rem;
+}
+
+.filters-title {
+    font-size: 2rem;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    min-height: 24px;
+    margin-bottom: 0.5rem;
+    color: var(--bs-dark);
+    font-size: 0.95rem;
+}
+
+.form-select,
+.form-range {
+    min-height: 38px;
+    cursor: pointer;
+}
+
+.filter-help {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--bs-secondary);
+}
+
+@media screen and (max-width: 992px) {
+    .filters-card {
+        padding: 2rem 1.25rem;
+    }
+}
