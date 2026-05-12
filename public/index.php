@@ -26,6 +26,10 @@ switch ($url) {
         $controller = new AuthController();
         $controller->login();
         break;
+    case 'inscription':
+        $controller = new AuthController();
+        $controller->register();
+        break;
     default:
         http_response_code(404);
         echo "Page introuvable";
