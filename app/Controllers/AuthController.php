@@ -6,4 +6,9 @@ class AuthController
     {
         require_once __DIR__ . '/../Views/pages/login.php';
     }
+
+    public function register(): void
+    {
+        require_once __DIR__ . '/../Views/pages/register.php';
+    }
 }
