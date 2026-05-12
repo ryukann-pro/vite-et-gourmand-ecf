@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../app/Controllers/HomeController.php';
 require_once __DIR__ . '/../app/Controllers/MenuController.php';
+require_once __DIR__ . '/../app/Controllers/MenuDetailController.php';
 
 $url = $_GET['url'] ?? 'accueil';
 
@@ -16,7 +17,10 @@ switch ($url) {
         $controller = new MenuController();
         $controller->index();
         break;
-
+    case 'menu-detail':
+        $controller = new MenuDetailController();
+        $controller->index();
+        break;
     default:
         http_response_code(404);
         echo "Page introuvable";
