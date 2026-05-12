@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../app/Controllers/HomeController.php';
 require_once __DIR__ . '/../app/Controllers/MenuController.php';
 require_once __DIR__ . '/../app/Controllers/MenuDetailController.php';
+require_once __DIR__ . '/../app/Controllers/AuthController.php';
 
 $url = $_GET['url'] ?? 'accueil';
 
@@ -20,6 +21,10 @@ switch ($url) {
     case 'menu-detail':
         $controller = new MenuDetailController();
         $controller->index();
+        break;
+    case 'connexion':
+        $controller = new AuthController();
+        $controller->login();
         break;
     default:
         http_response_code(404);
