@@ -1011,3 +1011,102 @@ TEAM SECTION
         padding: 2rem 1rem;
     }
 }
+
+
+/* ===========================================
+            PAGE MOT DE PASSE OUBLIE
+=========================================== */
+
+
+.forgot-password-page {
+    background-color: var(--vg-bg);
+
+    display: flex;
+    align-items: center;
+}
+
+.forgot-password-card {
+    background-color: #FFFFFF;
+
+    max-width: 500px;
+    margin: 0 auto;
+
+    padding: 3rem 2rem;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.forgot-password-title {
+    text-align: center;
+    color: var(--bs-primary);
+}
+
+.forgot-password-text {
+    text-align: center;
+
+    color: var(--bs-dark);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.forgot-password-card .form-label {
+    color: var(--bs-dark);
+    font-weight: 500;
+}
+
+.forgot-password-card .form-control {
+    padding: 0.75rem 1rem;
+}
+
+.forgot-password-btn {
+    background-color: var(--vg-cta);
+    color: #FFFFFF;
+
+    padding: 0.75rem 1rem;
+
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.forgot-password-btn:hover {
+    background-color: #a94b23;
+    color: #FFFFFF;
+}
+
+/* lien retour connexion */
+
+.login-text {
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.login-link {
+    color: var(--vg-cta);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+    .forgot-password-card {
+        padding: 2.5rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+
+    .forgot-password-card {
+        padding: 2rem 1rem;
+    }
+}
