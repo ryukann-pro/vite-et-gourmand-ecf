@@ -6,6 +6,7 @@ require_once __DIR__ . '/../app/Controllers/MenuDetailController.php';
 require_once __DIR__ . '/../app/Controllers/AuthController.php';
 require_once __DIR__ . '/../app/Controllers/ContactController.php';
 require_once __DIR__ . '/../app/Controllers/UserController.php';
+require_once __DIR__ . '/../app/Controllers/OrderController.php';
 
 $url = $_GET['url'] ?? 'accueil';
 
@@ -43,6 +44,10 @@ switch ($url) {
     case 'mon-compte':
         $controller = new UserController();
         $controller->account();
+        break;
+    case 'commande':
+        $controller = new OrderController();
+        $controller->create();
         break;
     default:
         http_response_code(404);
