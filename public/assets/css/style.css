@@ -1248,3 +1248,108 @@ TEAM SECTION
         padding: 2rem 1.25rem;
     }
 }
+
+
+/* ===========================================
+            PAGE COMMANDE
+=========================================== */
+
+.order-page {
+    background-color: var(--vg-bg);
+}
+
+.order-card {
+    background-color: #ffffff;
+    padding: 3rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.order-title {
+    text-align: center;
+    color: var(--bs-primary);
+}
+
+.order-section-title,
+.order-summary-title,
+.order-menu-title {
+    color: var(--bs-primary);
+}
+
+.order-section-title {
+    font-size: 1.4rem;
+}
+
+.order-card .form-control,
+.order-card .form-select {
+    padding: 0.75rem 1rem;
+}
+
+.order-help {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--bs-secondary);
+    font-size: 0.85rem;
+}
+
+.order-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+}
+
+.order-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+.order-summary {
+    background-color: #F7F7F5;
+    padding: 1.5rem;
+    border-radius: 8px;
+    position: sticky;
+    top: 2rem;
+}
+
+.order-summary-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.order-menu-description,
+.order-note {
+    color: var(--bs-secondary);
+}
+
+.order-summary-info {
+    color: var(--bs-dark);
+}
+
+.order-summary-info strong {
+    color: var(--bs-primary);
+}
+
+.order-total {
+    color: var(--vg-cta) !important;
+    font-size: 1.3rem;
+}
+
+.order-note {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+@media screen and (max-width: 992px) {
+    .order-card {
+        padding: 2rem 1.25rem;
+    }
+
+    .order-summary {
+        position: static;
+    }
+}
