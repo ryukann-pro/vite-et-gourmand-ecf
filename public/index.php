@@ -4,6 +4,7 @@ require_once __DIR__ . '/../app/Controllers/HomeController.php';
 require_once __DIR__ . '/../app/Controllers/MenuController.php';
 require_once __DIR__ . '/../app/Controllers/MenuDetailController.php';
 require_once __DIR__ . '/../app/Controllers/AuthController.php';
+require_once __DIR__ . '/../app/Controllers/ContactController.php';
 
 $url = $_GET['url'] ?? 'accueil';
 
@@ -33,6 +34,10 @@ switch ($url) {
     case 'mot-de-passe-oublie':
         $controller = new AuthController();
         $controller->forgotPassword();
+        break;
+    case 'contact':
+        $controller = new ContactController();
+        $controller->index();
         break;
     default:
         http_response_code(404);
