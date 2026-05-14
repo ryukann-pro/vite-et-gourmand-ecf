@@ -43,7 +43,7 @@ INSERT INTO utilisateur (
     nom, prenom, email, telephone, adresse, mot_de_passe_hash, role_id
 ) VALUES (
     'Dupont', 'Julie', 'julie.dupont@test.fr', '0600000000',
-    '12 rue test', 'hash_test', 1
+    '12 rue test', '$2y$10$5hEljTutQs6CFueBntcX9Oog/QG/c18PG63QDSjqPVcDfto4CTIL6', 1
 );
 
 -- Insertion des données dans la table restaurant
@@ -78,31 +78,54 @@ INSERT INTO allergene (nom) VALUES
 ('Lait'),
 ('Oeuf');
 
+-- Insertion des données dans la table plat
 INSERT INTO plat (nom, type_plat, description) VALUES
 ('Salade composée', 'Entrée', 'Entrée fraîche et légère.'),
 ('Poulet rôti', 'Plat principal', 'Plat principal accompagné de légumes.'),
 ('Tarte aux pommes', 'Dessert', 'Dessert fruité maison.');
 
+-- Insertion des données dans la table plat_allergene
 INSERT INTO plat_allergene (plat_id, allergene_id) VALUES
 (3, 1),
 (3, 2);
 
+--Inserttion des données dans la table theme
+INSERT INTO theme (nom) VALUES
+('Classique'),
+('Événement'),
+('Pâques'),
+('Noël');
+
+-- Insertion des données dans la table regime
+INSERT INTO regime (nom) VALUES
+('Standard'),
+('Végétarien'),
+('Vegan');
 
 -- Insertion des données dans la table menu
 
 INSERT INTO menu (
-    titre, description_courte, description_longue, theme, regime,
-    nb_personnes_min, prix_par_personne, stock, conditions
+    titre,
+    description_courte,
+    description_longue,
+    nb_personnes_min,
+    prix_par_personne,
+    stock,
+    conditions,
+    theme_id,
+    regime_id,
+    restaurant_id
 ) VALUES (
-    'Menu Classique',
+    'Menu Classique Test',
     'Un menu simple et gourmand.',
     'Menu complet composé d’une entrée, d’un plat et d’un dessert.',
-    'Classique',
-    'Standard',
     10,
     25.00,
     5,
-    'Commande au moins 3 jours avant la prestation.'
+    'Commande au moins 3 jours avant la prestation.',
+    1,
+    1,
+    1
 );
 
 
@@ -116,8 +139,17 @@ INSERT INTO menu_plat (menu_id, plat_id) VALUES
 
 -- Insertion des données dans la table image
 
-INSERT INTO image (url, texte_alternatif, ordre_affichage, menu_id) VALUES
-('images/menu-classique.jpg', 'Photo du menu classique', 1, 1);
+INSERT INTO image (
+    url,
+    texte_alternatif,
+    ordre_affichage,
+    menu_id
+) VALUES (
+    'assets/images/menu-test.jpg',
+    'Photo menu classique test',
+    1,
+    1
+);
 
 
 -- Insertion des données dans la table commande*
@@ -277,15 +309,9 @@ INSERT INTO utilisateur (
     3
 );
 
--- Modification du mot de passe utilisateur pour passer en hash bcrypt
-
-UPDATE utilisateur
-SET mot_de_passe_hash = '$2y$10$5hEljTutQs6CFueBntcX9Oog/QG/c18PG63QDSjqPVcDfto4CTIL6'
-WHERE id = 1;
-
 -- Ajout telephone et adresse pour l'utilisateur admin
 UPDATE utilisateur
 SET 
     telephone = '0601020304',
     adresse = '12 Rue Sainte-Catherine, Bordeaux'
-WHERE id = 4;
+WHERE id = 3;
