@@ -2,7 +2,13 @@
 
 require_once __DIR__ . '/../config/database.php';
 
-$database = new Database();
-$pdo = $database->getPDO();
+try {
 
-echo "Connexion PDO réussie";
+    $pdo = Database::getConnection();
+
+    echo "Connexion à la base de données réussie";
+
+} catch (PDOException $e) {
+
+    echo "Erreur : " . $e->getMessage();
+}
