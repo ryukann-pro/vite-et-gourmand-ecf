@@ -91,18 +91,31 @@ CREATE TABLE plat_allergene (
     PRIMARY KEY (plat_id, allergene_id)
 );
 
+-- Création de la table theme
+CREATE TABLE theme (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(50) NOT NULL UNIQUE
+);
+
+-- Création de la table regime
+CREATE TABLE regime (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(50) NOT NULL UNIQUE
+);
+
 -- Création de la table menu
 CREATE TABLE menu (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titre VARCHAR(100) NOT NULL,
     description_courte TEXT,
     description_longue TEXT,
-    theme ENUM('Classique', 'Evenement', 'Paques', 'Noel') NOT NULL,
-    regime ENUM('Standard', 'Végétarien', 'Vegan') NOT NULL,
     nb_personnes_min INT NOT NULL,
     prix_par_personne DECIMAL(10, 2) NOT NULL,
     stock INT NOT NULL,
-    conditions TEXT
+    conditions TEXT,
+    theme_id INT NOT NULL,
+    regime_id INT NOT NULL,
+    restaurant_id INT NOT NULL
 );
 -- Création de la table menu_plat pour la relation many-to-many entre menu et plat
 CREATE TABLE menu_plat (
@@ -187,6 +200,8 @@ ALTER TABLE message_contact ENGINE = InnoDB;
 ALTER TABLE allergene ENGINE = InnoDB;
 ALTER TABLE plat ENGINE = InnoDB;
 ALTER TABLE plat_allergene ENGINE = InnoDB;
+ALTER TABLE theme ENGINE = InnoDB;
+ALTER TABLE regime ENGINE = InnoDB;
 ALTER TABLE menu ENGINE = InnoDB;
 ALTER TABLE menu_plat ENGINE = InnoDB;
 ALTER TABLE image ENGINE = InnoDB;
@@ -195,6 +210,7 @@ ALTER TABLE statut_commande ENGINE = InnoDB;
 ALTER TABLE commande ENGINE = InnoDB;
 ALTER TABLE suivi_commande ENGINE = InnoDB;
 ALTER TABLE avis ENGINE = InnoDB;
+
 
 
 -- Ajout des contraintes de clés étrangères après la création de toutes les tables pour éviter les problèmes d'ordre de création
@@ -217,6 +233,18 @@ ALTER TABLE message_contact
 ADD CONSTRAINT fk_message_contact_restaurant
 FOREIGN KEY (restaurant_id) REFERENCES restaurant(id);
 
+-- Clés étrangères pour la table menu
+ALTER TABLE menu
+ADD CONSTRAINT fk_menu_theme
+FOREIGN KEY (theme_id) REFERENCES theme(id);
+
+ALTER TABLE menu
+ADD CONSTRAINT fk_menu_regime
+FOREIGN KEY (regime_id) REFERENCES regime(id);
+
+ALTER TABLE menu
+ADD CONSTRAINT fk_menu_restaurant
+FOREIGN KEY (restaurant_id) REFERENCES restaurant(id);
 
 -- Clés étrangères pour la table plat_allergene
 
