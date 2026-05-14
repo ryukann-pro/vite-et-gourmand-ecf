@@ -21,3 +21,5 @@ Thumbs.db
 hash.php
 test_password.php
 hash_client.php
+
+public/test-db.php
