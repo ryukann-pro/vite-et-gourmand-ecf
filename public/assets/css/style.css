@@ -867,3 +867,540 @@ TEAM SECTION
     }
 }
 
+/* ===========================================
+            PAGES CONNEXION
+=========================================== */
+
+.login-page {
+    background-color: var(--vg-bg);
+    min-height: 80vh;
+
+    display: flex;
+    align-items: center;
+}
+
+.login-card {
+    background-color: #FFFFFF;
+
+    max-width: 500px;
+    margin: 0 auto;
+
+    padding: 3rem 2rem;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.login-title {
+    text-align: center;
+    color: var(--bs-primary);
+}
+
+.login-card .form-label {
+    color: var(--bs-dark);
+    font-weight: 500;
+}
+
+.login-card .form-control {
+    padding: 0.75rem 1rem;
+}
+
+.forgot-password-link {
+    font-size: 0.9rem;
+    color: var(--bs-secondary);
+    text-decoration: none;
+}
+
+.forgot-password-link:hover {
+    color: var(--vg-cta);
+}
+
+.login-btn {
+    background-color: var(--vg-cta);
+    color: #FFFFFF;
+
+    padding: 0.75rem 1rem;
+
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.login-btn:hover {
+    background-color: #a94b23;
+    color: #FFFFFF;
+}
+
+.register-text {
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.register-link {
+    color: var(--vg-cta);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.register-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+    .login-card {
+        padding: 2.5rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+
+    .login-card {
+        padding: 2rem 1rem;
+    }
+}
+
+
+
+
+/* ===========================================
+            PAGES INSCRIPTION
+=========================================== */
+
+
+.register-page {
+    background-color: var(--vg-bg);
+
+    display: flex;
+    align-items: center;
+}
+
+.register-card {
+    background-color: #FFFFFF;
+
+    max-width: 600px;
+    margin: 0 auto;
+
+    padding: 3rem 2rem;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.register-title {
+    text-align: center;
+    color: var(--bs-primary);
+}
+
+.register-card .form-label {
+    color: var(--bs-dark);
+    font-weight: 500;
+}
+
+.register-card .form-control {
+    padding: 0.75rem 1rem;
+}
+
+.password-help {
+    display: block;
+    margin-top: 0.5rem;
+
+    font-size: 0.85rem;
+    color: var(--bs-secondary);
+}
+
+.register-btn {
+    background-color: var(--vg-cta);
+    color: #FFFFFF;
+
+    padding: 0.75rem 1rem;
+
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.register-btn:hover {
+    background-color: #a94b23;
+    color: #FFFFFF;
+}
+
+.login-text {
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.login-link {
+    color: var(--vg-cta);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+    .register-card {
+        padding: 2.5rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+
+    .register-card {
+        padding: 2rem 1rem;
+    }
+}
+
+
+/* ===========================================
+            PAGE MOT DE PASSE OUBLIE
+=========================================== */
+
+
+.forgot-password-page {
+    background-color: var(--vg-bg);
+
+    display: flex;
+    align-items: center;
+}
+
+.forgot-password-card {
+    background-color: #FFFFFF;
+
+    max-width: 500px;
+    margin: 0 auto;
+
+    padding: 3rem 2rem;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.forgot-password-title {
+    text-align: center;
+    color: var(--bs-primary);
+}
+
+.forgot-password-text {
+    text-align: center;
+
+    color: var(--bs-dark);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.forgot-password-card .form-label {
+    color: var(--bs-dark);
+    font-weight: 500;
+}
+
+.forgot-password-card .form-control {
+    padding: 0.75rem 1rem;
+}
+
+.forgot-password-btn {
+    background-color: var(--vg-cta);
+    color: #FFFFFF;
+
+    padding: 0.75rem 1rem;
+
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.forgot-password-btn:hover {
+    background-color: #a94b23;
+    color: #FFFFFF;
+}
+
+/* lien retour connexion */
+
+.login-text {
+    text-align: center;
+    font-size: 0.95rem;
+}
+
+.login-link {
+    color: var(--vg-cta);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+    .forgot-password-card {
+        padding: 2.5rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+
+    .forgot-password-card {
+        padding: 2rem 1rem;
+    }
+}
+
+
+/* ===========================================
+            PAGE CONTACT
+=========================================== */
+
+.contact-page {
+    background-color: var(--vg-bg);
+
+    display: flex;
+    align-items: center;
+}
+
+.contact-card {
+    background-color: #FFFFFF;
+
+    max-width: 700px;
+    margin: 0 auto;
+
+    padding: 3rem 2rem;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.contact-title {
+    text-align: center;
+    color: var(--bs-primary);
+}
+
+.contact-text {
+    text-align: center;
+
+    color: var(--bs-dark);
+
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+.contact-card .form-label {
+    color: var(--bs-dark);
+    font-weight: 500;
+}
+
+.contact-card .form-control {
+    padding: 0.75rem 1rem;
+}
+
+.contact-btn {
+    background-color: var(--vg-cta);
+    color: #FFFFFF;
+
+    padding: 0.75rem 1rem;
+
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+.contact-btn:hover {
+    background-color: #a94b23;
+    color: #FFFFFF;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+    .contact-card {
+        padding: 2.5rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+
+    .contact-card {
+        padding: 2rem 1rem;
+    }
+}
+
+/* ===========================================
+            PAGE MON COMPTE
+=========================================== */
+
+.account-page {
+    background-color: var(--vg-bg);
+}
+
+.account-card {
+    background-color: #FFFFFF;
+
+    padding: 2.5rem 2rem;
+
+    border-radius: 8px;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.account-title {
+    text-align: center;
+    color: var(--bs-primary);
+}
+
+.account-subtitle {
+    color: var(--bs-primary);
+    font-size: 1.3rem;
+}
+
+.account-info-box {
+    background-color: #F7F7F5;
+
+    padding: 1.5rem;
+
+    border-radius: 6px;
+}
+
+.account-btn {
+    background-color: var(--vg-cta);
+    color: #FFFFFF;
+}
+
+.account-btn:hover {
+    background-color: #a94b23;
+    color: #FFFFFF;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+    .account-card {
+        padding: 2rem 1.25rem;
+    }
+}
+
+
+/* ===========================================
+            PAGE COMMANDE
+=========================================== */
+
+.order-page {
+    background-color: var(--vg-bg);
+}
+
+.order-card {
+    background-color: #ffffff;
+    padding: 3rem 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+}
+
+.order-title {
+    text-align: center;
+    color: var(--bs-primary);
+}
+
+.order-section-title,
+.order-summary-title,
+.order-menu-title {
+    color: var(--bs-primary);
+}
+
+.order-section-title {
+    font-size: 1.4rem;
+}
+
+.order-card .form-control,
+.order-card .form-select {
+    padding: 0.75rem 1rem;
+}
+
+.order-help {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--bs-secondary);
+    font-size: 0.85rem;
+}
+
+.order-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+}
+
+.order-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+.order-summary {
+    background-color: #F7F7F5;
+    padding: 1.5rem;
+    border-radius: 8px;
+    position: sticky;
+    top: 2rem;
+}
+
+.order-summary-img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+.order-menu-description,
+.order-note {
+    color: var(--bs-secondary);
+}
+
+.order-summary-info {
+    color: var(--bs-dark);
+}
+
+.order-summary-info strong {
+    color: var(--bs-primary);
+}
+
+.order-total {
+    color: var(--vg-cta) !important;
+    font-size: 1.3rem;
+}
+
+.order-note {
+    background-color: #ffffff;
+    padding: 1rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+}
+
+@media screen and (max-width: 992px) {
+    .order-card {
+        padding: 2rem 1.25rem;
+    }
+
+    .order-summary {
+        position: static;
+    }
+}
+
