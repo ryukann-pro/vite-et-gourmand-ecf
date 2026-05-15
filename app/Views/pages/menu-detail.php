@@ -16,7 +16,7 @@
 
               <div class="carousel-item active">
                 <img
-                  src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/classique-1.jpg"
+                  src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-1.jpg"
                   class="d-block w-100 menu-detail-img"
                   alt="Menu festif traditionnel"
                   data-bs-toggle="modal"
@@ -26,7 +26,7 @@
 
               <div class="carousel-item">
                 <img
-                  src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/classique-2.jpg"
+                  src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-2.jpg"
                   class="d-block w-100 menu-detail-img"
                   alt="Menu festif traditionnel"
                   data-bs-toggle="modal"
@@ -36,7 +36,7 @@
 
               <div class="carousel-item">
                 <img
-                  src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/classique-3.jpg"
+                  src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-3.jpg"
                   class="d-block w-100 menu-detail-img"
                   alt="Menu festif traditionnel"
                   data-bs-toggle="modal"
