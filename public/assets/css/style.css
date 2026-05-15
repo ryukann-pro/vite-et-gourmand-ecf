@@ -850,6 +850,12 @@ TEAM SECTION
     cursor: zoom-in;
 }
 
+.menu-detail-description {
+    color: var(--bs-secondary);
+    line-height: 1.7;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+}
 @media screen and (max-width: 992px) {
     .menu-detail-title,
     .menu-detail-price {
