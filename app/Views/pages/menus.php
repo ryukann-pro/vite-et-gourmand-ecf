@@ -70,7 +70,7 @@
             <div class="col-12 col-md-6 col-xl-4">
                 <article class="menu-card">
                     <div class="menu-card-img-wrapper">
-                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/Evenement/buffet-signature-réception/classique-1.jpg"
+                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/evenement/buffet-signature-reception/standard-1.jpg"
                             alt="Buffet Signature Réception" class="menu-card-img">
                     </div>
 
@@ -95,7 +95,7 @@
             <div class="col-12 col-md-6 col-xl-4">
                 <article class="menu-card">
                     <div class="menu-card-img-wrapper">
-                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/Noel/Festin-vegetarien-de-noel/vegetarien-1.jpg"
+                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/festin-vegetarien-de-noel/vegetarien-1.jpg"
                             alt="Festin Végétarien de Noël" class="menu-card-img">
                     </div>
 
@@ -120,7 +120,7 @@
             <div class="col-12 col-md-6 col-xl-4">
                 <article class="menu-card">
                     <div class="menu-card-img-wrapper">
-                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/Classique/Menu-vegan-equilibré/vegan-1.jpg"
+                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/classique/menu-vegan-equilibre/vegan-1.jpg"
                             alt="Menu Vegan Équilibré" class="menu-card-img">
                     </div>
 
@@ -145,7 +145,7 @@
             <div class="col-12 col-md-6 col-xl-4">
                 <article class="menu-card">
                     <div class="menu-card-img-wrapper">
-                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/Paques/tradition-gourmande-de-paques/classique-1.jpg"
+                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/paques/tradition-gourmande-de-paques/standard-1.jpg"
                             alt="Tradition Gourmande de Pâques" class="menu-card-img">
                     </div>
 
@@ -170,7 +170,7 @@
             <div class="col-12 col-md-6 col-xl-4">
                 <article class="menu-card">
                     <div class="menu-card-img-wrapper">
-                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/Evenement/Cocktail-végan-évenementiel/vegan-1.jpg"
+                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/evenement/cocktail-vegan-evenementiel/vegan-1.jpg"
                             alt="Cocktail Vegan Événementiel" class="menu-card-img">
                     </div>
 
@@ -195,7 +195,7 @@
             <div class="col-12 col-md-6 col-xl-4">
                 <article class="menu-card">
                     <div class="menu-card-img-wrapper">
-                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/Noel/Menu-festif-traditionnel/classique-1.jpg"
+                        <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-1.jpg"
                             alt="Menu festif traditionnel" class="menu-card-img">
                     </div>
 
