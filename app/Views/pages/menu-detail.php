@@ -15,33 +15,21 @@
             <div class="carousel-inner">
 
               <div class="carousel-item active">
-                <img
-                  src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-1.jpg"
-                  class="d-block w-100 menu-detail-img"
-                  alt="Menu festif traditionnel"
-                  data-bs-toggle="modal"
-                  data-bs-target="#galleryModal"
-                >
+                <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-1.jpg"
+                  class="d-block w-100 menu-detail-img" alt="Menu festif traditionnel" data-bs-toggle="modal"
+                  data-bs-target="#galleryModal">
               </div>
 
               <div class="carousel-item">
-                <img
-                  src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-2.jpg"
-                  class="d-block w-100 menu-detail-img"
-                  alt="Menu festif traditionnel"
-                  data-bs-toggle="modal"
-                  data-bs-target="#galleryModal"
-                >
+                <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-2.jpg"
+                  class="d-block w-100 menu-detail-img" alt="Menu festif traditionnel" data-bs-toggle="modal"
+                  data-bs-target="#galleryModal">
               </div>
 
               <div class="carousel-item">
-                <img
-                  src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-3.jpg"
-                  class="d-block w-100 menu-detail-img"
-                  alt="Menu festif traditionnel"
-                  data-bs-toggle="modal"
-                  data-bs-target="#galleryModal"
-                >
+                <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-3.jpg"
+                  class="d-block w-100 menu-detail-img" alt="Menu festif traditionnel" data-bs-toggle="modal"
+                  data-bs-target="#galleryModal">
               </div>
 
             </div>
@@ -78,7 +66,9 @@
             <i class="bi bi-calendar-event"></i>
             Commande 1 semaine en avance
           </p>
-
+          <p class="menu-detail-description">
+            Un menu festif classique et généreux, parfait pour les repas de fête et les grandes occasions.
+          </p>
           <div class="menu-composition mt-4">
             <h2>Composition du menu</h2>
 
@@ -94,7 +84,8 @@
               <h3>Plat</h3>
               <p class="dish-name">Dinde rôtie aux herbes de Noël</p>
               <p class="dish-description">
-                Dinde rôtie lentement, jus réduit aux épices douces, accompagnée de pommes de terre fondantes et légumes de saison.
+                Dinde rôtie lentement, jus réduit aux épices douces, accompagnée de pommes de terre fondantes et légumes
+                de saison.
               </p>
               <p class="dish-allergens">Allergènes : Céleri</p>
 
@@ -148,27 +139,18 @@
           <div class="carousel-inner">
 
             <div class="carousel-item active">
-              <img
-                src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/classique-1.jpg"
-                class="d-block w-100 gallery-img"
-                alt="Menu festif traditionnel"
-              >
+              <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-1.jpg"
+                class="d-block w-100 gallery-img" alt="Menu festif traditionnel">
             </div>
 
             <div class="carousel-item">
-              <img
-                src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/classique-2.jpg"
-                class="d-block w-100 gallery-img"
-                alt="Menu festif traditionnel"
-              >
+              <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-2.jpg"
+                class="d-block w-100 gallery-img" alt="Menu festif traditionnel">
             </div>
 
             <div class="carousel-item">
-              <img
-                src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/classique-3.jpg"
-                class="d-block w-100 gallery-img"
-                alt="Menu festif traditionnel"
-              >
+              <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-3.jpg"
+                class="d-block w-100 gallery-img" alt="Menu festif traditionnel">
             </div>
 
           </div>
