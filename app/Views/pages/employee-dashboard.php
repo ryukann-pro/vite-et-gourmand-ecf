@@ -46,7 +46,7 @@
 
             <div class="col-12 col-md-6 col-xl-4">
                 <a href="index.php?url=employe-avis" class="employee-dashboard-card">
-                    <i class="bi bi-star"></i>
+                    <i class="bi bi-star-fill"></i>
                     <h2>Avis clients</h2>
                     <p>Valider ou refuser les avis envoyés par les utilisateurs.</p>
                 </a>
