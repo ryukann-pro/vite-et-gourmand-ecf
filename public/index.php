@@ -29,6 +29,10 @@ switch ($url) {
         $controller = new AuthController();
         $controller->login();
         break;
+    case 'deconnexion':
+        $controller = new AuthController();
+        $controller->logout();
+        break;
     case 'inscription':
         $controller = new AuthController();
         $controller->register();
