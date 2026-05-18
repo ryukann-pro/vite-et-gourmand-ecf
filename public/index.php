@@ -10,6 +10,7 @@ require_once __DIR__ . '/../app/Controllers/OrderController.php';
 require_once __DIR__ . '/../app/Controllers/OrderDetailController.php';
 require_once __DIR__ . '/../app/Controllers/OrderEditController.php';
 require_once __DIR__ . '/../app/Controllers/ProfileController.php';
+require_once __DIR__ . '/../app/Controllers/EmployeeController.php';
 
 $url = $_GET['url'] ?? 'accueil';
 
@@ -67,6 +68,10 @@ switch ($url) {
     case 'modifier-commande':
         $controller = new OrderEditController();
         $controller->edit();
+        break;
+    case 'espace-employe':
+        $controller = new EmployeeController();
+        $controller->dashboard();
         break;
     default:
         http_response_code(404);
