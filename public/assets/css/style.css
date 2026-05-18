@@ -2336,3 +2336,100 @@ TEAM SECTION
         width: 100%;
     }
 }
+
+/* ===========================================
+            PAGE GESTION DES HORAIRES
+=========================================== */
+.employee-hours-page {
+    background-color: var(--vg-bg);
+}
+
+.employee-hours-header {
+    text-align: center;
+}
+
+.employee-hours-title {
+    color: var(--bs-primary);
+    font-size: 3rem;
+}
+
+.employee-hours-text {
+    color: var(--bs-dark);
+    max-width: 700px;
+    margin: 1rem auto 0;
+    line-height: 1.7;
+}
+
+.employee-hours-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.employee-hours-subtitle {
+    color: var(--bs-primary);
+    font-size: 1.8rem;
+}
+
+.employee-hour-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5rem;
+    align-items: end;
+
+    padding: 1.25rem 0;
+    border-bottom: 1px solid #eeeeee;
+}
+
+.employee-hour-day {
+    color: var(--bs-primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.employee-hours-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+}
+
+.employee-hours-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+    .employee-hours-title {
+        font-size: 2.4rem;
+    }
+
+    .employee-hours-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .employee-hour-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .employee-hours-title {
+        font-size: 2rem;
+    }
+
+    .employee-hours-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .employee-hours-btn {
+        width: 100%;
+    }
+}
