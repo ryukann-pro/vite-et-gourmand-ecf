@@ -31,4 +31,9 @@ class EmployeeController
   {
     require_once __DIR__ . '/../Views/pages/employee-plates.php';
   }
+
+      public function hours():void
+  {
+    require_once __DIR__ . '/../Views/pages/employee-hours.php';
+  }
 }

@@ -20,7 +20,6 @@ switch ($url) {
         $controller = new HomeController();
         $controller->index();
         break;
-
     case 'menus':
         $controller = new MenuController();
         $controller->index();
@@ -89,10 +88,13 @@ switch ($url) {
         $controller = new EmployeeController();
         $controller->menus();
         break;
-
     case 'employe-plats':
         $controller = new EmployeeController();
         $controller->plates();
+        break;
+    case 'employe-horaires':
+        $controller = new EmployeeController();
+        $controller->hours();
         break;
     default:
         http_response_code(404);
