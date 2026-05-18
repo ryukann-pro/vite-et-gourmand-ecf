@@ -22,4 +22,13 @@ class EmployeeController
     require_once __DIR__ . '/../Views/pages/employee-reviews.php';
   }
   
+  public function menus():void
+  {
+    require_once __DIR__ . '/../Views/pages/employee-menus.php';
+  }
+
+    public function plates():void
+  {
+    require_once __DIR__ . '/../Views/pages/employee-plates.php';
+  }
 }
