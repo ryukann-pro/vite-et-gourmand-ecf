@@ -1,5 +1,14 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
+<?php
+$prixUnitaire = (float) $menu['prix_par_personne'];
+$nbPersonnesMin = (int) $menu['nb_personnes_min'];
+$sousTotal = $prixUnitaire * $nbPersonnesMin;
+$reduction = 0;
+$fraisLivraison = 5;
+$total = $sousTotal - $reduction + $fraisLivraison;
+?>
+
 <main class="order-page py-5">
     <section class="container">
         <div class="order-card">
@@ -52,15 +61,22 @@
                                     <option>Talence</option>
                                     <option>Bègles</option>
                                     <option>Cenon</option>
-                                    <option>Lormon</option>
-                                    <option>Le bouscat</option>
+                                    <option>Lormont</option>
+                                    <option>Le Bouscat</option>
                                 </select>
                             </div>
 
                             <div class="col-12 col-md-6 mb-4">
                                 <label class="form-label">Nombre de personnes</label>
-                                <input type="number" class="form-control" value="10" min="5">
-                                <small class="order-help">Minimum 5 personnes pour ce menu</small>
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    value="<?= $nbPersonnesMin ?>"
+                                    min="<?= $nbPersonnesMin ?>"
+                                >
+                                <small class="order-help">
+                                    Minimum <?= $nbPersonnesMin ?> personnes pour ce menu
+                                </small>
                             </div>
                         </div>
 
@@ -120,49 +136,53 @@
                         <h2 class="order-summary-title mb-4">Résumé de la commande</h2>
 
                         <img
-                            src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/classique-1.jpg"
-                            alt="Menu festif traditionnel"
+                            src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($images[0]['url'] ?? '') ?>"
+                            alt="<?= htmlspecialchars($menu['titre']) ?>"
                             class="order-summary-img mb-4"
                         >
 
-                        <h3 class="order-menu-title">Menu festif traditionnel</h3>
+                        <h3 class="order-menu-title">
+                            <?= htmlspecialchars($menu['titre']) ?>
+                        </h3>
 
                         <p class="order-menu-description">
-                            Menu festif complet avec entrée, plat et dessert de saison.
+                            <?= htmlspecialchars($menu['description_longue']) ?>
                         </p>
 
                         <div class="order-summary-info mt-4">
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Prix par personne</span>
-                                <strong>32 €</strong>
+                                <strong><?= number_format($prixUnitaire, 2, ',', ' ') ?> €</strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Nombre de personnes</span>
-                                <strong>10</strong>
+                                <strong><?= $nbPersonnesMin ?></strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Sous-total menu</span>
-                                <strong>320 €</strong>
+                                <strong><?= number_format($sousTotal, 2, ',', ' ') ?> €</strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Réduction</span>
-                                <strong>- 0 €</strong>
+                                <strong>- <?= number_format($reduction, 2, ',', ' ') ?> €</strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Livraison</span>
-                                <strong>5 €</strong>
+                                <strong><?= number_format($fraisLivraison, 2, ',', ' ') ?> €</strong>
                             </div>
 
                             <hr>
 
                             <div class="d-flex justify-content-between">
                                 <span>Total</span>
-                                <strong class="order-total">325 €</strong>
+                                <strong class="order-total">
+                                    <?= number_format($total, 2, ',', ' ') ?> €
+                                </strong>
                             </div>
 
                         </div>
