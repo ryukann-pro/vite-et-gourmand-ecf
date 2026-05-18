@@ -9,20 +9,20 @@
             <h1 class="login-title mb-5">
                 Connexion
             </h1>
-
-            <form>
+            <?php if ($error): ?>
+                <div class="alert alert-danger">
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
+            <form method="post">
 
                 <div class="mb-4">
                     <label for="email" class="form-label">
                         Adresse email
                     </label>
 
-                    <input
-                        type="email"
-                        id="email"
-                        class="form-control"
-                        placeholder="Votre adresse email"
-                    >
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Votre adresse email"
+                        required>
                 </div>
 
                 <div class="mb-2">
@@ -30,12 +30,8 @@
                         Mot de passe
                     </label>
 
-                    <input
-                        type="password"
-                        id="password"
-                        class="form-control"
-                        placeholder="Votre mot de passe"
-                    >
+                    <input type="password" id="password" class="form-control" placeholder="Votre mot de passe"
+                        name="password" required>
                 </div>
 
                 <div class="text-end mb-4 text-center">
