@@ -51,4 +51,15 @@ class AuthController
     {
         require_once __DIR__ . '/../Views/pages/forgot-password.php';
     }
+    public function logout(): void
+    {
+        session_start();
+
+        $_SESSION = [];
+
+        session_destroy();
+
+        header('Location: index.php');
+        exit;
+    }
 }
