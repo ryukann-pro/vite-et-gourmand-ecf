@@ -85,6 +85,15 @@ switch ($url) {
         $controller = new EmployeeController();
         $controller->reviews();
         break;
+    case 'employe-menus':
+        $controller = new EmployeeController();
+        $controller->menus();
+        break;
+
+    case 'employe-plats':
+        $controller = new EmployeeController();
+        $controller->plates();
+        break;
     default:
         http_response_code(404);
         echo "Page introuvable";
