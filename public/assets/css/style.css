@@ -1747,3 +1747,86 @@ TEAM SECTION
         width: 100%;
     }
 }
+
+/* ===========================================
+            PAGE MODIFICATION PROFIL
+=========================================== */
+
+.profile-edit-page {
+    background-color: var(--vg-bg);
+}
+
+.profile-edit-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.profile-edit-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--bs-primary);
+    text-align: center;
+}
+
+.profile-edit-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.profile-edit-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    padding: 0.9rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.profile-edit-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+    .profile-edit-card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .profile-edit-title {
+        font-size: 2.4rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .profile-edit-page {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    .profile-edit-card {
+        padding: 2rem 1rem;
+        border-radius: 10px;
+    }
+
+    .profile-edit-title {
+        font-size: 2rem;
+    }
+
+    .profile-edit-actions {
+        flex-direction: column;
+    }
+
+    .profile-edit-btn,
+    .account-secondary-btn {
+        width: 100%;
+    }
+}

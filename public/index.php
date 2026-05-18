@@ -9,6 +9,7 @@ require_once __DIR__ . '/../app/Controllers/UserController.php';
 require_once __DIR__ . '/../app/Controllers/OrderController.php';
 require_once __DIR__ . '/../app/Controllers/OrderDetailController.php';
 require_once __DIR__ . '/../app/Controllers/OrderEditController.php';
+require_once __DIR__ . '/../app/Controllers/ProfileController.php';
 
 $url = $_GET['url'] ?? 'accueil';
 
@@ -50,6 +51,10 @@ switch ($url) {
     case 'mon-compte':
         $controller = new UserController();
         $controller->account();
+        break;
+    case 'modifier-profil':
+        $controller = new ProfileController();
+        $controller->edit();
         break;
     case 'commande':
         $controller = new OrderController();
