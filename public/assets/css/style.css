@@ -1620,3 +1620,130 @@ TEAM SECTION
         max-width: 100%;
     }
 }
+
+/* ===========================================
+            PAGE MODIFICATION COMMANDE
+=========================================== */
+
+.order-edit-page {
+    background-color: var(--vg-bg);
+}
+
+.order-edit-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.order-edit-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--bs-primary);
+    text-align: center;
+}
+
+.order-edit-warning {
+    border-radius: 12px;
+    font-size: 1rem;
+    line-height: 1.7;
+}
+
+.order-edit-summary {
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.order-edit-menu-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--bs-primary);
+}
+
+.order-edit-menu-description {
+    color: var(--bs-secondary);
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
+.order-edit-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--bs-primary);
+}
+
+.order-edit-help {
+    color: var(--bs-secondary);
+    font-size: 0.9rem;
+}
+
+.order-edit-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.order-edit-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    padding: 0.9rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.order-edit-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+
+    .order-edit-card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .order-edit-title {
+        font-size: 2.4rem;
+    }
+
+    .order-edit-section-title {
+        font-size: 1.7rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+
+    .order-edit-page {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    .order-edit-card {
+        padding: 2rem 1rem;
+        border-radius: 10px;
+    }
+
+    .order-edit-title {
+        font-size: 2rem;
+    }
+
+    .order-edit-section-title {
+        font-size: 1.5rem;
+    }
+
+    .order-edit-actions {
+        flex-direction: column;
+    }
+
+    .order-edit-btn,
+    .account-secondary-btn {
+        width: 100%;
+    }
+}
