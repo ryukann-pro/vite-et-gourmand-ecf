@@ -73,6 +73,10 @@ switch ($url) {
         $controller = new EmployeeController();
         $controller->dashboard();
         break;
+    case 'employe-commandes':
+        $controller = new EmployeeController();
+        $controller->orders();
+        break;
     default:
         http_response_code(404);
         echo "Page introuvable";

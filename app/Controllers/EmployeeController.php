@@ -6,4 +6,9 @@ class EmployeeController
   {
     require_once __DIR__ . '/../Views/pages/employee-dashboard.php';
   }
+
+  public function orders():void
+  {
+    require_once __DIR__ . '/../Views/pages/employee-orders.php';
+  }
 }
