@@ -1294,6 +1294,27 @@ TEAM SECTION
     color: #FFFFFF;
 }
 
+.account-secondary-btn {
+    background-color: #f7f7f5;
+    color: var(--bs-primary);
+    border: 1px solid #ddd;
+}
+
+.account-secondary-btn:hover {
+    background-color: #eeeeea;
+    color: var(--bs-primary);
+}
+
+.account-danger-btn {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.account-danger-btn:hover {
+    background-color: #bb2d3b;
+    color: #ffffff;
+}
+
 /* =========================
    RESPONSIVE
 ========================= */
@@ -1410,3 +1431,192 @@ TEAM SECTION
     }
 }
 
+/* ===========================================
+            PAGE DETAIL COMMANDE
+=========================================== */
+
+.order-detail-page {
+    background-color: var(--vg-bg);
+}
+
+.order-detail-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.order-detail-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--bs-primary);
+    text-align: center;
+}
+
+.order-detail-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--bs-primary);
+}
+
+.order-detail-info {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--bs-dark);
+}
+
+.order-detail-info p {
+    margin-bottom: 1rem;
+}
+
+.order-detail-info strong {
+    color: var(--bs-dark);
+}
+
+.order-detail-divider {
+    margin: 2.5rem 0;
+    border-color: #dddddd;
+}
+
+.order-tracking-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 2rem;
+}
+
+.order-tracking-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+
+    background-color: #f8f8f8;
+    border-radius: 12px;
+
+    font-size: 1.05rem;
+    color: var(--bs-dark);
+}
+
+.order-tracking-item i {
+    font-size: 1.2rem;
+    color: var(--vg-cta);
+}
+
+.order-detail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.order-detail-btn {
+    padding: 0.85rem 1.4rem;
+    border-radius: 10px;
+    font-weight: 600;
+}
+
+.order-detail-btn-secondary {
+    background-color: #f3f3f3;
+    color: var(--bs-primary);
+    border: 1px solid #dddddd;
+}
+
+.order-detail-btn-secondary:hover {
+    background-color: #e8e8e8;
+    color: var(--bs-primary);
+}
+
+.order-detail-btn-danger {
+    background-color: #dc3545;
+    color: #ffffff;
+}
+
+.order-detail-btn-danger:hover {
+    background-color: #bb2d3b;
+    color: #ffffff;
+}
+
+/* Avis */
+
+.review-form {
+    max-width: 700px;
+}
+
+.review-form .form-label {
+    color: var(--bs-dark);
+    font-weight: 600;
+}
+
+.review-form .form-select,
+.review-form .form-control {
+    padding: 0.75rem 1rem;
+}
+
+.order-review-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+}
+
+.order-review-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+    .order-detail-card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .order-detail-title {
+        font-size: 2.4rem;
+    }
+
+    .order-detail-section-title {
+        font-size: 1.7rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .order-detail-page {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    .order-detail-card {
+        padding: 2rem 1rem;
+        border-radius: 10px;
+    }
+
+    .order-detail-title {
+        font-size: 2rem;
+    }
+
+    .order-detail-info {
+        font-size: 1rem;
+    }
+
+    .order-tracking-item {
+        align-items: flex-start;
+        font-size: 0.95rem;
+        padding: 0.9rem 1rem;
+    }
+
+    .order-detail-actions {
+        flex-direction: column;
+    }
+
+    .order-detail-btn {
+        width: 100%;
+    }
+
+    .review-form {
+        max-width: 100%;
+    }
+}
