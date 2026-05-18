@@ -11,4 +11,10 @@ class EmployeeController
   {
     require_once __DIR__ . '/../Views/pages/employee-orders.php';
   }
+
+    public function orderDetail():void
+  {
+    require_once __DIR__ . '/../Views/pages/employee-order-detail.php';
+  }
+  
 }

@@ -1996,3 +1996,114 @@ TEAM SECTION
         padding: 1.5rem 1rem;
     }
 }
+
+/* ===========================================
+            PAGE GESTION COMMANDE DETAIL
+=========================================== */
+
+.employee-order-detail-page {
+    background-color: var(--vg-bg);
+}
+
+.employee-order-detail-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 3rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.employee-order-detail-title {
+    color: var(--bs-primary);
+    font-size: 3rem;
+    text-align: center;
+}
+
+.employee-order-info-box,
+.employee-order-section {
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    padding: 1.5rem;
+}
+
+.employee-order-info-box h2,
+.employee-order-section-title {
+    color: var(--bs-primary);
+    font-size: 1.5rem;
+}
+
+.employee-order-info-box p {
+    margin-bottom: 0.8rem;
+}
+
+.employee-order-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.employee-order-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+.employee-order-danger-btn {
+    background-color: #dc3545;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+}
+
+.employee-order-danger-btn:hover {
+    background-color: #bb2d3b;
+    color: #ffffff;
+}
+
+.employee-order-tracking-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+
+.employee-order-tracking-list li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.employee-order-tracking-list i {
+    color: var(--vg-cta);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+    .employee-order-detail-card {
+        padding: 2.5rem 1.5rem;
+    }
+
+    .employee-order-detail-title {
+        font-size: 2.4rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .employee-order-detail-card {
+        padding: 2rem 1rem;
+    }
+
+    .employee-order-detail-title {
+        font-size: 2rem;
+    }
+
+    .employee-order-danger-btn {
+        width: 100%;
+    }
+}
