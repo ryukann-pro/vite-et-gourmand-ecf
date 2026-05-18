@@ -1,3 +1,10 @@
+<?php
+
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -63,13 +70,23 @@
                             <a class="nav-link" href="#">Contact</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Mon compte</a>
-                        </li>
+                        <?php if (isset($_SESSION['user'])): ?>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Connexion/Déconnexion</a>
-                        </li>
+                            <a href="index.php?url=mon-compte" class="nav-link">
+                                Mon compte
+                            </a>
+
+                            <a href="index.php?url=deconnexion" class="nav-link">
+                                Déconnexion
+                            </a>
+
+                        <?php else: ?>
+
+                            <a href="index.php?url=connexion" class="nav-link">
+                                Connexion
+                            </a>
+
+                        <?php endif; ?>
 
                     </ul>
 
