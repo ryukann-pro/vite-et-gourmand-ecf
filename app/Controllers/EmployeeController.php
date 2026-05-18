@@ -16,5 +16,10 @@ class EmployeeController
   {
     require_once __DIR__ . '/../Views/pages/employee-order-detail.php';
   }
+
+      public function reviews():void
+  {
+    require_once __DIR__ . '/../Views/pages/employee-reviews.php';
+  }
   
 }
