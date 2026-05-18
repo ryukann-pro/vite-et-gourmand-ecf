@@ -2107,3 +2107,126 @@ TEAM SECTION
         width: 100%;
     }
 }
+
+/* ===========================================
+            PAGE GESTION AVIS
+=========================================== */
+
+
+.employee-reviews-page {
+    background-color: var(--vg-bg);
+}
+
+.employee-reviews-header {
+    text-align: center;
+}
+
+.employee-reviews-title {
+    color: var(--bs-primary);
+    font-size: 3rem;
+}
+
+.employee-reviews-text {
+    color: var(--bs-dark);
+    max-width: 700px;
+    margin: 1rem auto 0;
+    line-height: 1.7;
+}
+
+.employee-reviews-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.employee-reviews-subtitle {
+    color: var(--bs-primary);
+    font-size: 1.8rem;
+}
+
+.employee-review-item {
+    background-color: #f8f8f8;
+    border-radius: 14px;
+    padding: 1.5rem;
+    height: 100%;
+}
+
+.employee-review-item h3 {
+    color: var(--bs-primary);
+    font-size: 1.3rem;
+    margin-bottom: 0.4rem;
+}
+
+.employee-review-menu,
+.employee-review-comment {
+    color: var(--bs-secondary);
+    line-height: 1.6;
+}
+
+.employee-review-stars {
+    color: var(--bs-warning);
+}
+
+.employee-review-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.employee-review-validate-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.employee-review-validate-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+.employee-review-refuse-btn {
+    background-color: #dc3545;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.employee-review-refuse-btn:hover {
+    background-color: #bb2d3b;
+    color: #ffffff;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+    .employee-reviews-title {
+        font-size: 2.4rem;
+    }
+
+    .employee-reviews-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .employee-reviews-title {
+        font-size: 2rem;
+    }
+
+    .employee-reviews-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .employee-review-actions {
+        flex-direction: column;
+    }
+
+    .employee-review-validate-btn,
+    .employee-review-refuse-btn {
+        width: 100%;
+    }
+}

@@ -81,6 +81,10 @@ switch ($url) {
         $controller = new EmployeeController();
         $controller->orderDetail();
         break;
+    case 'employe-avis':
+        $controller = new EmployeeController();
+        $controller->reviews();
+        break;
     default:
         http_response_code(404);
         echo "Page introuvable";
