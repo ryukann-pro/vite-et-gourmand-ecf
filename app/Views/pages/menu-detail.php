@@ -1,36 +1,26 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
 <main class="menu-detail-page py-4">
-
   <section class="container">
-
     <div class="row align-items-center g-5">
 
       <div class="col-12 col-lg-6">
-
         <div class="menu-image-wrapper">
 
           <div id="menuCarousel" class="carousel slide menu-carousel">
-
             <div class="carousel-inner">
 
-              <div class="carousel-item active">
-                <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-1.jpg"
-                  class="d-block w-100 menu-detail-img" alt="Menu festif traditionnel" data-bs-toggle="modal"
-                  data-bs-target="#galleryModal">
-              </div>
-
-              <div class="carousel-item">
-                <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-2.jpg"
-                  class="d-block w-100 menu-detail-img" alt="Menu festif traditionnel" data-bs-toggle="modal"
-                  data-bs-target="#galleryModal">
-              </div>
-
-              <div class="carousel-item">
-                <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-3.jpg"
-                  class="d-block w-100 menu-detail-img" alt="Menu festif traditionnel" data-bs-toggle="modal"
-                  data-bs-target="#galleryModal">
-              </div>
+              <?php foreach ($images as $index => $image): ?>
+                <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                  <img
+                    src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($image['url']) ?>"
+                    class="d-block w-100 menu-detail-img"
+                    alt="<?= htmlspecialchars($image['texte_alternatif']) ?>"
+                    data-bs-toggle="modal"
+                    data-bs-target="#galleryModal"
+                  >
+                </div>
+              <?php endforeach; ?>
 
             </div>
 
@@ -41,7 +31,6 @@
             <button class="carousel-control-next" type="button" data-bs-target="#menuCarousel" data-bs-slide="next">
               <span class="carousel-control-next-icon"></span>
             </button>
-
           </div>
 
           <p class="menu-image-hint">
@@ -50,61 +39,62 @@
           </p>
 
         </div>
-
       </div>
 
       <div class="col-12 col-lg-6">
-
         <div class="menu-detail-content">
 
           <div class="d-flex justify-content-between align-items-start mb-3">
-            <h1 class="menu-detail-title">Menu festif traditionnel</h1>
-            <p class="menu-detail-price">32 € / personne</p>
+            <h1 class="menu-detail-title">
+              <?= htmlspecialchars($menu['titre']) ?>
+            </h1>
+
+            <p class="menu-detail-price">
+              <?= number_format($menu['prix_par_personne'], 2, ',', ' ') ?> € / personne
+            </p>
           </div>
 
           <p class="menu-detail-condition">
             <i class="bi bi-calendar-event"></i>
-            Commande 1 semaine en avance
+            <?= htmlspecialchars($menu['conditions']) ?>
           </p>
+
           <p class="menu-detail-description">
-            Un menu festif classique et généreux, parfait pour les repas de fête et les grandes occasions.
+            <?= htmlspecialchars($menu['description_longue']) ?>
           </p>
+
           <div class="menu-composition mt-4">
             <h2>Composition du menu</h2>
 
             <div class="menu-composition-body">
 
-              <h3>Entrée</h3>
-              <p class="dish-name">Foie gras de canard et son chutney de saison</p>
-              <p class="dish-description">
-                Foie gras mi-cuit, accompagné d’un chutney de figues et pain brioché légèrement toasté.
-              </p>
-              <p class="dish-allergens">Allergènes : Lait, Gluten</p>
+              <?php foreach ($plats as $plat): ?>
+                <h3><?= htmlspecialchars($plat['type_plat']) ?></h3>
 
-              <h3>Plat</h3>
-              <p class="dish-name">Dinde rôtie aux herbes de Noël</p>
-              <p class="dish-description">
-                Dinde rôtie lentement, jus réduit aux épices douces, accompagnée de pommes de terre fondantes et légumes
-                de saison.
-              </p>
-              <p class="dish-allergens">Allergènes : Céleri</p>
+                <p class="dish-name">
+                  <?= htmlspecialchars($plat['nom']) ?>
+                </p>
 
-              <h3>Dessert</h3>
-              <p class="dish-name">Bûche de Noël chocolat & praliné</p>
-              <p class="dish-description">
-                Biscuit moelleux, mousse chocolat noir et cœur praliné croustillant.
-              </p>
-              <p class="dish-allergens">Allergènes : Gluten, Lait, Œufs, Fruits à coque</p>
+                <p class="dish-description">
+                  <?= htmlspecialchars($plat['description']) ?>
+                </p>
+
+                <p class="dish-allergens">
+                  Allergènes :
+                  <?= htmlspecialchars($plat['allergenes'] ?? 'Aucun') ?>
+                </p>
+              <?php endforeach; ?>
 
             </div>
           </div>
 
           <div class="text-center mt-4">
-            <a href="index.php?url=commande" class="btn menu-order-btn">Commander</a>
+            <a href="index.php?url=commande&id=<?= (int) $menu['id'] ?>" class="btn menu-order-btn">
+              Commander
+            </a>
           </div>
 
           <div class="menu-detail-badges mt-4">
-
             <div class="menu-detail-badge">
               <i class="bi bi-box-seam"></i>
               <span>Prêt de matériel possible</span>
@@ -112,46 +102,34 @@
 
             <div class="menu-detail-badge">
               <i class="bi bi-people"></i>
-              <span>Minimum 5 personnes</span>
+              <span>Minimum <?= (int) $menu['nb_personnes_min'] ?> personnes</span>
             </div>
-
           </div>
 
         </div>
-
       </div>
 
     </div>
-
   </section>
-
 </main>
 
 <div class="modal fade" id="galleryModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered modal-xl">
-
     <div class="modal-content bg-transparent border-0">
-
       <div class="modal-body p-0">
 
         <div id="galleryCarousel" class="carousel slide">
-
           <div class="carousel-inner">
 
-            <div class="carousel-item active">
-              <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-1.jpg"
-                class="d-block w-100 gallery-img" alt="Menu festif traditionnel">
-            </div>
-
-            <div class="carousel-item">
-              <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-2.jpg"
-                class="d-block w-100 gallery-img" alt="Menu festif traditionnel">
-            </div>
-
-            <div class="carousel-item">
-              <img src="/vite-et-gourmand-ecf/public/assets/images/menus/noel/menu-festif-traditionnel/standard-3.jpg"
-                class="d-block w-100 gallery-img" alt="Menu festif traditionnel">
-            </div>
+            <?php foreach ($images as $index => $image): ?>
+              <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
+                <img
+                  src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($image['url']) ?>"
+                  class="d-block w-100 gallery-img"
+                  alt="<?= htmlspecialchars($image['texte_alternatif']) ?>"
+                >
+              </div>
+            <?php endforeach; ?>
 
           </div>
 
@@ -162,13 +140,10 @@
           <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
             <span class="carousel-control-next-icon"></span>
           </button>
-
         </div>
 
       </div>
-
     </div>
-
   </div>
 </div>
 
