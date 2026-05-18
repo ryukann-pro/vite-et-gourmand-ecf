@@ -8,6 +8,7 @@ require_once __DIR__ . '/../app/Controllers/ContactController.php';
 require_once __DIR__ . '/../app/Controllers/UserController.php';
 require_once __DIR__ . '/../app/Controllers/OrderController.php';
 require_once __DIR__ . '/../app/Controllers/OrderDetailController.php';
+require_once __DIR__ . '/../app/Controllers/OrderEditController.php';
 
 $url = $_GET['url'] ?? 'accueil';
 
@@ -57,6 +58,10 @@ switch ($url) {
     case 'detail-commande':
         $controller = new OrderDetailController();
         $controller->index();
+        break;
+    case 'modifier-commande':
+        $controller = new OrderEditController();
+        $controller->edit();
         break;
     default:
         http_response_code(404);
