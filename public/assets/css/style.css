@@ -1919,3 +1919,80 @@ TEAM SECTION
         padding: 1.5rem;
     }
 }
+
+
+/* ===========================================
+            PAGE GESTION COMMANDES
+=========================================== */
+
+.employee-orders-page {
+    background-color: var(--vg-bg);
+}
+
+.employee-orders-header {
+    text-align: center;
+}
+
+.employee-orders-title {
+    color: var(--bs-primary);
+    font-size: 3rem;
+}
+
+.employee-orders-text {
+    color: var(--bs-dark);
+    max-width: 700px;
+    margin: 1rem auto 0;
+    line-height: 1.7;
+}
+
+.employee-orders-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.employee-orders-subtitle {
+    color: var(--bs-primary);
+    font-size: 1.8rem;
+}
+
+.employee-orders-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.employee-orders-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+.employee-orders-table small {
+    color: var(--bs-secondary);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+    .employee-orders-title {
+        font-size: 2.4rem;
+    }
+
+    .employee-orders-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .employee-orders-title {
+        font-size: 2rem;
+    }
+
+    .employee-orders-card {
+        padding: 1.5rem 1rem;
+    }
+}
