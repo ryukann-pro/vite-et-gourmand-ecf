@@ -113,6 +113,11 @@ switch ($url) {
         $controller = new AdminController();
         $controller->statistics();
         break;
+    case 'admin-chiffre-affaires':
+        $controller = new AdminController();
+        $controller->turnover();
+        break;
+        
     default:
         http_response_code(404);
         echo "Page introuvable";

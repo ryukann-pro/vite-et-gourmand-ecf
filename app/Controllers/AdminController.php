@@ -21,4 +21,10 @@ class AdminController
   {
     require_once __DIR__ . '/../Views/pages/admin-statistics.php';
   }
+
+  
+      public function turnover(): void
+  {
+    require_once __DIR__ . '/../Views/pages/admin-turnover.php';
+  }
 }

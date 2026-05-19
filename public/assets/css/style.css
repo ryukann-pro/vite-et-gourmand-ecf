@@ -2846,3 +2846,98 @@ TEAM SECTION
         padding: 1.5rem 1rem;
     }
 }
+
+
+/* ===========================================
+            PAGE CHIFFRE D'AFFAIRES
+=========================================== */
+
+.admin-turnover-page {
+    background-color: var(--vg-bg);
+}
+
+.admin-turnover-header {
+    text-align: center;
+}
+
+.admin-turnover-title {
+    color: var(--bs-primary);
+    font-size: 3rem;
+}
+
+.admin-turnover-text {
+    color: var(--bs-dark);
+    max-width: 750px;
+    margin: 1rem auto 0;
+    line-height: 1.7;
+}
+
+.admin-turnover-card,
+.admin-turnover-stat-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    padding: 2.5rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.admin-turnover-subtitle {
+    color: var(--bs-primary);
+    font-size: 1.8rem;
+}
+
+.admin-turnover-btn {
+    background-color: var(--vg-cta);
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 8px;
+}
+
+.admin-turnover-btn:hover {
+    background-color: #a94b23;
+    color: #ffffff;
+}
+
+.admin-turnover-stat-card {
+    height: 100%;
+}
+
+.admin-turnover-stat-card span {
+    display: block;
+    color: var(--bs-secondary);
+    margin-bottom: 0.7rem;
+}
+
+.admin-turnover-stat-card strong {
+    color: var(--bs-primary);
+    font-size: 1.7rem;
+}
+
+.admin-turnover-table td {
+    vertical-align: middle;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media screen and (max-width: 992px) {
+    .admin-turnover-title {
+        font-size: 2.4rem;
+    }
+
+    .admin-turnover-card,
+    .admin-turnover-stat-card {
+        padding: 2rem 1.5rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .admin-turnover-title {
+        font-size: 2rem;
+    }
+
+    .admin-turnover-card,
+    .admin-turnover-stat-card {
+        padding: 1.5rem 1rem;
+    }
+}
