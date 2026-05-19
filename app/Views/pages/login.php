@@ -22,7 +22,7 @@
                     </label>
 
                     <input type="email" id="email" name="email" class="form-control" placeholder="Votre adresse email"
-                        required>
+                        maxlength="191" autocomplete="email" required>
                 </div>
 
                 <div class="mb-2">
@@ -30,8 +30,9 @@
                         Mot de passe
                     </label>
 
-                    <input type="password" id="password" class="form-control" placeholder="Votre mot de passe"
-                        name="password" required>
+                    <input type="password" id="password" name="password" class="form-control"
+                        placeholder="Votre mot de passe" minlength="10" maxlength="255" autocomplete="current-password"
+                        required>
                 </div>
 
                 <div class="text-end mb-4 text-center">
