@@ -2,46 +2,50 @@
 require_once __DIR__ . '/../Models/UserModel.php';
 class AuthController
 {
-    public function login(): void
-    {
-        session_start();
+public function login(): void
+{
+    session_start();
 
-        $error = null;
+    $error = null;
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-            $email = trim($_POST['email'] ?? '');
-            $password = trim($_POST['password'] ?? '');
+        $email = trim($_POST['email'] ?? '');
+        $password = $_POST['password'] ?? '';
 
+        if (
+            $email === '' ||
+            $password === '' ||
+            !filter_var($email, FILTER_VALIDATE_EMAIL) ||
+            strlen($email) > 191 ||
+            strlen($password) > 255
+        ) {
+            $error = "Email ou mot de passe incorrect.";
+        } else {
             $userModel = new UserModel();
-
             $user = $userModel->findByEmail($email);
 
-            if (!$user) {
+            if (!$user || !password_verify($password, $user['mot_de_passe_hash'])) {
                 $error = "Email ou mot de passe incorrect.";
             } else {
+                session_regenerate_id(true);
 
-                if (!password_verify($password, $user['mot_de_passe_hash'])) {
-                    $error = "Email ou mot de passe incorrect.";
-                } else {
+                $_SESSION['user'] = [
+                    'id' => $user['id'],
+                    'nom' => $user['nom'],
+                    'prenom' => $user['prenom'],
+                    'email' => $user['email'],
+                    'role' => $user['role']
+                ];
 
-                    $_SESSION['user'] = [
-                        'id' => $user['id'],
-                        'nom' => $user['nom'],
-                        'prenom' => $user['prenom'],
-                        'email' => $user['email'],
-                        'role' => $user['role']
-                    ];
-
-                    header('Location: index.php');
-                    exit;
-                }
+                header('Location: index.php');
+                exit;
             }
         }
-
-        require_once __DIR__ . '/../Views/pages/login.php';
     }
 
+    require_once __DIR__ . '/../Views/pages/login.php';
+}
     public function register(): void
     {
         require_once __DIR__ . '/../Views/pages/register.php';
