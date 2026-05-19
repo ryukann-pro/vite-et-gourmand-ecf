@@ -11,4 +11,9 @@ class AdminController
   {
     require_once __DIR__ . '/../Views/pages/admin-employees.php';
   }
+
+    public function createEmployee(): void
+  {
+    require_once __DIR__ . '/../Views/pages/admin-create-employee.php';
+  }
 }
