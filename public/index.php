@@ -109,6 +109,10 @@ switch ($url) {
         $controller = new AdminController();
         $controller->createEmployee();
         break;
+    case 'admin-statistiques':
+        $controller = new AdminController();
+        $controller->statistics();
+        break;
     default:
         http_response_code(404);
         echo "Page introuvable";

@@ -16,4 +16,9 @@ class AdminController
   {
     require_once __DIR__ . '/../Views/pages/admin-create-employee.php';
   }
+
+      public function statistics(): void
+  {
+    require_once __DIR__ . '/../Views/pages/admin-statistics.php';
+  }
 }
