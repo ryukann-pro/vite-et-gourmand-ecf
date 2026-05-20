@@ -30,4 +30,52 @@ class UserModel
 
         return $user ?: null;
     }
+
+    public function emailExists(string $email): bool
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "SELECT id FROM utilisateur WHERE email = ?";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$email]);
+
+        return (bool) $stmt->fetch();
+    }
+
+    public function createUser(
+        string $nom,
+        string $prenom,
+        string $email,
+        string $telephone,
+        string $adresse,
+        string $passwordHash
+    ): bool {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        INSERT INTO utilisateur (
+            nom,
+            prenom,
+            email,
+            telephone,
+            adresse,
+            mot_de_passe_hash,
+            date_inscription,
+            role_id
+        )
+        VALUES (?, ?, ?, ?, ?, ?, NOW(), 1)
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([
+            $nom,
+            $prenom,
+            $email,
+            $telephone,
+            $adresse,
+            $passwordHash
+        ]);
+    }
 }
