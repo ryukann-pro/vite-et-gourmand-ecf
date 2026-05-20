@@ -12,6 +12,7 @@ require_once __DIR__ . '/../app/Controllers/OrderEditController.php';
 require_once __DIR__ . '/../app/Controllers/ProfileController.php';
 require_once __DIR__ . '/../app/Controllers/EmployeeController.php';
 require_once __DIR__ . '/../app/Controllers/AdminController.php';
+require_once __DIR__ . '/../app/Helpers/Auth.php';
 
 $url = $_GET['url'] ?? 'accueil';
 
