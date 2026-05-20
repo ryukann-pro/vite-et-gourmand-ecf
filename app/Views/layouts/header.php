@@ -72,19 +72,45 @@ if (session_status() === PHP_SESSION_NONE) {
 
                         <?php if (isset($_SESSION['user'])): ?>
 
-                            <a href="index.php?url=mon-compte" class="nav-link">
-                                Mon compte
-                            </a>
+                            <?php if ($_SESSION['user']['role'] === 'Admin'): ?>
 
-                            <a href="index.php?url=deconnexion" class="nav-link">
-                                Déconnexion
-                            </a>
+                                <li class="nav-item">
+                                    <a href="index.php?url=espace-admin" class="nav-link">
+                                        Espace admin
+                                    </a>
+                                </li>
+
+                            <?php elseif ($_SESSION['user']['role'] === 'Employé'): ?>
+
+                                <li class="nav-item">
+                                    <a href="index.php?url=espace-employe" class="nav-link">
+                                        Espace employé
+                                    </a>
+                                </li>
+
+                            <?php else: ?>
+
+                                <li class="nav-item">
+                                    <a href="index.php?url=mon-compte" class="nav-link">
+                                        Mon compte
+                                    </a>
+                                </li>
+
+                            <?php endif; ?>
+
+                            <li class="nav-item">
+                                <a href="index.php?url=deconnexion" class="nav-link">
+                                    Déconnexion
+                                </a>
+                            </li>
 
                         <?php else: ?>
 
-                            <a href="index.php?url=connexion" class="nav-link">
-                                Connexion
-                            </a>
+                            <li class="nav-item">
+                                <a href="index.php?url=connexion" class="nav-link">
+                                    Connexion
+                                </a>
+                            </li>
 
                         <?php endif; ?>
 
