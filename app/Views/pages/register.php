@@ -9,20 +9,20 @@
             <h1 class="register-title mb-5">
                 Créer un compte
             </h1>
-
-            <form>
+            <?php if ($error): ?>
+                <div class="alert alert-danger">
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
+            <form method="POST">
 
                 <div class="mb-4">
                     <label for="lastname" class="form-label">
                         Nom
                     </label>
 
-                    <input
-                        type="text"
-                        id="lastname"
-                        class="form-control"
-                        placeholder="Votre nom"
-                    >
+                    <input type="text" id="lastname" name="nom" class="form-control" placeholder="Votre nom" required
+                        autocomplete="family-name">
                 </div>
 
                 <div class="mb-4">
@@ -30,12 +30,8 @@
                         Prénom
                     </label>
 
-                    <input
-                        type="text"
-                        id="firstname"
-                        class="form-control"
-                        placeholder="Votre prénom"
-                    >
+                    <input type="text" id="firstname" name="prenom" class="form-control" placeholder="Votre prénom"
+                        required autocomplete="given-name">
                 </div>
 
                 <div class="mb-4">
@@ -43,12 +39,9 @@
                         Numéro de téléphone
                     </label>
 
-                    <input
-                        type="tel"
-                        id="phone"
-                        class="form-control"
-                        placeholder="Votre numéro de téléphone"
-                    >
+                    <input type="tel" id="phone" name="telephone" class="form-control"
+                        placeholder="Votre numéro de téléphone" pattern="^0[1-9][0-9]{8}$"
+                        title="Veuillez entrer un numéro français valide à 10 chiffres." required>
                 </div>
 
                 <div class="mb-4">
@@ -56,12 +49,8 @@
                         Adresse email
                     </label>
 
-                    <input
-                        type="email"
-                        id="email"
-                        class="form-control"
-                        placeholder="Votre adresse email"
-                    >
+                    <input type="email" id="email" name="email" class="form-control" maxlength="191"
+                        autocomplete="email" placeholder="Votre adresse email" required>
                 </div>
 
                 <div class="mb-4">
@@ -69,12 +58,8 @@
                         Adresse postale
                     </label>
 
-                    <input
-                        type="text"
-                        id="address"
-                        class="form-control"
-                        placeholder="Votre adresse"
-                    >
+                    <input type="text" id="address" name="adresse" class="form-control" placeholder="Votre adresse"
+                        required autocomplete="street-address">
                 </div>
 
                 <div class="mb-2">
@@ -82,12 +67,10 @@
                         Mot de passe
                     </label>
 
-                    <input
-                        type="password"
-                        id="password"
-                        class="form-control"
-                        placeholder="Votre mot de passe"
-                    >
+                    <input type="password" id="password" name="password" class="form-control" minlength="10"
+                        maxlength="255" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}"
+                        title="Le mot de passe doit contenir au moins 10 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial."
+                        placeholder="Votre mot de passe" required autocomplete="new-password">
 
                     <small class="password-help">
                         10 caractères minimum avec majuscule,
@@ -100,12 +83,9 @@
                         Confirmer le mot de passe
                     </label>
 
-                    <input
-                        type="password"
-                        id="confirm-password"
-                        class="form-control"
-                        placeholder="Confirmez votre mot de passe"
-                    >
+                    <input type="password" id="confirm-password" name="confirm_password" class="form-control"
+                        minlength="10" maxlength="255" placeholder="Confirmez votre mot de passe" required
+                        autocomplete="new-password">
                 </div>
 
                 <button type="submit" class="btn register-btn w-100 mb-4">
