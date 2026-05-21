@@ -68,14 +68,11 @@ $total = $sousTotal - $reduction + $fraisLivraison;
                             <div class="col-12 col-md-6 mb-4">
                                 <label for="villeLivraison" class="form-label">Ville de livraison</label>
                                 <select id="villeLivraison" name="ville_id" class="form-select" required>
-                                    <option value="1">Bordeaux</option>
-                                    <option value="2">Mérignac</option>
-                                    <option value="3">Pessac</option>
-                                    <option value="4">Talence</option>
-                                    <option value="5">Bègles</option>
-                                    <option value="6">Cenon</option>
-                                    <option value="7">Lormont</option>
-                                    <option value="8">Le Bouscat</option>
+                                    <?php foreach ($cities as $city): ?>
+                                        <option value="<?= (int) $city['id'] ?>">
+                                            <?= htmlspecialchars($city['nom']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
                                 </select>
                             </div>
 

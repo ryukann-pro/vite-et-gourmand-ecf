@@ -3,7 +3,7 @@
 require_once __DIR__ . '/../Helpers/Auth.php';
 require_once __DIR__ . '/../Models/OrderModel.php';
 require_once __DIR__ . '/../Models/MenuModel.php';
-
+require_once __DIR__ . '/../Models/CityModel.php';
 class OrderController
 {
     public function create(): void
@@ -15,12 +15,13 @@ class OrderController
         }
 
         $error = null;
-
         $menuId = (int) ($_GET['id'] ?? 0);
-        $villeId = (int) ($_POST['ville_id'] ?? 0);
+        $cityModel = new CityModel();
+        $cities = $cityModel->getAllCities();
         $menuModel = new MenuModel();
         $menu = $menuModel->getMenuById($menuId);
         $images = $menuModel->getImagesByMenuId($menuId);
+
 
         if (!$menu) {
             header('Location: index.php?url=menus');
@@ -29,6 +30,8 @@ class OrderController
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $villeId = (int) ($_POST['ville_id'] ?? 0);
+            $city = $cityModel->getCityById($villeId);
             $nomClient = trim($_POST['nom_client'] ?? '');
             $prenomClient = trim($_POST['prenom_client'] ?? '');
             $telephoneClient = trim($_POST['telephone_client'] ?? '');
@@ -58,16 +61,28 @@ class OrderController
                 $error = "Tous les champs sont obligatoires.";
             } elseif ($nbPersonnes < (int) $menu['nb_personnes_min']) {
                 $error = "Le nombre minimum de personnes pour ce menu est de " . (int) $menu['nb_personnes_min'] . ".";
+            } elseif (!$city) {
+                $error = "Ville invalide.";
             } elseif ($dateLivraison < $dateToday) {
                 $error = "La date de livraison ne peut pas être dans le passé.";
             } else {
 
                 $prixUnitaire = (float) $menu['prix_par_personne'];
 
-                $fraisLivraison = 0;
+                $fraisLivraison = 5;
+
+                if ($city['distance_km'] > 0) {
+                    $fraisLivraison += $city['distance_km'] * 0.59;
+                }
                 $reduction = 0;
 
-                $prixTotal = $prixUnitaire * $nbPersonnes;
+                if ($nbPersonnes >= ($menu['nb_personnes_min'] + 5)) {
+                    $reduction = ($prixUnitaire * $nbPersonnes) * 0.10;
+                }
+
+                $sousTotal = $prixUnitaire * $nbPersonnes;
+
+                $prixTotal = $sousTotal - $reduction + $fraisLivraison;
 
                 $orderModel = new OrderModel();
 
