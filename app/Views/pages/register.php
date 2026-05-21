@@ -9,13 +9,13 @@
             <h1 class="register-title mb-5">
                 Créer un compte
             </h1>
-            <?php if ($error): ?>
-                <div class="alert alert-danger">
-                    <?= htmlspecialchars($error) ?>
-                </div>
-            <?php endif; ?>
-            <form method="POST">
 
+            <form method="POST">
+                <?php if ($error): ?>
+                    <div class="alert alert-danger">
+                        <?= htmlspecialchars($error) ?>
+                    </div>
+                <?php endif; ?>
                 <div class="mb-4">
                     <label for="lastname" class="form-label">
                         Nom

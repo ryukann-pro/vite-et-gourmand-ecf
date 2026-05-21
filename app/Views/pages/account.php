@@ -54,78 +54,40 @@
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>#CMD-001</td>
-                            <td>15/05/2026</td>
-                            <td>Buffet Signature Réception</td>
-                            <td>
-                                <span class="badge bg-warning text-dark">
-                                    En attente
-                                </span>
-                            </td>
-                            <td>180 €</td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                    <a href="index.php?url=detail-commande&id=1" class="btn btn-sm account-btn">
-                                        Voir
-                                    </a>
+                        <?php foreach ($orders as $order): ?>
+                            <tr>
+                                <td>#CMD-
+                                    <?= (int) $order['id'] ?>
+                                </td>
 
-                                    <a href="index.php?url=modifier-commande&id=1" class="btn btn-sm account-secondary-btn">
-                                        Modifier
-                                    </a>
+                                <td>
+                                    <?= date('d/m/Y', strtotime($order['date_creation'])) ?>
+                                </td>
 
-                                    <a href="#" class="btn btn-sm account-danger-btn">
-                                        Annuler
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                                <td>
+                                    <?= htmlspecialchars($order['menu_titre']) ?>
+                                </td>
 
-                        <tr>
-                            <td>#CMD-002</td>
-                            <td>10/05/2026</td>
-                            <td>Menu Festif Traditionnel</td>
-                            <td>
-                                <span class="badge bg-primary">
-                                    Acceptée
-                                </span>
-                            </td>
-                            <td>240 €</td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                    <a href="index.php?url=detail-commande&id=2" class="btn btn-sm account-btn">
-                                        Voir
-                                    </a>
+                                <td>
+                                    <span class="badge bg-warning text-dark">
+                                        <?= htmlspecialchars($order['statut']) ?>
+                                    </span>
+                                </td>
 
-                                    <a href="index.php?url=suivi-commande&id=2" class="btn btn-sm account-secondary-btn">
-                                        Suivi
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                                <td>
+                                    <?= number_format((float) $order['prix_total'], 2, ',', ' ') ?> €
+                                </td>
 
-                        <tr>
-                            <td>#CMD-003</td>
-                            <td>05/05/2026</td>
-                            <td>Menu Vegan Équilibré</td>
-                            <td>
-                                <span class="badge bg-success">
-                                    Terminée
-                                </span>
-                            </td>
-                            <td>120 €</td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                    <a href="index.php?url=detail-commande&id=3" class="btn btn-sm account-btn">
-                                        Voir
-                                    </a>
-
-                                    <a href="index.php?url=avis-commande&id=3" class="btn btn-sm account-secondary-btn">
-                                        Donner un avis
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
+                                <td>
+                                    <div class="d-flex justify-content-end gap-2 flex-wrap">
+                                        <a href="index.php?url=detail-commande&id=<?= (int) $order['id'] ?>"
+                                            class="btn btn-sm account-btn">
+                                            Voir
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
 
                 </table>
