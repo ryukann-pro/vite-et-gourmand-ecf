@@ -183,3 +183,25 @@ INSERT INTO image (url, texte_alternatif, ordre_affichage, menu_id) VALUES
 ('assets/images/menus/noel/menu-festif-traditionnel/standard-1.jpg', 'Menu Festif Traditionnel', 1, 6),
 ('assets/images/menus/noel/menu-festif-traditionnel/standard-2.jpg', 'Menu Festif Traditionnel', 2, 6),
 ('assets/images/menus/noel/menu-festif-traditionnel/standard-3.jpg', 'Menu Festif Traditionnel', 3, 6);
+
+-- Statut_commande
+INSERT INTO statut_commande (nom) VALUES
+('en_attente'),
+('acceptee'),
+('en_preparation'),
+('en_cours_de_livraison'),
+('livree'),
+('en_attente_retour_materiel'),
+('terminee'),
+('annulee');
+
+-- Villes
+INSERT INTO ville_commande (nom, distance_km) VALUES
+('Bordeaux', 0),
+('Mérignac', 8),
+('Pessac', 7),
+('Talence', 7),
+('Bègles', 5),
+('Cenon', 9),
+('Lormont', 10),
+('Le Bouscat', 3);

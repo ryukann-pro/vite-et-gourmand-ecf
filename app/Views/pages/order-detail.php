@@ -7,15 +7,34 @@
         <div class="order-detail-card">
 
             <h1 class="order-detail-title mb-5">
-                Détail de la commande #CMD-001
+                Détail de la commande #CMD-
+                <?= (int) $order['id'] ?>
             </h1>
 
             <div class="order-detail-info">
-                <p><strong>Menu :</strong> Buffet Signature Réception</p>
-                <p><strong>Date de livraison :</strong> 15/05/2026 à 12:30</p>
-                <p><strong>Adresse :</strong> 5 rue exemple, Bordeaux</p>
-                <p><strong>Nombre de personnes :</strong> 10</p>
-                <p><strong>Total :</strong> 180 €</p>
+                <p><strong>Menu :</strong>
+                    <?= htmlspecialchars($order['menu_titre']) ?>
+                </p>
+                <p><strong>Date de commande :</strong>
+                    <?= date('d/m/Y à H:i', strtotime($order['date_creation'])) ?>
+                </p>
+                <p><strong>Date de livraison :</strong>
+                    <?= date('d/m/Y', strtotime($order['date_livraison'])) ?> à
+                    <?= htmlspecialchars(substr($order['heure_livraison'], 0, 5)) ?>
+                </p>
+                <p><strong>Adresse :</strong>
+                    <?= htmlspecialchars($order['adresse_livraison']) ?>,
+                    <?= htmlspecialchars($order['ville']) ?>
+                </p>
+                <p><strong>Nombre de personnes :</strong>
+                    <?= (int) $order['nb_personnes'] ?>
+                </p>
+                <p><strong>Statut :</strong>
+                    <?= htmlspecialchars($order['statut']) ?>
+                </p>
+                <p><strong>Total :</strong>
+                    <?= number_format((float) $order['prix_total'], 2, ',', ' ') ?> €
+                </p>
             </div>
 
             <hr class="order-detail-divider">
@@ -72,11 +91,7 @@
 
                 <div class="mb-4">
                     <label class="form-label">Commentaire</label>
-                    <textarea
-                        class="form-control"
-                        rows="5"
-                        placeholder="Votre avis sur la prestation..."
-                    ></textarea>
+                    <textarea class="form-control" rows="5" placeholder="Votre avis sur la prestation..."></textarea>
                 </div>
 
                 <button type="submit" class="btn order-detail-btn order-review-btn">
