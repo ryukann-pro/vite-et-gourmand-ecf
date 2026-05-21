@@ -26,4 +26,24 @@ class OrderDetailController
 
         require_once __DIR__ . '/../Views/pages/order-detail.php';
     }
+    public function cancel(): void
+    {
+        Auth::requireRole(['Client']);
+
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        $orderId = (int) ($_GET['id'] ?? 0);
+
+        $orderModel = new OrderModel();
+
+        $orderModel->cancelOrder(
+            $orderId,
+            $_SESSION['user']['id']
+        );
+
+        header('Location: index.php?url=detail-commande&id=' . $orderId);
+        exit;
+    }
 }

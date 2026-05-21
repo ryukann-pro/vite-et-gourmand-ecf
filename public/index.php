@@ -118,7 +118,10 @@ switch ($url) {
         $controller = new AdminController();
         $controller->turnover();
         break;
-        
+    case 'annuler-commande':
+        $controller = new OrderDetailController();
+        $controller->cancel();
+        break;
     default:
         http_response_code(404);
         echo "Page introuvable";
