@@ -121,4 +121,72 @@ class OrderModel
         return $order ?: null;
     }
 
+    public function updateOrder(
+        int $orderId,
+        int $userId,
+        string $adresseLivraison,
+        string $dateLivraison,
+        string $heureLivraison,
+        int $nbPersonnes,
+        int $villeId,
+        float $fraisLivraison,
+        float $reduction,
+        float $prixTotal,
+        bool $pretMateriel
+    ): bool {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        UPDATE commande
+        SET
+            adresse_livraison = ?,
+            date_livraison = ?,
+            heure_livraison = ?,
+            nb_personnes = ?,
+            ville_id = ?,
+            frais_livraison = ?,
+            reduction = ?,
+            prix_total = ?,
+            pret_materiel = ?
+        WHERE id = ?
+        AND utilisateur_id = ?
+        AND statut_id IN (1, 2)
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([
+            $adresseLivraison,
+            $dateLivraison,
+            $heureLivraison,
+            $nbPersonnes,
+            $villeId,
+            $fraisLivraison,
+            $reduction,
+            $prixTotal,
+            $pretMateriel ? 1 : 0,
+            $orderId,
+            $userId
+        ]);
+    }
+
+    public function cancelOrder(int $orderId, int $userId): bool
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        UPDATE commande
+        SET statut_id = 8
+        WHERE id = ?
+        AND utilisateur_id = ?
+        AND statut_id = 1
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([
+            $orderId,
+            $userId
+        ]);
+    }
 }
