@@ -17,6 +17,7 @@ class OrderDetailController
 
         $orderModel = new OrderModel();
         $order = $orderModel->getOrderByIdAndUserId($orderId, $_SESSION['user']['id']);
+        $tracking = $orderModel->getOrderTracking($orderId);
 
         if (!$order) {
             http_response_code(404);

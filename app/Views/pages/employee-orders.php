@@ -15,35 +15,46 @@
 
             <h2 class="employee-orders-subtitle mb-4">Filtres</h2>
 
-            <div class="row g-4">
+            <form method="GET" class="row g-4">
+
+                <input type="hidden" name="url" value="employe-commandes">
 
                 <div class="col-12 col-md-6 col-lg-4">
-                    <label class="form-label">Statut</label>
-                    <select class="form-select">
-                        <option>Tous les statuts</option>
-                        <option>En attente</option>
-                        <option>Acceptée</option>
-                        <option>En préparation</option>
-                        <option>En cours de livraison</option>
-                        <option>Livrée</option>
-                        <option>En attente retour matériel</option>
-                        <option>Terminée</option>
-                        <option>Annulée</option>
+                    <label for="statutFiltre" class="form-label">Statut</label>
+
+                    <select id="statutFiltre" name="statut_id" class="form-select">
+                        <option value="0">Tous les statuts</option>
+                        <option value="1" <?= ($_GET['statut_id'] ?? '') == 1 ? 'selected' : '' ?>>En attente</option>
+                        <option value="2" <?= ($_GET['statut_id'] ?? '') == 2 ? 'selected' : '' ?>>Acceptée</option>
+                        <option value="3" <?= ($_GET['statut_id'] ?? '') == 3 ? 'selected' : '' ?>>En préparation</option>
+                        <option value="4" <?= ($_GET['statut_id'] ?? '') == 4 ? 'selected' : '' ?>>En cours de livraison
+                        </option>
+                        <option value="5" <?= ($_GET['statut_id'] ?? '') == 5 ? 'selected' : '' ?>>Livrée</option>
+                        <option value="6" <?= ($_GET['statut_id'] ?? '') == 6 ? 'selected' : '' ?>>En attente retour
+                            matériel</option>
+                        <option value="7" <?= ($_GET['statut_id'] ?? '') == 7 ? 'selected' : '' ?>>Terminée</option>
+                        <option value="8" <?= ($_GET['statut_id'] ?? '') == 8 ? 'selected' : '' ?>>Annulée</option>
                     </select>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg-4">
-                    <label class="form-label">Client</label>
-                    <input type="text" class="form-control" placeholder="Nom, prénom ou email">
+                    <label for="clientFiltre" class="form-label">Client</label>
+
+                    <input type="text" id="clientFiltre" name="client" class="form-control"
+                        placeholder="Nom, prénom ou email" value="<?= htmlspecialchars($_GET['client'] ?? '') ?>">
                 </div>
 
-                <div class="col-12 col-lg-4 d-flex align-items-end">
-                    <button class="btn employee-orders-btn w-100">
+                <div class="col-12 col-lg-4 d-flex align-items-end gap-2">
+                    <button type="submit" class="btn employee-orders-btn w-100">
                         Rechercher
                     </button>
+
+                    <a href="index.php?url=employe-commandes" class="btn account-secondary-btn w-100">
+                        Réinitialiser
+                    </a>
                 </div>
 
-            </div>
+            </form>
 
         </div>
 
@@ -66,59 +77,45 @@
                             <th class="text-end">Actions</th>
                         </tr>
                     </thead>
-
                     <tbody>
+                        <?php foreach ($orders as $order): ?>
+                            <tr>
+                                <td>#CMD-
+                                    <?= (int) $order['id'] ?>
+                                </td>
 
-                        <tr>
-                            <td>#CMD-001</td>
-                            <td>Julie Dupont<br><small>julie@email.com</small></td>
-                            <td>Buffet Signature Réception</td>
-                            <td>15/05/2026<br><small>12:30</small></td>
-                            <td><span class="badge bg-warning text-dark">En attente</span></td>
-                            <td>180 €</td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                    <a href="index.php?url=employe-detail-commande&id=1" class="btn btn-sm employee-orders-btn">
+                                <td>
+                                    <?= htmlspecialchars($order['prenom_client']) ?>
+                                    <?= htmlspecialchars($order['nom_client']) ?>
+                                </td>
+
+                                <td>
+                                    <?= htmlspecialchars($order['menu_titre']) ?>
+                                </td>
+
+                                <td>
+                                    <?= date('d/m/Y', strtotime($order['date_livraison'])) ?>
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-warning text-dark">
+                                        <?= htmlspecialchars($order['statut']) ?>
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <?= number_format((float) $order['prix_total'], 2, ',', ' ') ?> €
+                                </td>
+
+                                <td class="text-end">
+                                    <a href="index.php?url=employe-detail-commande&id=<?= (int) $order['id'] ?>"
+                                        class="btn btn-sm account-btn">
                                         Voir
                                     </a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>#CMD-002</td>
-                            <td>Lucas Martin<br><small>lucas@email.com</small></td>
-                            <td>Menu Festif Traditionnel</td>
-                            <td>20/05/2026<br><small>18:00</small></td>
-                            <td><span class="badge bg-primary">Acceptée</span></td>
-                            <td>320 €</td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                    <a href="index.php?url=employe-detail-commande&id=2" class="btn btn-sm employee-orders-btn">
-                                        Voir
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>#CMD-003</td>
-                            <td>Sophie Bernard<br><small>sophie@email.com</small></td>
-                            <td>Cocktail Vegan Événementiel</td>
-                            <td>22/05/2026<br><small>11:30</small></td>
-                            <td><span class="badge bg-success">Terminée</span></td>
-                            <td>315 €</td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                    <a href="index.php?url=employe-detail-commande&id=3" class="btn btn-sm employee-orders-btn">
-                                        Voir
-                                    </a>
-                                </div>
-                            </td>
-                        </tr>
-
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
-
                 </table>
 
             </div>
