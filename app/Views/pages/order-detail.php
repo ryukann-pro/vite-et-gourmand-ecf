@@ -44,20 +44,16 @@
             </h2>
 
             <ul class="order-tracking-list">
-                <li class="order-tracking-item">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>En attente — 15/05/2026 10:30</span>
-                </li>
-
-                <li class="order-tracking-item">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>Acceptée — 15/05/2026 11:00</span>
-                </li>
-
-                <li class="order-tracking-item">
-                    <i class="bi bi-check-circle-fill"></i>
-                    <span>Terminée — 15/05/2026 16:30</span>
-                </li>
+                <?php foreach ($tracking as $track): ?>
+                    <li>
+                        <i class="bi bi-check-circle-fill"></i>
+                        <span>
+                            <?= htmlspecialchars($track['statut']) ?>
+                            —
+                            <?= date('d/m/Y H:i', strtotime($track['date_changement'])) ?>
+                        </span>
+                    </li>
+                <?php endforeach; ?>
             </ul>
 
             <div class="order-detail-actions">

@@ -86,7 +86,7 @@ class OrderController
 
                 $orderModel = new OrderModel();
 
-                $orderCreated = $orderModel->createOrder(
+                $orderId = $orderModel->createOrder(
                     $nomClient,
                     $prenomClient,
                     $telephoneClient,
@@ -106,8 +106,8 @@ class OrderController
                     1
                 );
 
-                if ($orderCreated) {
-
+                if ($orderId > 0) {
+                    $orderModel->addOrderTracking($orderId, 1);
                     header('Location: index.php?url=mon-compte');
                     exit;
                 }

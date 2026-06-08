@@ -13,15 +13,93 @@ class EmployeeController
     public function orders(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
+
+        $statusId = isset($_GET['statut_id']) ? (int) $_GET['statut_id'] : 0;
+        $clientSearch = trim($_GET['client'] ?? '');
+
+        $orderModel = new OrderModel();
+
+        $orders = $orderModel->searchOrders(
+            $statusId > 0 ? $statusId : null,
+            $clientSearch !== '' ? $clientSearch : null
+        );
+
         require_once __DIR__ . '/../Views/pages/employee-orders.php';
     }
-
     public function orderDetail(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
+
+        $orderId = (int) ($_GET['id'] ?? 0);
+
+        $orderModel = new OrderModel();
+
+        $order = $orderModel->getOrderByIdForEmployee($orderId);
+
+        if (!$order) {
+            http_response_code(404);
+            echo "Commande introuvable";
+            return;
+        }
+
+        // ANNULATION COMMANDE
+        if (
+            $_SERVER['REQUEST_METHOD'] === 'POST'
+            && isset($_POST['cancel_order'])
+        ) {
+
+            $modeContact = $_POST['mode_contact'] ?? '';
+            $clientContacte = $_POST['client_contacte'] ?? '';
+            $motifAnnulation = trim($_POST['motif_annulation'] ?? '');
+
+            if (
+                $modeContact !== '' &&
+                $clientContacte === 'oui' &&
+                $motifAnnulation !== ''
+            ) {
+
+                $orderModel->cancelOrderByEmployee($orderId);
+
+                $orderModel->addOrderTracking(
+                    $orderId,
+                    8
+                );
+            }
+
+            header(
+                'Location: index.php?url=employe-detail-commande&id=' . $orderId
+            );
+            exit;
+        }
+
+        // CHANGEMENT DE STATUT
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $statusId = (int) ($_POST['statut_id'] ?? 0);
+
+            if ($statusId >= 1 && $statusId <= 7) {
+
+                $orderModel->updateStatus(
+                    $orderId,
+                    $statusId
+                );
+
+                $orderModel->addOrderTracking(
+                    $orderId,
+                    $statusId
+                );
+            }
+
+            header(
+                'Location: index.php?url=employe-detail-commande&id=' . $orderId
+            );
+            exit;
+        }
+
+        $tracking = $orderModel->getOrderTracking($orderId);
+
         require_once __DIR__ . '/../Views/pages/employee-order-detail.php';
     }
-
     public function reviews(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
