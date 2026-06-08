@@ -6,102 +6,162 @@
         <div class="employee-order-detail-card">
 
             <h1 class="employee-order-detail-title mb-5">
-                Détail commande #CMD-001
+                Détail commande #CMD-<?= (int) $order['id'] ?>
             </h1>
 
             <div class="row g-4 mb-5">
                 <div class="col-12 col-lg-6">
                     <div class="employee-order-info-box h-100">
                         <h2>Informations client</h2>
-                        <p><strong>Client :</strong> Julie Dupont</p>
-                        <p><strong>Email :</strong> julie@email.com</p>
-                        <p><strong>Téléphone :</strong> 06 00 00 00 00</p>
-                        <p><strong>Adresse :</strong> 5 rue exemple, Bordeaux</p>
+                        <p><strong>Client :</strong> <?= htmlspecialchars($order['prenom_client']) ?>
+                            <?= htmlspecialchars($order['nom_client']) ?>
+                        </p>
+                        <p><strong>Email :</strong> <?= htmlspecialchars($order['email_client']) ?></p>
+                        <p><strong>Téléphone :</strong> <?= htmlspecialchars($order['telephone_client']) ?></p>
+                        <p><strong>Adresse :</strong> <?= htmlspecialchars($order['adresse_livraison']) ?>,
+                            <?= htmlspecialchars($order['ville']) ?>
+                        </p>
                     </div>
                 </div>
 
                 <div class="col-12 col-lg-6">
                     <div class="employee-order-info-box h-100">
                         <h2>Informations commande</h2>
-                        <p><strong>Menu :</strong> Buffet Signature Réception</p>
-                        <p><strong>Date livraison :</strong> 15/05/2026 à 12:30</p>
-                        <p><strong>Nombre de personnes :</strong> 10</p>
-                        <p><strong>Total :</strong> 180 €</p>
-                        <p><strong>Prêt matériel :</strong> Non</p>
+                        <p><strong>Menu :</strong> <?= htmlspecialchars($order['menu_titre']) ?></p>
+                        <p><strong>Date livraison :</strong> <?= date('d/m/Y', strtotime($order['date_livraison'])) ?> à
+                            <?= htmlspecialchars(substr($order['heure_livraison'], 0, 5)) ?>
+                        </p>
+                        <p><strong>Nombre de personnes :</strong> <?= (int) $order['nb_personnes'] ?></p>
+                        <p><strong>Total :</strong> <?= number_format((float) $order['prix_total'], 2, ',', ' ') ?> €
+                        </p>
+                        <p><strong>Prêt matériel :</strong> <?= $order['pret_materiel'] ? 'Oui' : 'Non' ?></p>
+                        <p><strong>Statut :</strong> <?= htmlspecialchars($order['statut']) ?></p>
                     </div>
                 </div>
             </div>
+            <?php
+            $currentStatus = (int) $order['statut_id'];
+            $hasEquipmentLoan = (bool) $order['pret_materiel'];
 
-            <div class="employee-order-section mb-5">
-                <h2 class="employee-order-section-title mb-4">
-                    Mise à jour du statut
-                </h2>
+            $nextStatuses = [
+                1 => [2 => 'Acceptée'],
+                2 => [3 => 'En préparation'],
+                3 => [4 => 'En cours de livraison'],
+                4 => [5 => 'Livrée'],
+                6 => [7 => 'Terminée']
+            ];
 
-                <form>
-                    <div class="row g-4">
-                        <div class="col-12 col-lg-8">
-                            <label class="form-label">Nouveau statut</label>
-                            <select class="form-select">
-                                <option>En attente</option>
-                                <option>Acceptée</option>
-                                <option>En préparation</option>
-                                <option>En cours de livraison</option>
-                                <option>Livrée</option>
-                                <option>En attente du retour de matériel</option>
-                                <option>Terminée</option>
-                                <option>Annulée</option>
-                            </select>
+            if ($currentStatus === 5) {
+                if ($hasEquipmentLoan) {
+                    $nextStatuses[5] = [6 => 'En attente retour matériel'];
+                } else {
+                    $nextStatuses[5] = [7 => 'Terminée'];
+                }
+            }
+
+            $availableStatuses = $nextStatuses[$currentStatus] ?? [];
+            ?>
+
+            <?php if (!in_array((int) $order['statut_id'], [7, 8])): ?>
+
+                <div class="employee-order-section mb-5">
+
+                    <h2 class="employee-order-section-title mb-4">
+                        Mise à jour du statut
+                    </h2>
+
+                    <form method="POST">
+
+                        <div class="row g-4">
+
+                            <div class="col-12 col-lg-8">
+                                <label class="form-label">Nouveau statut</label>
+
+                                <select class="form-select" name="statut_id">
+
+                                    <?php foreach ($availableStatuses as $statusId => $statusLabel): ?>
+                                        <option value="<?= $statusId ?>">
+                                            <?= $statusLabel ?>
+                                        </option>
+                                    <?php endforeach; ?>
+
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-lg-4 d-flex align-items-end">
+                                <button type="submit" class="btn employee-order-btn w-100">
+                                    Mettre à jour
+                                </button>
+                            </div>
+
                         </div>
 
-                        <div class="col-12 col-lg-4 d-flex align-items-end">
-                            <button type="submit" class="btn employee-order-btn w-100">
-                                Mettre à jour
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+                    </form>
 
-            <div class="employee-order-section mb-5">
-                <h2 class="employee-order-section-title mb-4">
-                    Annulation de commande
-                </h2>
-
-                <div class="alert alert-warning">
-                    Avant toute annulation, le client doit être contacté par téléphone ou par email.
                 </div>
 
-                <form>
-                    <div class="row g-4">
-                        <div class="col-12 col-md-6">
-                            <label class="form-label">Mode de contact</label>
-                            <select class="form-select">
-                                <option>Téléphone</option>
-                                <option>Email</option>
-                            </select>
-                        </div>
+            <?php else: ?>
 
-                        <div class="col-12 col-md-6">
-                            <label class="form-label">Client contacté ?</label>
-                            <select class="form-select">
-                                <option>Oui</option>
-                                <option>Non</option>
-                            </select>
-                        </div>
+                <div class="alert alert-secondary">
+                    Cette commande est clôturée et ne peut plus changer de statut.
+                </div>
 
-                        <div class="col-12">
-                            <label class="form-label">Motif d’annulation</label>
-                            <textarea class="form-control" rows="5" placeholder="Indiquer le motif d’annulation..."></textarea>
-                        </div>
+            <?php endif; ?>
+            <?php if (in_array((int) $order['statut_id'], [1, 2, 3])): ?>
 
-                        <div class="col-12">
-                            <button type="submit" class="btn employee-order-danger-btn">
-                                Annuler la commande
-                            </button>
-                        </div>
+                <div class="employee-order-section mb-5">
+
+                    <h2 class="employee-order-section-title mb-4">
+                        Annulation de commande
+                    </h2>
+
+                    <div class="alert alert-warning">
+                        Avant toute annulation, le client doit être contacté par téléphone ou par email.
                     </div>
-                </form>
-            </div>
+
+                    <form method="POST">
+
+                        <div class="row g-4">
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Mode de contact</label>
+
+                                <select class="form-select" name="mode_contact" required>
+                                    <option value="">Choisir</option>
+                                    <option value="telephone">Téléphone</option>
+                                    <option value="email">Email</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Client contacté ?</label>
+
+                                <select class="form-select" name="client_contacte" required>
+                                    <option value="">Choisir</option>
+                                    <option value="oui">Oui</option>
+                                    <option value="non">Non</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <label class="form-label">Motif d’annulation</label>
+
+                                <textarea class="form-control" name="motif_annulation" rows="5" required></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <button type="submit" name="cancel_order" class="btn employee-order-danger-btn">
+                                    Annuler la commande
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            <?php endif; ?>
 
             <div class="employee-order-section">
                 <h2 class="employee-order-section-title mb-4">
@@ -109,18 +169,16 @@
                 </h2>
 
                 <ul class="employee-order-tracking-list">
-                    <li>
-                        <i class="bi bi-check-circle-fill"></i>
-                        <span>En attente — 15/05/2026 10:30</span>
-                    </li>
-                    <li>
-                        <i class="bi bi-clock"></i>
-                        <span>Acceptée — en attente</span>
-                    </li>
-                    <li>
-                        <i class="bi bi-clock"></i>
-                        <span>En préparation — en attente</span>
-                    </li>
+                    <?php foreach ($tracking as $track): ?>
+                        <li>
+                            <i class="bi bi-check-circle-fill"></i>
+                            <span>
+                                <?= htmlspecialchars($track['statut']) ?>
+                                —
+                                <?= date('d/m/Y H:i', strtotime($track['date_changement'])) ?>
+                            </span>
+                        </li>
+                    <?php endforeach; ?>
                 </ul>
             </div>
 

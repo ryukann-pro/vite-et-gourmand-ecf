@@ -22,7 +22,7 @@ class OrderModel
         int $menuId,
         int $villeId,
         int $statutId
-    ): bool {
+    ): int {
         $pdo = Database::getConnection();
 
         $sql = "
@@ -50,7 +50,7 @@ class OrderModel
 
         $stmt = $pdo->prepare($sql);
 
-        return $stmt->execute([
+        $created = $stmt->execute([
             $nomClient,
             $prenomClient,
             $telephoneClient,
@@ -69,6 +69,12 @@ class OrderModel
             $villeId,
             $statutId
         ]);
+
+        if ($created) {
+            return (int) $pdo->lastInsertId();
+        }
+
+        return 0;
     }
 
     public function getOrdersByUserId(int $userId): array
@@ -188,5 +194,173 @@ class OrderModel
             $orderId,
             $userId
         ]);
+    }
+
+    public function getAllOrders(): array
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        SELECT
+            commande.id,
+            commande.date_creation,
+            commande.date_livraison,
+            commande.prix_total,
+            commande.nom_client,
+            commande.prenom_client,
+            menu.titre AS menu_titre,
+            statut_commande.nom AS statut
+        FROM commande
+        INNER JOIN menu ON commande.menu_id = menu.id
+        INNER JOIN statut_commande ON commande.statut_id = statut_commande.id
+        ORDER BY commande.date_creation DESC
+    ";
+
+        $stmt = $pdo->query($sql);
+
+        return $stmt->fetchAll();
+    }
+    public function getOrderByIdForEmployee(int $orderId): ?array
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        SELECT
+            commande.*,
+            menu.titre AS menu_titre,
+            statut_commande.nom AS statut,
+            ville_commande.nom AS ville
+        FROM commande
+        INNER JOIN menu ON commande.menu_id = menu.id
+        INNER JOIN statut_commande ON commande.statut_id = statut_commande.id
+        INNER JOIN ville_commande ON commande.ville_id = ville_commande.id
+        WHERE commande.id = ?
+    ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$orderId]);
+
+        $order = $stmt->fetch();
+
+        return $order ?: null;
+    }
+
+    public function updateStatus(int $orderId, int $statusId): bool
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        UPDATE commande
+        SET statut_id = ?
+        WHERE id = ?
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([$statusId, $orderId]);
+    }
+    public function addOrderTracking(int $orderId, int $statusId): bool
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        INSERT INTO suivi_commande (
+            commande_id,
+            statut_id,
+            date_changement
+        )
+        VALUES (?, ?, NOW())
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([$orderId, $statusId]);
+    }
+
+    public function getOrderTracking(int $orderId): array
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        SELECT
+            suivi_commande.date_changement,
+            statut_commande.nom AS statut
+        FROM suivi_commande
+        INNER JOIN statut_commande 
+            ON suivi_commande.statut_id = statut_commande.id
+        WHERE suivi_commande.commande_id = ?
+        ORDER BY suivi_commande.date_changement ASC
+    ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$orderId]);
+
+        return $stmt->fetchAll();
+    }
+    public function searchOrders(?int $statusId, ?string $clientSearch): array
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        SELECT
+            commande.id,
+            commande.date_creation,
+            commande.date_livraison,
+            commande.prix_total,
+            commande.nom_client,
+            commande.prenom_client,
+            commande.email_client,
+            menu.titre AS menu_titre,
+            statut_commande.nom AS statut
+        FROM commande
+        INNER JOIN menu ON commande.menu_id = menu.id
+        INNER JOIN statut_commande ON commande.statut_id = statut_commande.id
+        WHERE 1 = 1
+    ";
+
+        $params = [];
+
+        if ($statusId !== null && $statusId > 0) {
+            $sql .= " AND commande.statut_id = ?";
+            $params[] = $statusId;
+        }
+
+        if ($clientSearch !== null && $clientSearch !== '') {
+            $sql .= "
+            AND (
+                commande.nom_client LIKE ?
+                OR commande.prenom_client LIKE ?
+                OR commande.email_client LIKE ?
+            )
+        ";
+
+            $search = '%' . $clientSearch . '%';
+
+            $params[] = $search;
+            $params[] = $search;
+            $params[] = $search;
+        }
+
+        $sql .= " ORDER BY commande.date_creation DESC";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll();
+    }
+    public function cancelOrderByEmployee(int $orderId): bool
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        UPDATE commande
+        SET statut_id = 8
+        WHERE id = ?
+        AND statut_id IN (1, 2, 3)
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([$orderId]);
     }
 }
