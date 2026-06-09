@@ -13,6 +13,8 @@ require_once __DIR__ . '/../app/Controllers/ProfileController.php';
 require_once __DIR__ . '/../app/Controllers/EmployeeController.php';
 require_once __DIR__ . '/../app/Controllers/AdminController.php';
 require_once __DIR__ . '/../app/Helpers/Auth.php';
+require_once __DIR__ . '/../app/Controllers/ReviewController.php';
+require_once __DIR__ . '/../app/Controllers/EmployeeReviewController.php';
 
 $url = $_GET['url'] ?? 'accueil';
 
@@ -83,8 +85,8 @@ switch ($url) {
         $controller->orderDetail();
         break;
     case 'employe-avis':
-        $controller = new EmployeeController();
-        $controller->reviews();
+        $controller = new EmployeeReviewController();
+        $controller->index();
         break;
     case 'employe-menus':
         $controller = new EmployeeController();
@@ -121,6 +123,22 @@ switch ($url) {
     case 'annuler-commande':
         $controller = new OrderDetailController();
         $controller->cancel();
+        break;
+    case 'laisser-avis':
+        $controller = new ReviewController();
+        $controller->create();
+        break;
+    case 'valider-avis':
+        $controller = new EmployeeReviewController();
+        $controller->validate();
+        break;
+    case 'refuser-avis':
+        $controller = new EmployeeReviewController();
+        $controller->delete();
+        break;
+    case 'supprimer-avis':
+        $controller = new EmployeeReviewController();
+        $controller->delete();
         break;
     default:
         http_response_code(404);
