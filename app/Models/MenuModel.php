@@ -101,4 +101,61 @@ class MenuModel
 
     return $stmt->fetchAll();
   }
+  public function searchMenus(?string $theme, ?string $regime, ?float $prixMin, ?float $prixMax, ?int $personnes): array
+  {
+    $pdo = Database::getConnection();
+
+    $sql = "
+        SELECT 
+            menu.id,
+            menu.titre,
+            menu.description_courte,
+            menu.nb_personnes_min,
+            menu.prix_par_personne,
+            regime.nom AS regime,
+            theme.nom AS theme,
+            image.url AS image_url,
+            image.texte_alternatif
+        FROM menu
+        INNER JOIN regime ON menu.regime_id = regime.id
+        INNER JOIN theme ON menu.theme_id = theme.id
+        LEFT JOIN image 
+            ON image.menu_id = menu.id 
+            AND image.ordre_affichage = 1
+        WHERE 1 = 1
+    ";
+
+    $params = [];
+
+    if ($theme !== null && $theme !== '') {
+      $sql .= " AND theme.nom = ?";
+      $params[] = $theme;
+    }
+
+    if ($regime !== null && $regime !== '') {
+      $sql .= " AND regime.nom = ?";
+      $params[] = $regime;
+    }
+
+    if ($prixMin !== null) {
+      $sql .= " AND menu.prix_par_personne >= ?";
+      $params[] = $prixMin;
+    }
+
+    if ($prixMax !== null) {
+      $sql .= " AND menu.prix_par_personne <= ?";
+      $params[] = $prixMax;
+    }
+    if ($personnes !== null) {
+    $sql .= " AND menu.nb_personnes_min <= ?";
+    $params[] = $personnes;
+}
+
+    $sql .= " ORDER BY menu.id ASC";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+
+    return $stmt->fetchAll();
+  }
 }
