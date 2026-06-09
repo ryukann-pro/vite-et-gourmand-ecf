@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../Helpers/Auth.php';
 require_once __DIR__ . '/../Models/OrderModel.php';
+require_once __DIR__ . '/../Models/ReviewModel.php';
 
 class OrderDetailController
 {
@@ -18,6 +19,8 @@ class OrderDetailController
         $orderModel = new OrderModel();
         $order = $orderModel->getOrderByIdAndUserId($orderId, $_SESSION['user']['id']);
         $tracking = $orderModel->getOrderTracking($orderId);
+        $reviewModel = new ReviewModel();
+        $hasReview = $reviewModel->hasReviewForOrder($orderId);
 
         if (!$order) {
             http_response_code(404);
