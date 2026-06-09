@@ -77,35 +77,39 @@
             </div>
 
             <hr class="order-detail-divider">
+            <?php if ((int) $order['statut_id'] === 7 && !$hasReview): ?>
+                <h2 class="order-detail-section-title mb-4">
+                    Donner un avis
+                </h2>
 
-            <h2 class="order-detail-section-title mb-4">
-                Donner un avis
-            </h2>
+                <form method="POST" class="review-form" action="index.php?url=laisser-avis&id=<?= (int) $order['id'] ?>">
+                    <div class="mb-4">
+                        <label class="form-label">Note</label>
+                        <select name="note" class="form-select" required>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option selected>5</option>
+                        </select>
+                    </div>
 
-            <form class="review-form">
+                    <div class="mb-4">
+                        <label class="form-label">Commentaire</label>
+                        <textarea name="commentaire" class="form-control" rows="5"
+                            placeholder="Votre avis sur la prestation..." required></textarea>
+                    </div>
 
-                <div class="mb-4">
-                    <label class="form-label">Note</label>
-                    <select class="form-select">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option selected>5</option>
-                    </select>
+                    <button type="submit" class="btn order-detail-btn order-review-btn">
+                        Envoyer mon avis
+                    </button>
+
+                </form>
+            <?php elseif ((int) $order['statut_id'] === 7 && $hasReview): ?>
+                <div class="alert alert-info">
+                    Vous avez déjà laissé un avis pour cette commande.
                 </div>
-
-                <div class="mb-4">
-                    <label class="form-label">Commentaire</label>
-                    <textarea class="form-control" rows="5" placeholder="Votre avis sur la prestation..."></textarea>
-                </div>
-
-                <button type="submit" class="btn order-detail-btn order-review-btn">
-                    Envoyer mon avis
-                </button>
-
-            </form>
-
+            <?php endif; ?>
         </div>
 
     </section>
