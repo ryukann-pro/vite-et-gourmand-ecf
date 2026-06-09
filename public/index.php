@@ -140,6 +140,10 @@ switch ($url) {
         $controller = new EmployeeReviewController();
         $controller->delete();
         break;
+    case 'api-menus':
+        $controller = new MenuController();
+        $controller->apiSearch();
+        break;
     default:
         http_response_code(404);
         echo "Page introuvable";
