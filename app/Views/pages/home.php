@@ -97,100 +97,46 @@
 
             <div class="row g-4 justify-content-center">
 
-                <!-- Avis 1 -->
-                <div class="col-12 col-md-6 col-lg-3">
-                    <article class="review-card">
+                <?php if (!empty($reviews)): ?>
 
-                        <h3 class="review-name">Marie L.</h3>
+                    <?php foreach ($reviews as $review): ?>
 
-                        <div class="review-stars mb-3">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
+                        <div class="col-12 col-md-6 col-lg-3">
+                            <article class="review-card">
+
+                                <h3 class="review-name">
+                                    <?= mb_convert_case(htmlspecialchars($review['prenom']), MB_CASE_TITLE, 'UTF-8') ?>
+                                    <?= mb_strtoupper(mb_substr(htmlspecialchars($review['nom']), 0, 1), 'UTF-8') ?>.
+                                </h3>
+
+                                <div class="review-stars mb-3">
+                                    <?php for ($i = 1; $i <= 5; $i++): ?>
+                                        <?php if ($i <= (int) $review['note']): ?>
+                                            <i class="bi bi-star-fill"></i>
+                                        <?php else: ?>
+                                            <i class="bi bi-star"></i>
+                                        <?php endif; ?>
+                                    <?php endfor; ?>
+                                </div>
+
+                                <p class="review-text">
+                                    <?= nl2br(htmlspecialchars($review['commentaire'])) ?>
+                                </p>
+
+                            </article>
                         </div>
 
-                        <p class="review-text">
-                            Commande passée pour l'anniversaire de ma mère,
-                            tout était parfait. Les plats étaient frais,
-                            bien présentés et vraiment savoureux.
-                            Je recommande sans hésiter !
+                    <?php endforeach; ?>
+
+                <?php else: ?>
+
+                    <div class="col-12">
+                        <p class="text-center mb-0">
+                            Aucun avis client validé pour le moment.
                         </p>
+                    </div>
 
-                    </article>
-                </div>
-
-                <!-- Avis 2 -->
-                <div class="col-12 col-md-6 col-lg-3">
-                    <article class="review-card">
-
-                        <h3 class="review-name">Sophie R.</h3>
-
-                        <div class="review-stars mb-3">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star"></i>
-                        </div>
-
-                        <p class="review-text">
-                            Très bonne expérience globalement.
-                            Les bouchées apéritives étaient délicieuses.
-                            Petite amélioration possible sur l'emballage,
-                            mais le contenu était au rendez-vous.
-                        </p>
-
-                    </article>
-                </div>
-
-                <!-- Avis 3 -->
-                <div class="col-12 col-md-6 col-lg-3">
-                    <article class="review-card">
-
-                        <h3 class="review-name">Thomas B.</h3>
-
-                        <div class="review-stars mb-3">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                        </div>
-
-                        <p class="review-text">
-                            Super prestation pour notre pot de départ au bureau.
-                            Rapport qualité-prix imbattable,
-                            livraison à l'heure et une équipe très sympa.
-                            On refera appel à eux !
-                        </p>
-
-                    </article>
-                </div>
-
-                <!-- Avis 4 -->
-                <div class="col-12 col-md-6 col-lg-3">
-                    <article class="review-card">
-
-                        <h3 class="review-name">Lucas M.</h3>
-
-                        <div class="review-stars mb-3">
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star-fill"></i>
-                            <i class="bi bi-star"></i>
-                        </div>
-
-                        <p class="review-text">
-                            Bon traiteur, portions généreuses et goût maison appréciable.
-                            Légère attente à la livraison mais rien de grave.
-                            Je retenterai pour mon prochain événement.
-                        </p>
-
-                    </article>
-                </div>
+                <?php endif; ?>
 
             </div>
 

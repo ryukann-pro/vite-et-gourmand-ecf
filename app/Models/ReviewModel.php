@@ -127,4 +127,23 @@ class ReviewModel
 
     return $stmt->execute([$reviewId]);
   }
+  public function getValidatedReviews(): array
+  {
+    $sql = "
+        SELECT
+            avis.note,
+            avis.commentaire,
+            utilisateur.prenom,
+            utilisateur.nom
+        FROM avis
+        INNER JOIN utilisateur ON avis.utilisateur_id = utilisateur.id
+        WHERE avis.est_valide = 1
+        ORDER BY avis.id DESC
+        LIMIT 4
+    ";
+
+    $stmt = $this->pdo->query($sql);
+
+    return $stmt->fetchAll();
+  }
 }
