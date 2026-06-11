@@ -11,6 +11,7 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/svg+xml" href="/vite-et-gourmand-ecf/public/assets/images/logo/Favico.svg">
     <title>Vite et Gourmand</title>
 
     <!-- Google Fonts -->
@@ -59,15 +60,15 @@ if (session_status() === PHP_SESSION_NONE) {
                     <ul class="navbar-nav gap-lg-4">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Accueil</a>
+                            <a class="nav-link" href="index.php?url=accueil">Accueil</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Menus</a>
+                            <a class="nav-link" href="index.php?url=menus">Menus</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Contact</a>
+                            <a class="nav-link" href="index.php?url=contact">Contact</a>
                         </li>
 
                         <?php if (isset($_SESSION['user'])): ?>
