@@ -14,35 +14,25 @@
 
             <h2 class="employee-hours-subtitle mb-4">Horaires hebdomadaires</h2>
 
-            <form>
+            <form method="POST" action="index.php?url=employe-horaires">
 
-                <?php
-                $days = [
-                    ['Lundi', '07:30', '19:00'],
-                    ['Mardi', '07:30', '19:00'],
-                    ['Mercredi', '07:30', '19:00'],
-                    ['Jeudi', '07:30', '19:00'],
-                    ['Vendredi', '07:30', '19:00'],
-                    ['Samedi', '07:30', '19:00'],
-                    ['Dimanche', '07:30', '13:00'],
-                ];
-                ?>
-
-                <?php foreach ($days as $day): ?>
+                <?php foreach ($horaires as $horaire): ?>
                     <div class="employee-hour-row">
 
                         <div class="employee-hour-day">
-                            <?= $day[0] ?>
+                            <?= htmlspecialchars($horaire['jour_semaine']) ?>
                         </div>
 
                         <div>
                             <label class="form-label">Ouverture</label>
-                            <input type="time" class="form-control" value="<?= $day[1] ?>">
+                            <input type="time" name="horaires[<?= (int) $horaire['id'] ?>][ouverture]" class="form-control"
+                                value="<?= htmlspecialchars(substr($horaire['heure_ouverture'], 0, 5)) ?>" required>
                         </div>
 
                         <div>
                             <label class="form-label">Fermeture</label>
-                            <input type="time" class="form-control" value="<?= $day[2] ?>">
+                            <input type="time" name="horaires[<?= (int) $horaire['id'] ?>][fermeture]" class="form-control"
+                                value="<?= htmlspecialchars(substr($horaire['heure_fermeture'], 0, 5)) ?>" required>
                         </div>
 
                     </div>
