@@ -15,7 +15,19 @@
                 Contactez-nous via le formulaire ci-dessous.
             </p>
 
-            <form>
+            <?php if (!empty($success)): ?>
+                <div class="alert alert-success">
+                    <?= htmlspecialchars($success) ?>
+                </div>
+            <?php endif; ?>
+
+            <?php if (!empty($error)): ?>
+                <div class="alert alert-danger">
+                    <?= htmlspecialchars($error) ?>
+                </div>
+            <?php endif; ?>
+
+            <form method="POST" action="index.php?url=contact">
 
                 <div class="mb-4">
                     <label for="title" class="form-label">
@@ -25,8 +37,10 @@
                     <input
                         type="text"
                         id="title"
+                        name="titre"
                         class="form-control"
                         placeholder="Sujet de votre demande"
+                        required
                     >
                 </div>
 
@@ -40,8 +54,10 @@
                         <input
                             type="text"
                             id="lastname"
+                            name="nom"
                             class="form-control"
                             placeholder="Votre nom"
+                            required
                         >
                     </div>
 
@@ -53,8 +69,10 @@
                         <input
                             type="text"
                             id="firstname"
+                            name="prenom"
                             class="form-control"
                             placeholder="Votre prénom"
+                            required
                         >
                     </div>
 
@@ -68,8 +86,10 @@
                     <input
                         type="email"
                         id="email"
+                        name="email"
                         class="form-control"
                         placeholder="Votre adresse email"
+                        required
                     >
                 </div>
 
@@ -81,6 +101,7 @@
                     <input
                         type="tel"
                         id="phone"
+                        name="telephone"
                         class="form-control"
                         placeholder="Votre numéro"
                     >
@@ -93,9 +114,11 @@
 
                     <textarea
                         id="message"
+                        name="message"
                         class="form-control"
                         rows="6"
                         placeholder="Votre message"
+                        required
                     ></textarea>
                 </div>
 
