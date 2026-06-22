@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../Helpers/Auth.php';
+require_once __DIR__ . '/../Models/HoraireModel.php';
 
 class EmployeeController
 {
@@ -121,6 +122,29 @@ class EmployeeController
     public function hours(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
+
+        $horaireModel = new HoraireModel();
+
+        if (
+            $_SERVER['REQUEST_METHOD'] === 'POST'
+            && isset($_POST['horaires'])
+        ) {
+
+            foreach ($_POST['horaires'] as $id => $horaire) {
+
+                $horaireModel->update(
+                    (int) $id,
+                    $horaire['ouverture'],
+                    $horaire['fermeture']
+                );
+            }
+
+            header('Location: index.php?url=employe-horaires');
+            exit;
+        }
+
+        $horaires = $horaireModel->getAll();
+
         require_once __DIR__ . '/../Views/pages/employee-hours.php';
     }
 }

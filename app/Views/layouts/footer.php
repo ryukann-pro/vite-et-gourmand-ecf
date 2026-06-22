@@ -1,39 +1,117 @@
+<?php
+require_once __DIR__ . '/../../Models/HoraireModel.php';
+
+$horaireModel = new HoraireModel();
+$footerHoraires = $horaireModel->getAll();
+?>
+
 <footer class="site-footer">
 
     <div class="container">
 
-        <p class="footer-hours-title mb-2">Nos horaires</p>
+        <div class="footer-grid">
 
-        <p class="footer-hours mb-4">
-            Lundi - Samedi : 7h30 - 19h · Dimanche : 7h30 - 13h
-        </p>
+            <!-- Horaires -->
+            <div class="footer-column">
 
-        <div class="footer-contact-line mb-4">
-            <span class="footer-help">Besoin d’aide ? Des questions ?</span>
+                <h3 class="footer-hours-title">
+                    Nos horaires
+                </h3>
 
-            <a href="tel:+33556000000" class="footer-contact-link">
-                <i class="bi bi-telephone-fill"></i>
-                05 56 00 00 00
-            </a>
+                <div class="footer-hours-list">
+
+                    <?php foreach ($footerHoraires as $horaire): ?>
+
+                        <p class="footer-hours">
+
+                            <strong>
+                                <?= htmlspecialchars($horaire['jour_semaine']) ?>
+                            </strong>
+
+                            :
+
+                            <?= htmlspecialchars(substr($horaire['heure_ouverture'], 0, 5)) ?>
+
+                            -
+
+                            <?= htmlspecialchars(substr($horaire['heure_fermeture'], 0, 5)) ?>
+
+                        </p>
+
+                    <?php endforeach; ?>
+
+                </div>
+
+            </div>
+
+            <!-- Contact -->
+            <div class="footer-column">
+
+                <h3 class="footer-hours-title">
+                    Contact
+                </h3>
+
+                <p class="footer-help">
+                    Besoin d’aide ? Des questions ?
+                </p>
+
+                <a href="tel:+33556000000" class="footer-contact-link">
+                    <i class="bi bi-telephone-fill"></i>
+                    05 56 00 00 00
+                </a>
+
+                <a href="mailto:contact@viteetgourmand.fr"
+                    class="footer-contact-link footer-email">
+
+                    <i class="bi bi-envelope-fill"></i>
+
+                    contact@viteetgourmand.fr
+
+                </a>
+
+                <p class="footer-address">
+                    12 rue Sainte-Catherine<br>
+                    33000 Bordeaux
+                </p>
+
+            </div>
+
+            <!-- Navigation -->
+            <div class="footer-column">
+
+                <h3 class="footer-hours-title">
+                    Navigation
+                </h3>
+
+                <nav class="footer-links">
+
+                    <a href="index.php?url=accueil">
+                        Accueil
+                    </a>
+
+                    <a href="index.php?url=menus">
+                        Menus
+                    </a>
+
+                    <a href="index.php?url=contact">
+                        Contact
+                    </a>
+
+                    <a href="#">
+                        Mentions légales
+                    </a>
+
+                    <a href="#">
+                        CGV
+                    </a>
+
+                </nav>
+
+            </div>
+
         </div>
 
-        <a href="mailto:contact@viteetgourmand.fr" class="footer-contact-link footer-email mb-4">
-            <i class="bi bi-envelope-fill"></i>
-            contact@viteetgourmand.fr
-        </a>
-
-        <p class="footer-address mb-4">
-            12 rue Sainte-Catherine 33000 Bordeaux
-        </p>
-
-        <nav class="footer-links mb-4">
-            <a href="index.php?url=contact">Contact</a>
-            <a href="index.php?url=accueil">Accueil</a>
-            <a href="#">Mentions légales</a>
-            <a href="#">CGV</a>
-        </nav>
-
-        <p class="footer-copyright mb-0">
+        <p class="footer-copyright mt-5 mb-0">
             © 2026 Vite & Gourmand
         </p>
 
@@ -43,4 +121,5 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
