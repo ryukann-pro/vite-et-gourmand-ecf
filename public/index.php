@@ -94,7 +94,19 @@ switch ($url) {
         break;
     case 'employe-plats':
         $controller = new EmployeeController();
-        $controller->plates();
+        $controller->plats();
+        break;
+    case 'employe-plat-create':
+        $controller = new EmployeeController();
+        $controller->createPlat();
+        break;
+    case 'employe-plat-edit':
+        $controller = new EmployeeController();
+        $controller->editPlat();
+        break;
+    case 'employe-plat-delete':
+        $controller = new EmployeeController();
+        $controller->deletePlat();
         break;
     case 'employe-horaires':
         $controller = new EmployeeController();
