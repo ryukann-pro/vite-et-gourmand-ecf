@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../Helpers/Auth.php';
 require_once __DIR__ . '/../Models/HoraireModel.php';
+require_once __DIR__ . '/../Models/PlatModel.php';
+require_once __DIR__ . '/../Models/OrderModel.php';
 
 class EmployeeController
 {
@@ -113,11 +115,6 @@ class EmployeeController
         require_once __DIR__ . '/../Views/pages/employee-menus.php';
     }
 
-    public function plates(): void
-    {
-        Auth::requireRole(['Employé', 'Admin']);
-        require_once __DIR__ . '/../Views/pages/employee-plates.php';
-    }
 
     public function hours(): void
     {
@@ -146,5 +143,121 @@ class EmployeeController
         $horaires = $horaireModel->getAll();
 
         require_once __DIR__ . '/../Views/pages/employee-hours.php';
+    }
+    public function plats(): void
+    {
+        Auth::requireRole(['Employé', 'Admin']);
+
+        $platModel = new PlatModel();
+
+        $plats = $platModel->getAll();
+
+        require_once __DIR__ . '/../Views/pages/employee-plats.php';
+    }
+    public function createPlat(): void
+    {
+        Auth::requireRole(['Employé', 'Admin']);
+
+        $error = null;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nom = trim($_POST['nom'] ?? '');
+            $typePlat = trim($_POST['type_plat'] ?? '');
+            $description = trim($_POST['description'] ?? '');
+
+            if ($nom === '' || $typePlat === '' || $description === '') {
+                $error = "Tous les champs sont obligatoires.";
+            } elseif (!in_array($typePlat, ['Entrée', 'Plat principal', 'Dessert'])) {
+                $error = "Type de plat invalide.";
+            } else {
+                $platModel = new PlatModel();
+
+                $created = $platModel->create(
+                    $nom,
+                    $typePlat,
+                    $description
+                );
+
+                if ($created) {
+                    header('Location: index.php?url=employe-plats');
+                    exit;
+                }
+
+                $error = "Erreur lors de la création du plat.";
+            }
+        }
+
+        require_once __DIR__ . '/../Views/pages/employee-plat-create.php';
+    }
+    public function editPlat(): void
+    {
+        Auth::requireRole(['Employé', 'Admin']);
+
+        $platModel = new PlatModel();
+
+        $platId = (int) ($_GET['id'] ?? 0);
+        $plat = $platModel->getById($platId);
+
+        if (!$plat) {
+            http_response_code(404);
+            echo "Plat introuvable";
+            return;
+        }
+
+        $error = null;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $nom = trim($_POST['nom'] ?? '');
+            $typePlat = trim($_POST['type_plat'] ?? '');
+            $description = trim($_POST['description'] ?? '');
+
+            if ($nom === '' || $typePlat === '' || $description === '') {
+                $error = "Tous les champs sont obligatoires.";
+            } elseif (!in_array($typePlat, ['Entrée', 'Plat principal', 'Dessert'])) {
+                $error = "Type de plat invalide.";
+            } else {
+                $updated = $platModel->update(
+                    $platId,
+                    $nom,
+                    $typePlat,
+                    $description
+                );
+
+                if ($updated) {
+                    header('Location: index.php?url=employe-plats');
+                    exit;
+                }
+
+                $error = "Erreur lors de la modification du plat.";
+            }
+        }
+
+        require_once __DIR__ . '/../Views/pages/employee-plat-edit.php';
+    }
+
+    public function deletePlat(): void
+    {
+        Auth::requireRole(['Employé', 'Admin']);
+
+        $platId = (int) ($_GET['id'] ?? 0);
+
+        $platModel = new PlatModel();
+
+        if ($platModel->isUsedInMenu($platId)) {
+
+            header(
+                'Location: index.php?url=employe-plats&error=used'
+            );
+
+            exit;
+        }
+
+        $platModel->delete($platId);
+
+        header(
+            'Location: index.php?url=employe-plats'
+        );
+
+        exit;
     }
 }
