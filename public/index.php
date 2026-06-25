@@ -156,6 +156,18 @@ switch ($url) {
         $controller = new MenuController();
         $controller->apiSearch();
         break;
+    case 'employe-menu-create':
+        $controller = new EmployeeController();
+        $controller->createMenu();
+        break;
+    case 'employe-menu-edit':
+        $controller = new EmployeeController();
+        $controller->editMenu();
+        break;
+    case 'employe-menu-delete':
+        $controller = new EmployeeController();
+        $controller->deleteMenu();
+        break;
     default:
         http_response_code(404);
         echo "Page introuvable";

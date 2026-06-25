@@ -138,8 +138,9 @@ main {
 .footer-hours-title {
     font-family: 'Raleway', sans-serif;
     font-weight: 700;
-    font-size: 1.05rem;
+    font-size: 1.10rem;
     margin-bottom: 0.5rem;
+    color: #FFFFFF;
 }
 
 .footer-hours-list {
