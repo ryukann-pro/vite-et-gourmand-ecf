@@ -4,6 +4,7 @@ require_once __DIR__ . '/../Helpers/Auth.php';
 require_once __DIR__ . '/../Models/HoraireModel.php';
 require_once __DIR__ . '/../Models/PlatModel.php';
 require_once __DIR__ . '/../Models/OrderModel.php';
+require_once __DIR__ . '/../Models/MenuModel.php';
 
 class EmployeeController
 {
@@ -30,79 +31,80 @@ class EmployeeController
         require_once __DIR__ . '/../Views/pages/employee-orders.php';
     }
     public function orderDetail(): void
-    {
-        Auth::requireRole(['Employé', 'Admin']);
+{
+    Auth::requireRole(['Employé', 'Admin']);
 
-        $orderId = (int) ($_GET['id'] ?? 0);
-
-        $orderModel = new OrderModel();
-
-        $order = $orderModel->getOrderByIdForEmployee($orderId);
-
-        if (!$order) {
-            http_response_code(404);
-            echo "Commande introuvable";
-            return;
-        }
-
-        // ANNULATION COMMANDE
-        if (
-            $_SERVER['REQUEST_METHOD'] === 'POST'
-            && isset($_POST['cancel_order'])
-        ) {
-
-            $modeContact = $_POST['mode_contact'] ?? '';
-            $clientContacte = $_POST['client_contacte'] ?? '';
-            $motifAnnulation = trim($_POST['motif_annulation'] ?? '');
-
-            if (
-                $modeContact !== '' &&
-                $clientContacte === 'oui' &&
-                $motifAnnulation !== ''
-            ) {
-
-                $orderModel->cancelOrderByEmployee($orderId);
-
-                $orderModel->addOrderTracking(
-                    $orderId,
-                    8
-                );
-            }
-
-            header(
-                'Location: index.php?url=employe-detail-commande&id=' . $orderId
-            );
-            exit;
-        }
-
-        // CHANGEMENT DE STATUT
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-            $statusId = (int) ($_POST['statut_id'] ?? 0);
-
-            if ($statusId >= 1 && $statusId <= 7) {
-
-                $orderModel->updateStatus(
-                    $orderId,
-                    $statusId
-                );
-
-                $orderModel->addOrderTracking(
-                    $orderId,
-                    $statusId
-                );
-            }
-
-            header(
-                'Location: index.php?url=employe-detail-commande&id=' . $orderId
-            );
-            exit;
-        }
-
-        $tracking = $orderModel->getOrderTracking($orderId);
-
-        require_once __DIR__ . '/../Views/pages/employee-order-detail.php';
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
     }
+
+    $orderId = (int) ($_GET['id'] ?? 0);
+
+    $orderModel = new OrderModel();
+    $order = $orderModel->getOrderByIdForEmployee($orderId);
+
+    if (!$order) {
+        http_response_code(404);
+        echo "Commande introuvable";
+        return;
+    }
+
+    // ANNULATION COMMANDE
+    if (
+        $_SERVER['REQUEST_METHOD'] === 'POST'
+        && isset($_POST['cancel_order'])
+    ) {
+        $modeContact = $_POST['mode_contact'] ?? '';
+        $clientContacte = $_POST['client_contacte'] ?? '';
+        $motifAnnulation = trim($_POST['motif_annulation'] ?? '');
+
+        if (
+            $modeContact !== ''
+            && $clientContacte === 'oui'
+            && $motifAnnulation !== ''
+        ) {
+            $cancelled = $orderModel->cancelOrderByEmployee($orderId);
+
+            if ($cancelled) {
+                $orderModel->addOrderTracking(
+                    $orderId,
+                    8,
+                    (int) $_SESSION['user']['id']
+                );
+            }
+        }
+
+        header('Location: index.php?url=employe-detail-commande&id=' . $orderId);
+        exit;
+    }
+
+    // CHANGEMENT DE STATUT
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $statusId = (int) ($_POST['statut_id'] ?? 0);
+
+        if ($statusId >= 1 && $statusId <= 7) {
+            $updated = $orderModel->updateStatus(
+                $orderId,
+                $statusId
+            );
+
+            if ($updated) {
+                $orderModel->addOrderTracking(
+                    $orderId,
+                    $statusId,
+                    (int) $_SESSION['user']['id']
+                );
+            }
+        }
+
+        header('Location: index.php?url=employe-detail-commande&id=' . $orderId);
+        exit;
+    }
+
+    $tracking = $orderModel->getOrderTracking($orderId);
+
+    require_once __DIR__ . '/../Views/pages/employee-order-detail.php';
+}
     public function reviews(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
@@ -112,6 +114,10 @@ class EmployeeController
     public function menus(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
+
+        $menuModel = new MenuModel();
+        $menus = $menuModel->getAllForEmployee();
+
         require_once __DIR__ . '/../Views/pages/employee-menus.php';
     }
 
@@ -260,4 +266,190 @@ class EmployeeController
 
         exit;
     }
+    public function createMenu(): void
+{
+    Auth::requireRole(['Employé', 'Admin']);
+
+    $menuModel = new MenuModel();
+    $platModel = new PlatModel();
+
+    $themes = $menuModel->getThemes();
+    $regimes = $menuModel->getRegimes();
+
+    $entrees = $platModel->getByType('Entrée');
+    $platsPrincipaux = $platModel->getByType('Plat principal');
+    $desserts = $platModel->getByType('Dessert');
+
+    $error = null;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $titre = trim($_POST['titre'] ?? '');
+        $descriptionCourte = trim($_POST['description_courte'] ?? '');
+        $descriptionLongue = trim($_POST['description_longue'] ?? '');
+        $nbPersonnesMin = (int) ($_POST['nb_personnes_min'] ?? 0);
+        $prixParPersonne = (float) ($_POST['prix_par_personne'] ?? 0);
+        $stock = (int) ($_POST['stock'] ?? 0);
+        $conditions = trim($_POST['conditions'] ?? '');
+
+        $themeId = (int) ($_POST['theme_id'] ?? 0);
+        $regimeId = (int) ($_POST['regime_id'] ?? 0);
+
+        $entreeId = (int) ($_POST['entree_id'] ?? 0);
+        $platPrincipalId = (int) ($_POST['plat_principal_id'] ?? 0);
+        $dessertId = (int) ($_POST['dessert_id'] ?? 0);
+
+        if (
+            $titre === '' ||
+            $descriptionCourte === '' ||
+            $descriptionLongue === '' ||
+            $nbPersonnesMin <= 0 ||
+            $prixParPersonne <= 0 ||
+            $stock < 0 ||
+            $conditions === '' ||
+            $themeId <= 0 ||
+            $regimeId <= 0 ||
+            $entreeId <= 0 ||
+            $platPrincipalId <= 0 ||
+            $dessertId <= 0
+        ) {
+            $error = "Tous les champs sont obligatoires.";
+        } else {
+            $menuId = $menuModel->createMenu(
+                $titre,
+                $descriptionCourte,
+                $descriptionLongue,
+                $nbPersonnesMin,
+                $prixParPersonne,
+                $stock,
+                $conditions,
+                $themeId,
+                $regimeId
+            );
+
+            $menuModel->attachPlatToMenu($menuId, $entreeId);
+            $menuModel->attachPlatToMenu($menuId, $platPrincipalId);
+            $menuModel->attachPlatToMenu($menuId, $dessertId);
+
+            header('Location: index.php?url=employe-menus');
+            exit;
+        }
+    }
+
+    require_once __DIR__ . '/../Views/pages/employee-menu-create.php';
+}
+public function editMenu(): void
+{
+    Auth::requireRole(['Employé', 'Admin']);
+
+    $menuModel = new MenuModel();
+    $platModel = new PlatModel();
+
+    $menuId = (int) ($_GET['id'] ?? 0);
+
+    $menu = $menuModel->getByIdForEmployee($menuId);
+
+    if (!$menu) {
+        http_response_code(404);
+        echo "Menu introuvable";
+        return;
+    }
+
+    $themes = $menuModel->getThemes();
+    $regimes = $menuModel->getRegimes();
+
+    $entrees = $platModel->getByType('Entrée');
+    $platsPrincipaux = $platModel->getByType('Plat principal');
+    $desserts = $platModel->getByType('Dessert');
+
+    $selectedPlats = [
+        'Entrée' => 0,
+        'Plat principal' => 0,
+        'Dessert' => 0
+    ];
+
+    foreach ($menuModel->getPlatIdsByMenuId($menuId) as $plat) {
+        $selectedPlats[$plat['type_plat']] = (int) $plat['id'];
+    }
+
+    $error = null;
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    $titre = trim($_POST['titre'] ?? '');
+    $descriptionCourte = trim($_POST['description_courte'] ?? '');
+    $descriptionLongue = trim($_POST['description_longue'] ?? '');
+    $nbPersonnesMin = (int) ($_POST['nb_personnes_min'] ?? 0);
+    $prixParPersonne = (float) ($_POST['prix_par_personne'] ?? 0);
+    $stock = (int) ($_POST['stock'] ?? 0);
+    $conditions = trim($_POST['conditions'] ?? '');
+
+    $themeId = (int) ($_POST['theme_id'] ?? 0);
+    $regimeId = (int) ($_POST['regime_id'] ?? 0);
+
+    $entreeId = (int) ($_POST['entree_id'] ?? 0);
+    $platPrincipalId = (int) ($_POST['plat_principal_id'] ?? 0);
+    $dessertId = (int) ($_POST['dessert_id'] ?? 0);
+
+    if (
+        $titre === '' ||
+        $descriptionCourte === '' ||
+        $descriptionLongue === '' ||
+        $nbPersonnesMin <= 0 ||
+        $prixParPersonne <= 0 ||
+        $stock < 0 ||
+        $conditions === '' ||
+        $themeId <= 0 ||
+        $regimeId <= 0 ||
+        $entreeId <= 0 ||
+        $platPrincipalId <= 0 ||
+        $dessertId <= 0
+    ) {
+
+        $error = "Tous les champs sont obligatoires.";
+
+    } else {
+
+        $menuModel->updateMenu(
+            $menuId,
+            $titre,
+            $descriptionCourte,
+            $descriptionLongue,
+            $nbPersonnesMin,
+            $prixParPersonne,
+            $stock,
+            $conditions,
+            $themeId,
+            $regimeId
+        );
+
+        $menuModel->detachPlatsFromMenu($menuId);
+
+        $menuModel->attachPlatToMenu($menuId, $entreeId);
+        $menuModel->attachPlatToMenu($menuId, $platPrincipalId);
+        $menuModel->attachPlatToMenu($menuId, $dessertId);
+
+        header('Location: index.php?url=employe-menus');
+        exit;
+    }
+}
+
+    require_once __DIR__ . '/../Views/pages/employee-menu-edit.php';
+}
+public function deleteMenu(): void
+{
+    Auth::requireRole(['Employé', 'Admin']);
+
+    $menuId = (int) ($_GET['id'] ?? 0);
+
+    $menuModel = new MenuModel();
+
+    if ($menuModel->isUsedInOrder($menuId)) {
+        header('Location: index.php?url=employe-menus&error=used');
+        exit;
+    }
+
+    $menuModel->deleteMenu($menuId);
+
+    header('Location: index.php?url=employe-menus');
+    exit;
+}
 }

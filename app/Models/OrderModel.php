@@ -189,13 +189,10 @@ class OrderModel
     ";
 
         $stmt = $pdo->prepare($sql);
+        $stmt->execute([$orderId, $userId]);
 
-        return $stmt->execute([
-            $orderId,
-            $userId
-        ]);
+        return $stmt->rowCount() > 0;
     }
-
     public function getAllOrders(): array
     {
         $pdo = Database::getConnection();
@@ -259,7 +256,7 @@ class OrderModel
 
         return $stmt->execute([$statusId, $orderId]);
     }
-    public function addOrderTracking(int $orderId, int $statusId): bool
+    public function addOrderTracking(int $orderId, int $statusId, ?int $userId = null): bool
     {
         $pdo = Database::getConnection();
 
@@ -267,14 +264,15 @@ class OrderModel
         INSERT INTO suivi_commande (
             commande_id,
             statut_id,
+            utilisateur_id,
             date_changement
         )
-        VALUES (?, ?, NOW())
+        VALUES (?, ?, ?, NOW())
     ";
 
         $stmt = $pdo->prepare($sql);
 
-        return $stmt->execute([$orderId, $statusId]);
+        return $stmt->execute([$orderId, $statusId, $userId]);
     }
 
     public function getOrderTracking(int $orderId): array
@@ -284,10 +282,17 @@ class OrderModel
         $sql = "
         SELECT
             suivi_commande.date_changement,
-            statut_commande.nom AS statut
+            statut_commande.nom AS statut,
+            utilisateur.nom AS auteur_nom,
+            utilisateur.prenom AS auteur_prenom,
+            role.nom AS auteur_role
         FROM suivi_commande
         INNER JOIN statut_commande 
             ON suivi_commande.statut_id = statut_commande.id
+        LEFT JOIN utilisateur
+            ON suivi_commande.utilisateur_id = utilisateur.id
+        LEFT JOIN role
+            ON utilisateur.role_id = role.id
         WHERE suivi_commande.commande_id = ?
         ORDER BY suivi_commande.date_changement ASC
     ";
@@ -360,7 +365,8 @@ class OrderModel
     ";
 
         $stmt = $pdo->prepare($sql);
+        $stmt->execute([$orderId]);
 
-        return $stmt->execute([$orderId]);
+        return $stmt->rowCount() > 0;
     }
 }

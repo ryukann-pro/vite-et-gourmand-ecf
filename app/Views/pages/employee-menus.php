@@ -15,11 +15,16 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
                 <h2 class="employee-management-subtitle mb-0">Menus existants</h2>
 
-                <a href="#" class="btn employee-management-btn">
+                <a href="index.php?url=employe-menu-create"
+                    class="btn employee-management-btn">
                     Ajouter un menu
                 </a>
             </div>
-
+            <?php if (isset($_GET['error']) && $_GET['error'] === 'used'): ?>
+                <div class="alert alert-danger mb-4">
+                    Impossible de supprimer ce menu car il est utilisé dans une commande.
+                </div>
+            <?php endif; ?>
             <div class="table-responsive">
                 <table class="table align-middle employee-management-table">
                     <thead>
@@ -34,47 +39,40 @@
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>Buffet Signature Réception</td>
-                            <td>Événement</td>
-                            <td>Standard</td>
-                            <td>18 € / personne</td>
-                            <td>10</td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                    <a href="#" class="btn btn-sm employee-management-secondary-btn">Modifier</a>
-                                    <a href="#" class="btn btn-sm employee-management-danger-btn">Supprimer</a>
-                                </div>
-                            </td>
-                        </tr>
+                        <?php foreach ($menus as $menu): ?>
+                            <tr>
+                                <td>
+                                    <?= htmlspecialchars($menu['titre']) ?>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($menu['theme']) ?>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($menu['regime']) ?>
+                                </td>
+                                <td>
+                                    <?= number_format((float) $menu['prix_par_personne'], 2, ',', ' ') ?> € / personne
+                                </td>
+                                <td>
+                                    <?= (int) $menu['stock'] ?>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-end gap-2 flex-wrap">
+                                        <a href="index.php?url=employe-menu-edit&id=<?= (int) $menu['id'] ?>"
+                                            class="btn btn-sm employee-management-secondary-btn">
+                                            Modifier
+                                        </a>
 
-                        <tr>
-                            <td>Festin Végétarien de Noël</td>
-                            <td>Noël</td>
-                            <td>Végétarien</td>
-                            <td>22 € / personne</td>
-                            <td>8</td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                    <a href="#" class="btn btn-sm employee-management-secondary-btn">Modifier</a>
-                                    <a href="#" class="btn btn-sm employee-management-danger-btn">Supprimer</a>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Menu Vegan Équilibré</td>
-                            <td>Classique</td>
-                            <td>Vegan</td>
-                            <td>20 € / personne</td>
-                            <td>12</td>
-                            <td>
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                    <a href="#" class="btn btn-sm employee-management-secondary-btn">Modifier</a>
-                                    <a href="#" class="btn btn-sm employee-management-danger-btn">Supprimer</a>
-                                </div>
-                            </td>
-                        </tr>
+                                        <a
+                                            href="index.php?url=employe-menu-delete&id=<?= (int) $menu['id'] ?>"
+                                            class="btn btn-sm employee-management-danger-btn"
+                                            onclick="return confirm('Supprimer ce menu ?')">
+                                            Supprimer
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
