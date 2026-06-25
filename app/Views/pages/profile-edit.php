@@ -9,35 +9,35 @@
                 Modifier mes informations
             </h1>
 
-            <form>
+            <form method="POST" action="index.php?url=modifier-profil">
 
                 <div class="row">
 
                     <div class="col-12 col-md-6 mb-4">
                         <label class="form-label">Nom</label>
-                        <input type="text" class="form-control" value="Dupont">
+                        <input type="text" class="form-control" name="nom" value="<?= htmlspecialchars($user['nom']) ?>">
                     </div>
 
                     <div class="col-12 col-md-6 mb-4">
                         <label class="form-label">Prénom</label>
-                        <input type="text" class="form-control" value="Julie">
+                        <input type="text" class="form-control" name="prenom" value="<?= htmlspecialchars($user['prenom']) ?>">
                     </div>
 
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Adresse email</label>
-                    <input type="email" class="form-control" value="julie@email.com">
+                    <input type="email" class="form-control" name="email" value="<?= htmlspecialchars($user['email']) ?>">
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Téléphone</label>
-                    <input type="tel" class="form-control" value="06 00 00 00 00">
+                    <input type="tel" class="form-control" name="telephone" value="<?= htmlspecialchars($user['telephone'] ?? '') ?>">
                 </div>
 
                 <div class="mb-5">
                     <label class="form-label">Adresse postale</label>
-                    <input type="text" class="form-control" value="12 rue Sainte-Catherine, 33000 Bordeaux">
+                    <input type="text" class="form-control" name="adresse" value="<?= htmlspecialchars($user['adresse'] ?? '') ?>">
                 </div>
 
                 <div class="profile-edit-actions">

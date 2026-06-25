@@ -16,11 +16,10 @@
                 <div class="col-12 col-md-6">
                     <div class="account-info-box h-100">
                         <h2 class="account-subtitle mb-3">Informations personnelles</h2>
-
-                        <p><strong>Nom :</strong> Dupont</p>
-                        <p><strong>Prénom :</strong> Julie</p>
-                        <p><strong>Email :</strong> julie@email.com</p>
-                        <p><strong>Téléphone :</strong> 06 00 00 00 00</p>
+                        <p><strong>Nom :</strong> <?= htmlspecialchars($user['nom']) ?></p>
+                        <p><strong>Prénom :</strong> <?= htmlspecialchars($user['prenom']) ?></p>
+                        <p><strong>Email :</strong> <?= htmlspecialchars($user['email']) ?></p>
+                        <p><strong>Téléphone :</strong> <?= htmlspecialchars($user['telephone'] ?? '') ?></p>
                     </div>
                 </div>
 
@@ -28,10 +27,7 @@
                     <div class="account-info-box h-100">
                         <h2 class="account-subtitle mb-3">Adresse</h2>
 
-                        <p>
-                            12 rue Sainte-Catherine<br>
-                            33000 Bordeaux
-                        </p>
+<?= htmlspecialchars($user['adresse'] ?? '') ?>
                     </div>
                 </div>
             </div>

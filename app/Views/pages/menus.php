@@ -84,8 +84,10 @@
                     <article class="menu-card">
 
                         <div class="menu-card-img-wrapper">
-                            <img src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($menu['image_url']) ?>"
-                                alt="<?= htmlspecialchars($menu['texte_alternatif']) ?>" class="menu-card-img">
+                            <img
+                                src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($menu['image_url'] ?? 'assets/images/menus/default.jpg') ?>"
+                                alt="<?= htmlspecialchars($menu['texte_alternatif'] ?? $menu['titre']) ?>"
+                                class="menu-card-img">
                         </div>
 
                         <div class="menu-card-body">

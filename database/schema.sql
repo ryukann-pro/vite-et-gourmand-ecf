@@ -176,11 +176,11 @@ CREATE TABLE suivi_commande (
     id INT AUTO_INCREMENT PRIMARY KEY,
     date_changement DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     commande_id INT NOT NULL,
-    statut_id INT NOT NULL
+    statut_id INT NOT NULL,
+    utilisateur_id INT NULL
 );
 
 -- Création de la table avis
-
 CREATE TABLE avis (
     id INT AUTO_INCREMENT PRIMARY KEY,
     note INT NOT NULL CHECK (note >= 1 AND note <= 5),
@@ -300,6 +300,10 @@ FOREIGN KEY (commande_id) REFERENCES commande(id);
 ALTER TABLE suivi_commande
 ADD CONSTRAINT fk_suivi_commande_statut
 FOREIGN KEY (statut_id) REFERENCES statut_commande(id);
+
+ALTER TABLE suivi_commande
+ADD CONSTRAINT fk_suivi_commande_utilisateur
+FOREIGN KEY (utilisateur_id) REFERENCES utilisateur(id);
 
 
 -- Clés étrangères pour la table avis

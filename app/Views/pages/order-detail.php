@@ -47,10 +47,20 @@
                 <?php foreach ($tracking as $track): ?>
                     <li>
                         <i class="bi bi-check-circle-fill"></i>
+
                         <span>
                             <?= htmlspecialchars($track['statut']) ?>
                             —
                             <?= date('d/m/Y H:i', strtotime($track['date_changement'])) ?>
+
+                            <br>
+
+                            <?php if (!empty($track['auteur_nom'])): ?>
+                                <small class="text-muted">
+                                    Par <?= htmlspecialchars($track['auteur_prenom'] . ' ' . $track['auteur_nom']) ?>
+                                    (<?= htmlspecialchars($track['auteur_role']) ?>)
+                                </small>
+                            <?php endif; ?>
                         </span>
                     </li>
                 <?php endforeach; ?>

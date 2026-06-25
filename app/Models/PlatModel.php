@@ -122,4 +122,19 @@ class PlatModel
 
     return (int) $stmt->fetchColumn() > 0;
   }
+  public function getByType(string $type): array
+  {
+    $pdo = Database::getConnection();
+
+    $stmt = $pdo->prepare("
+        SELECT id, nom
+        FROM plat
+        WHERE type_plat = ?
+        ORDER BY nom ASC
+    ");
+
+    $stmt->execute([$type]);
+
+    return $stmt->fetchAll();
+  }
 }
