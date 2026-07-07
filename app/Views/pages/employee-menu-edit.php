@@ -21,7 +21,7 @@
                 </div>
             <?php endif; ?>
 
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
 
                 <div class="mb-4">
                     <label class="form-label">Titre</label>
@@ -191,7 +191,34 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
+                <div class="mb-5">
+                    <label class="form-label">Images actuelles</label>
 
+                    <div class="d-flex gap-3 flex-wrap mb-3">
+                        <?php foreach ($images as $image): ?>
+                            <img
+                                src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($image['url']) ?>"
+                                alt="<?= htmlspecialchars($image['texte_alternatif'] ?? $menu['titre']) ?>"
+                                style="width: 160px; height: 100px; object-fit: cover; border-radius: 8px;">
+                        <?php endforeach; ?>
+                    </div>
+
+                    <label class="form-label">Remplacer les images du menu</label>
+
+                    <input
+                        type="file"
+                        id="menuImagesInput"
+                        name="images[]"
+                        class="form-control"
+                        accept="image/jpeg,image/png,image/webp"
+                        multiple>
+
+                    <div id="selectedImagesList" class="mt-3"></div>
+
+                    <small class="form-text text-muted">
+                        Laissez vide pour conserver les images actuelles. Sinon, ajoutez entre 1 et 3 nouvelles images.
+                    </small>
+                </div>
                 <button type="submit" class="btn employee-management-btn">
                     Enregistrer les modifications
                 </button>
@@ -206,5 +233,5 @@
 
     </section>
 </main>
-
+<script src="/vite-et-gourmand-ecf/public/assets/js/menu-images.js"></script>
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

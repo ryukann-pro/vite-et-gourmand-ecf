@@ -377,9 +377,10 @@ public function isUsedInOrder(int $menuId): bool
 
 public function deleteMenu(int $menuId): bool
 {
-    $pdo = Database::getConnection();
-
+    $this->deleteImagesByMenuId($menuId);
     $this->detachPlatsFromMenu($menuId);
+
+    $pdo = Database::getConnection();
 
     $stmt = $pdo->prepare("
         DELETE FROM menu
@@ -387,5 +388,200 @@ public function deleteMenu(int $menuId): bool
     ");
 
     return $stmt->execute([$menuId]);
+}
+private function slugify(string $text): string
+{
+    $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
+    $text = strtolower($text);
+    $text = preg_replace('/[^a-z0-9]+/', '-', $text);
+    $text = trim($text, '-');
+
+    return $text ?: 'menu';
+}
+public function getThemeNameById(int $id): ?string
+{
+    $pdo = Database::getConnection();
+
+    $stmt = $pdo->prepare("
+        SELECT nom
+        FROM theme
+        WHERE id = ?
+    ");
+
+    $stmt->execute([$id]);
+
+    $theme = $stmt->fetchColumn();
+
+    return $theme ?: null;
+}
+public function saveMenuImages(
+    int $menuId,
+    string $titre,
+    string $theme,
+    array $images
+): bool {
+    $allowedTypes = [
+        'image/jpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/webp' => 'webp'
+    ];
+
+    $themeSlug = $this->getThemeFolder($theme);
+    $menuSlug = $menuId . '-' . $this->slugify($titre);
+
+    $relativeDir = "assets/images/menus/$themeSlug/$menuSlug";
+    $absoluteDir = __DIR__ . "/../../public/$relativeDir";
+
+    if (!is_dir($absoluteDir)) {
+        mkdir($absoluteDir, 0777, true);
+    }
+
+    $pdo = Database::getConnection();
+
+    foreach ($images['name'] as $index => $name) {
+        if ($images['error'][$index] !== UPLOAD_ERR_OK) {
+            return false;
+        }
+
+        $tmpName = $images['tmp_name'][$index];
+        $mimeType = mime_content_type($tmpName);
+
+        if (!isset($allowedTypes[$mimeType])) {
+            return false;
+        }
+
+        $order = $index + 1;
+        $extension = $allowedTypes[$mimeType];
+
+        $fileName = "image-$order.$extension";
+        $relativePath = "$relativeDir/$fileName";
+        $absolutePath = "$absoluteDir/$fileName";
+
+        if (!move_uploaded_file($tmpName, $absolutePath)) {
+            return false;
+        }
+
+        $stmt = $pdo->prepare("
+            INSERT INTO image (
+                url,
+                texte_alternatif,
+                ordre_affichage,
+                menu_id
+            )
+            VALUES (?, ?, ?, ?)
+        ");
+
+        $stmt->execute([
+            $relativePath,
+            $titre,
+            $order,
+            $menuId
+        ]);
+    }
+
+    return true;
+}
+private function getThemeFolder(string $theme): string
+{
+    return match ($theme) {
+        'Classique' => 'classique',
+        'Événement' => 'evenement',
+        'Noël' => 'noel',
+        'Pâques' => 'paques',
+        default => $this->slugify($theme),
+    };
+}
+public function deleteImagesByMenuId(int $menuId): bool
+{
+    $images = $this->getImagesByMenuId($menuId);
+
+    $oldDirectory = null;
+
+    if (!empty($images)) {
+        $oldDirectory = dirname(__DIR__ . '/../../public/' . $images[0]['url']);
+    }
+
+    foreach ($images as $image) {
+        $absolutePath = __DIR__ . '/../../public/' . $image['url'];
+
+        if (file_exists($absolutePath)) {
+            unlink($absolutePath);
+        }
+    }
+
+    if ($oldDirectory !== null && is_dir($oldDirectory)) {
+        $filesInDirectory = array_diff(scandir($oldDirectory), ['.', '..']);
+
+        if (empty($filesInDirectory)) {
+            rmdir($oldDirectory);
+        }
+    }
+
+    $pdo = Database::getConnection();
+
+    $stmt = $pdo->prepare("
+        DELETE FROM image
+        WHERE menu_id = ?
+    ");
+
+    return $stmt->execute([$menuId]);
+}
+public function replaceMenuImages(
+    int $menuId,
+    string $titre,
+    string $theme,
+    array $files
+): bool {
+
+    // Récupère les anciennes images
+    $images = $this->getImagesByMenuId($menuId);
+
+    $oldDirectory = null;
+
+    // Récupère le dossier des anciennes images
+    if (!empty($images)) {
+        $oldDirectory = dirname(__DIR__ . '/../../public/' . $images[0]['url']);
+    }
+
+    // Supprime les anciens fichiers
+    foreach ($images as $image) {
+
+        $absolutePath = __DIR__ . '/../../public/' . $image['url'];
+
+        if (file_exists($absolutePath)) {
+            unlink($absolutePath);
+        }
+    }
+
+    // Supprime le dossier s'il est vide
+    if (
+        $oldDirectory !== null &&
+        is_dir($oldDirectory)
+    ) {
+
+        $filesInDirectory = array_diff(scandir($oldDirectory), ['.', '..']);
+
+        if (empty($filesInDirectory)) {
+            rmdir($oldDirectory);
+        }
+    }
+
+    // Supprime les anciennes lignes de la base
+    $pdo = Database::getConnection();
+
+    $stmt = $pdo->prepare("
+        DELETE FROM image
+        WHERE menu_id = ?
+    ");
+
+    $stmt->execute([$menuId]);
+
+    // Enregistre les nouvelles images
+    return $this->saveMenuImages(
+        $menuId,
+        $titre,
+        $theme,
+        $files
+    );
 }
 }
