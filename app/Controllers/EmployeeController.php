@@ -164,27 +164,29 @@ class EmployeeController
     {
         Auth::requireRole(['Employé', 'Admin']);
 
+        $platModel = new PlatModel();
+        $allergenes = $platModel->getAllAllergenes();
+
         $error = null;
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $nom = trim($_POST['nom'] ?? '');
             $typePlat = trim($_POST['type_plat'] ?? '');
             $description = trim($_POST['description'] ?? '');
+            $allergeneIds = $_POST['allergenes'] ?? [];
 
             if ($nom === '' || $typePlat === '' || $description === '') {
                 $error = "Tous les champs sont obligatoires.";
             } elseif (!in_array($typePlat, ['Entrée', 'Plat principal', 'Dessert'])) {
                 $error = "Type de plat invalide.";
             } else {
-                $platModel = new PlatModel();
+                $platId = $platModel->create($nom, $typePlat, $description);
 
-                $created = $platModel->create(
-                    $nom,
-                    $typePlat,
-                    $description
-                );
+                if ($platId > 0) {
+                    foreach ($allergeneIds as $allergeneId) {
+                        $platModel->attachAllergeneToPlat($platId, (int) $allergeneId);
+                    }
 
-                if ($created) {
                     header('Location: index.php?url=employe-plats');
                     exit;
                 }
@@ -203,7 +205,8 @@ class EmployeeController
 
         $platId = (int) ($_GET['id'] ?? 0);
         $plat = $platModel->getById($platId);
-
+        $allergenes = $platModel->getAllAllergenes();
+        $selectedAllergenes = $platModel->getAllergeneIdsByPlatId($platId);
         if (!$plat) {
             http_response_code(404);
             echo "Plat introuvable";
@@ -216,6 +219,7 @@ class EmployeeController
             $nom = trim($_POST['nom'] ?? '');
             $typePlat = trim($_POST['type_plat'] ?? '');
             $description = trim($_POST['description'] ?? '');
+            $allergeneIds = $_POST['allergenes'] ?? [];
 
             if ($nom === '' || $typePlat === '' || $description === '') {
                 $error = "Tous les champs sont obligatoires.";
@@ -230,6 +234,14 @@ class EmployeeController
                 );
 
                 if ($updated) {
+                    $platModel->detachAllergenesFromPlat($platId);
+
+                    foreach ($allergeneIds as $allergeneId) {
+                        $platModel->attachAllergeneToPlat(
+                            $platId,
+                            (int) $allergeneId
+                        );
+                    }
                     header('Location: index.php?url=employe-plats');
                     exit;
                 }
@@ -267,219 +279,219 @@ class EmployeeController
         exit;
     }
     public function createMenu(): void
-{
-    Auth::requireRole(['Employé', 'Admin']);
+    {
+        Auth::requireRole(['Employé', 'Admin']);
 
-    $menuModel = new MenuModel();
-    $platModel = new PlatModel();
+        $menuModel = new MenuModel();
+        $platModel = new PlatModel();
 
-    $themes = $menuModel->getThemes();
-    $regimes = $menuModel->getRegimes();
+        $themes = $menuModel->getThemes();
+        $regimes = $menuModel->getRegimes();
 
-    $entrees = $platModel->getByType('Entrée');
-    $platsPrincipaux = $platModel->getByType('Plat principal');
-    $desserts = $platModel->getByType('Dessert');
+        $entrees = $platModel->getByType('Entrée');
+        $platsPrincipaux = $platModel->getByType('Plat principal');
+        $desserts = $platModel->getByType('Dessert');
 
-    $error = null;
+        $error = null;
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $titre = trim($_POST['titre'] ?? '');
-        $descriptionCourte = trim($_POST['description_courte'] ?? '');
-        $descriptionLongue = trim($_POST['description_longue'] ?? '');
-        $nbPersonnesMin = (int) ($_POST['nb_personnes_min'] ?? 0);
-        $prixParPersonne = (float) ($_POST['prix_par_personne'] ?? 0);
-        $stock = (int) ($_POST['stock'] ?? 0);
-        $conditions = trim($_POST['conditions'] ?? '');
+            $titre = trim($_POST['titre'] ?? '');
+            $descriptionCourte = trim($_POST['description_courte'] ?? '');
+            $descriptionLongue = trim($_POST['description_longue'] ?? '');
+            $nbPersonnesMin = (int) ($_POST['nb_personnes_min'] ?? 0);
+            $prixParPersonne = (float) ($_POST['prix_par_personne'] ?? 0);
+            $stock = (int) ($_POST['stock'] ?? 0);
+            $conditions = trim($_POST['conditions'] ?? '');
 
-        $themeId = (int) ($_POST['theme_id'] ?? 0);
-        $regimeId = (int) ($_POST['regime_id'] ?? 0);
+            $themeId = (int) ($_POST['theme_id'] ?? 0);
+            $regimeId = (int) ($_POST['regime_id'] ?? 0);
 
-        $entreeId = (int) ($_POST['entree_id'] ?? 0);
-        $platPrincipalId = (int) ($_POST['plat_principal_id'] ?? 0);
-        $dessertId = (int) ($_POST['dessert_id'] ?? 0);
+            $entreeId = (int) ($_POST['entree_id'] ?? 0);
+            $platPrincipalId = (int) ($_POST['plat_principal_id'] ?? 0);
+            $dessertId = (int) ($_POST['dessert_id'] ?? 0);
 
-        $imageCount = count(array_filter($_FILES['images']['name'] ?? []));
+            $imageCount = count(array_filter($_FILES['images']['name'] ?? []));
 
-        if (
-            $titre === '' ||
-            $descriptionCourte === '' ||
-            $descriptionLongue === '' ||
-            $nbPersonnesMin <= 0 ||
-            $prixParPersonne <= 0 ||
-            $stock < 0 ||
-            $conditions === '' ||
-            $themeId <= 0 ||
-            $regimeId <= 0 ||
-            $entreeId <= 0 ||
-            $platPrincipalId <= 0 ||
-            $dessertId <= 0 ||
-            $imageCount < 1 ||
-            $imageCount > 3
-        ) {
-            $error = "Tous les champs sont obligatoires et vous devez ajouter entre 1 et 3 images.";
-        } else {
-
-            $menuId = $menuModel->createMenu(
-                $titre,
-                $descriptionCourte,
-                $descriptionLongue,
-                $nbPersonnesMin,
-                $prixParPersonne,
-                $stock,
-                $conditions,
-                $themeId,
-                $regimeId
-            );
-
-            $menuModel->attachPlatToMenu($menuId, $entreeId);
-            $menuModel->attachPlatToMenu($menuId, $platPrincipalId);
-            $menuModel->attachPlatToMenu($menuId, $dessertId);
-
-            $themeName = $menuModel->getThemeNameById($themeId);
-
-            if ($themeName === null) {
-                $error = "Thème invalide.";
+            if (
+                $titre === '' ||
+                $descriptionCourte === '' ||
+                $descriptionLongue === '' ||
+                $nbPersonnesMin <= 0 ||
+                $prixParPersonne <= 0 ||
+                $stock < 0 ||
+                $conditions === '' ||
+                $themeId <= 0 ||
+                $regimeId <= 0 ||
+                $entreeId <= 0 ||
+                $platPrincipalId <= 0 ||
+                $dessertId <= 0 ||
+                $imageCount < 1 ||
+                $imageCount > 3
+            ) {
+                $error = "Tous les champs sont obligatoires et vous devez ajouter entre 1 et 3 images.";
             } else {
-                $imagesSaved = $menuModel->saveMenuImages(
-                    $menuId,
+
+                $menuId = $menuModel->createMenu(
                     $titre,
-                    $themeName,
-                    $_FILES['images']
+                    $descriptionCourte,
+                    $descriptionLongue,
+                    $nbPersonnesMin,
+                    $prixParPersonne,
+                    $stock,
+                    $conditions,
+                    $themeId,
+                    $regimeId
                 );
 
-                if ($imagesSaved) {
-                    header('Location: index.php?url=employe-menus');
-                    exit;
-                }
+                $menuModel->attachPlatToMenu($menuId, $entreeId);
+                $menuModel->attachPlatToMenu($menuId, $platPrincipalId);
+                $menuModel->attachPlatToMenu($menuId, $dessertId);
 
-                $error = "Erreur lors de l'enregistrement des images.";
-            }
-        }
-    }
-
-    require_once __DIR__ . '/../Views/pages/employee-menu-create.php';
-}
-public function editMenu(): void
-{
-    Auth::requireRole(['Employé', 'Admin']);
-
-    $menuModel = new MenuModel();
-    $platModel = new PlatModel();
-
-    $menuId = (int) ($_GET['id'] ?? 0);
-    $menu = $menuModel->getByIdForEmployee($menuId);
-
-    if (!$menu) {
-        http_response_code(404);
-        echo "Menu introuvable";
-        return;
-    }
-
-    $themes = $menuModel->getThemes();
-    $regimes = $menuModel->getRegimes();
-
-    $entrees = $platModel->getByType('Entrée');
-    $platsPrincipaux = $platModel->getByType('Plat principal');
-    $desserts = $platModel->getByType('Dessert');
-    $images = $menuModel->getImagesByMenuId($menuId);
-
-    $selectedPlats = [
-        'Entrée' => 0,
-        'Plat principal' => 0,
-        'Dessert' => 0
-    ];
-
-    foreach ($menuModel->getPlatIdsByMenuId($menuId) as $plat) {
-        $selectedPlats[$plat['type_plat']] = (int) $plat['id'];
-    }
-
-    $error = null;
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-        $titre = trim($_POST['titre'] ?? '');
-        $descriptionCourte = trim($_POST['description_courte'] ?? '');
-        $descriptionLongue = trim($_POST['description_longue'] ?? '');
-        $nbPersonnesMin = (int) ($_POST['nb_personnes_min'] ?? 0);
-        $prixParPersonne = (float) ($_POST['prix_par_personne'] ?? 0);
-        $stock = (int) ($_POST['stock'] ?? 0);
-        $conditions = trim($_POST['conditions'] ?? '');
-
-        $themeId = (int) ($_POST['theme_id'] ?? 0);
-        $regimeId = (int) ($_POST['regime_id'] ?? 0);
-
-        $entreeId = (int) ($_POST['entree_id'] ?? 0);
-        $platPrincipalId = (int) ($_POST['plat_principal_id'] ?? 0);
-        $dessertId = (int) ($_POST['dessert_id'] ?? 0);
-
-        $imageCount = count(array_filter($_FILES['images']['name'] ?? []));
-
-        if (
-            $titre === '' ||
-            $descriptionCourte === '' ||
-            $descriptionLongue === '' ||
-            $nbPersonnesMin <= 0 ||
-            $prixParPersonne <= 0 ||
-            $stock < 0 ||
-            $conditions === '' ||
-            $themeId <= 0 ||
-            $regimeId <= 0 ||
-            $entreeId <= 0 ||
-            $platPrincipalId <= 0 ||
-            $dessertId <= 0 ||
-            $imageCount > 3
-        ) {
-            $error = "Tous les champs sont obligatoires. Vous pouvez ajouter au maximum 3 images.";
-        } else {
-
-            $menuModel->updateMenu(
-                $menuId,
-                $titre,
-                $descriptionCourte,
-                $descriptionLongue,
-                $nbPersonnesMin,
-                $prixParPersonne,
-                $stock,
-                $conditions,
-                $themeId,
-                $regimeId
-            );
-
-            $menuModel->detachPlatsFromMenu($menuId);
-
-            $menuModel->attachPlatToMenu($menuId, $entreeId);
-            $menuModel->attachPlatToMenu($menuId, $platPrincipalId);
-            $menuModel->attachPlatToMenu($menuId, $dessertId);
-
-            if ($imageCount > 0) {
                 $themeName = $menuModel->getThemeNameById($themeId);
 
                 if ($themeName === null) {
                     $error = "Thème invalide.";
                 } else {
-                    $imagesReplaced = $menuModel->replaceMenuImages(
+                    $imagesSaved = $menuModel->saveMenuImages(
                         $menuId,
                         $titre,
                         $themeName,
                         $_FILES['images']
                     );
 
-                    if (!$imagesReplaced) {
-                        $error = "Erreur lors du remplacement des images.";
+                    if ($imagesSaved) {
+                        header('Location: index.php?url=employe-menus');
+                        exit;
                     }
+
+                    $error = "Erreur lors de l'enregistrement des images.";
                 }
             }
+        }
 
-            if ($error === null) {
-                header('Location: index.php?url=employe-menus');
-                exit;
+        require_once __DIR__ . '/../Views/pages/employee-menu-create.php';
+    }
+    public function editMenu(): void
+    {
+        Auth::requireRole(['Employé', 'Admin']);
+
+        $menuModel = new MenuModel();
+        $platModel = new PlatModel();
+
+        $menuId = (int) ($_GET['id'] ?? 0);
+        $menu = $menuModel->getByIdForEmployee($menuId);
+
+        if (!$menu) {
+            http_response_code(404);
+            echo "Menu introuvable";
+            return;
+        }
+
+        $themes = $menuModel->getThemes();
+        $regimes = $menuModel->getRegimes();
+
+        $entrees = $platModel->getByType('Entrée');
+        $platsPrincipaux = $platModel->getByType('Plat principal');
+        $desserts = $platModel->getByType('Dessert');
+        $images = $menuModel->getImagesByMenuId($menuId);
+
+        $selectedPlats = [
+            'Entrée' => 0,
+            'Plat principal' => 0,
+            'Dessert' => 0
+        ];
+
+        foreach ($menuModel->getPlatIdsByMenuId($menuId) as $plat) {
+            $selectedPlats[$plat['type_plat']] = (int) $plat['id'];
+        }
+
+        $error = null;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $titre = trim($_POST['titre'] ?? '');
+            $descriptionCourte = trim($_POST['description_courte'] ?? '');
+            $descriptionLongue = trim($_POST['description_longue'] ?? '');
+            $nbPersonnesMin = (int) ($_POST['nb_personnes_min'] ?? 0);
+            $prixParPersonne = (float) ($_POST['prix_par_personne'] ?? 0);
+            $stock = (int) ($_POST['stock'] ?? 0);
+            $conditions = trim($_POST['conditions'] ?? '');
+
+            $themeId = (int) ($_POST['theme_id'] ?? 0);
+            $regimeId = (int) ($_POST['regime_id'] ?? 0);
+
+            $entreeId = (int) ($_POST['entree_id'] ?? 0);
+            $platPrincipalId = (int) ($_POST['plat_principal_id'] ?? 0);
+            $dessertId = (int) ($_POST['dessert_id'] ?? 0);
+
+            $imageCount = count(array_filter($_FILES['images']['name'] ?? []));
+
+            if (
+                $titre === '' ||
+                $descriptionCourte === '' ||
+                $descriptionLongue === '' ||
+                $nbPersonnesMin <= 0 ||
+                $prixParPersonne <= 0 ||
+                $stock < 0 ||
+                $conditions === '' ||
+                $themeId <= 0 ||
+                $regimeId <= 0 ||
+                $entreeId <= 0 ||
+                $platPrincipalId <= 0 ||
+                $dessertId <= 0 ||
+                $imageCount > 3
+            ) {
+                $error = "Tous les champs sont obligatoires. Vous pouvez ajouter au maximum 3 images.";
+            } else {
+
+                $menuModel->updateMenu(
+                    $menuId,
+                    $titre,
+                    $descriptionCourte,
+                    $descriptionLongue,
+                    $nbPersonnesMin,
+                    $prixParPersonne,
+                    $stock,
+                    $conditions,
+                    $themeId,
+                    $regimeId
+                );
+
+                $menuModel->detachPlatsFromMenu($menuId);
+
+                $menuModel->attachPlatToMenu($menuId, $entreeId);
+                $menuModel->attachPlatToMenu($menuId, $platPrincipalId);
+                $menuModel->attachPlatToMenu($menuId, $dessertId);
+
+                if ($imageCount > 0) {
+                    $themeName = $menuModel->getThemeNameById($themeId);
+
+                    if ($themeName === null) {
+                        $error = "Thème invalide.";
+                    } else {
+                        $imagesReplaced = $menuModel->replaceMenuImages(
+                            $menuId,
+                            $titre,
+                            $themeName,
+                            $_FILES['images']
+                        );
+
+                        if (!$imagesReplaced) {
+                            $error = "Erreur lors du remplacement des images.";
+                        }
+                    }
+                }
+
+                if ($error === null) {
+                    header('Location: index.php?url=employe-menus');
+                    exit;
+                }
             }
         }
-    }
 
-    require_once __DIR__ . '/../Views/pages/employee-menu-edit.php';
-}
+        require_once __DIR__ . '/../Views/pages/employee-menu-edit.php';
+    }
     public function deleteMenu(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
