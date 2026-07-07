@@ -57,24 +57,27 @@ class PlatModel
     return $plat ?: null;
   }
 
-  public function create(
+public function create(
     string $nom,
     string $typePlat,
     string $description
-  ): bool {
+): int {
+
     $pdo = Database::getConnection();
 
-    $stmt = $pdo->prepare(
-      "INSERT INTO plat (nom, type_plat, description)
-            VALUES (?, ?, ?)"
-    );
+    $stmt = $pdo->prepare("
+        INSERT INTO plat (nom, type_plat, description)
+        VALUES (?, ?, ?)
+    ");
 
-    return $stmt->execute([
-      $nom,
-      $typePlat,
-      $description
+    $stmt->execute([
+        $nom,
+        $typePlat,
+        $description
     ]);
-  }
+
+    return (int) $pdo->lastInsertId();
+}
 
   public function update(
     int $id,
@@ -100,16 +103,18 @@ class PlatModel
     ]);
   }
 
-  public function delete(int $id): bool
-  {
+public function delete(int $id): bool
+{
     $pdo = Database::getConnection();
 
+    $this->detachAllergenesFromPlat($id);
+
     $stmt = $pdo->prepare(
-      "DELETE FROM plat WHERE id = ?"
+        "DELETE FROM plat WHERE id = ?"
     );
 
     return $stmt->execute([$id]);
-  }
+}
   public function isUsedInMenu(int $id): bool
   {
     $pdo = Database::getConnection();
@@ -136,5 +141,56 @@ class PlatModel
     $stmt->execute([$type]);
 
     return $stmt->fetchAll();
+  }
+  public function getAllAllergenes(): array
+  {
+    $pdo = Database::getConnection();
+
+    $stmt = $pdo->query("
+        SELECT id, nom
+        FROM allergene
+        ORDER BY nom ASC
+    ");
+
+    return $stmt->fetchAll();
+  }
+
+  public function attachAllergeneToPlat(int $platId, int $allergeneId): bool
+  {
+    $pdo = Database::getConnection();
+
+    $stmt = $pdo->prepare("
+        INSERT INTO plat_allergene (plat_id, allergene_id)
+        VALUES (?, ?)
+    ");
+
+    return $stmt->execute([$platId, $allergeneId]);
+  }
+
+  public function detachAllergenesFromPlat(int $platId): bool
+  {
+    $pdo = Database::getConnection();
+
+    $stmt = $pdo->prepare("
+        DELETE FROM plat_allergene
+        WHERE plat_id = ?
+    ");
+
+    return $stmt->execute([$platId]);
+  }
+
+  public function getAllergeneIdsByPlatId(int $platId): array
+  {
+    $pdo = Database::getConnection();
+
+    $stmt = $pdo->prepare("
+        SELECT allergene_id
+        FROM plat_allergene
+        WHERE plat_id = ?
+    ");
+
+    $stmt->execute([$platId]);
+
+    return array_column($stmt->fetchAll(), 'allergene_id');
   }
 }
