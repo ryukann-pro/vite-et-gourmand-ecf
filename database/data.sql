@@ -59,7 +59,13 @@ INSERT INTO allergene (nom) VALUES
 ('Céleri'),
 ('Soja'),
 ('Moutarde'),
-('Sulfites');
+('Sulfites'),
+('Poissons'),
+('Crustacés'),
+('Mollusques'),
+('Arachides'),
+('Lupin'),
+('Graines de sésame');
 
 -- Plats
 INSERT INTO plat (nom, type_plat, description) VALUES

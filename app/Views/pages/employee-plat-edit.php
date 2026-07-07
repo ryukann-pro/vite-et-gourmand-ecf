@@ -35,8 +35,7 @@
                         name="nom"
                         class="form-control"
                         value="<?= htmlspecialchars($plat['nom']) ?>"
-                        required
-                    >
+                        required>
                 </div>
 
                 <div class="mb-4">
@@ -48,8 +47,7 @@
                         id="type_plat"
                         name="type_plat"
                         class="form-select"
-                        required
-                    >
+                        required>
                         <option value="Entrée" <?= $plat['type_plat'] === 'Entrée' ? 'selected' : '' ?>>
                             Entrée
                         </option>
@@ -74,23 +72,59 @@
                         name="description"
                         class="form-control"
                         rows="5"
-                        required
-                    ><?= htmlspecialchars($plat['description']) ?></textarea>
+                        required><?= htmlspecialchars($plat['description']) ?></textarea>
+                </div>
+                <div class="mb-4">
+                    <label class="form-label">
+                        Allergènes
+                    </label>
+
+                    <div class="row">
+
+                        <?php foreach ($allergenes as $allergene): ?>
+
+                            <div class="col-md-4 mb-2">
+                                <div class="form-check">
+
+                                    <input
+                                        class="form-check-input"
+                                        type="checkbox"
+                                        name="allergenes[]"
+                                        value="<?= (int) $allergene['id'] ?>"
+                                        id="allergene<?= (int) $allergene['id'] ?>"
+                                        <?= in_array((int) $allergene['id'], array_map('intval', $selectedAllergenes), true) ? 'checked' : '' ?>>
+
+                                    <label
+                                        class="form-check-label"
+                                        for="allergene<?= (int) $allergene['id'] ?>">
+
+                                        <?= htmlspecialchars($allergene['nom']) ?>
+
+                                    </label>
+
+                                </div>
+                            </div>
+
+                        <?php endforeach; ?>
+
+                    </div>
+
+                    <small class="form-text text-muted">
+                        Cochez les allergènes présents dans ce plat.
+                    </small>
                 </div>
 
                 <div class="d-flex gap-3">
 
                     <button
                         type="submit"
-                        class="btn employee-management-btn"
-                    >
+                        class="btn employee-management-btn">
                         Enregistrer les modifications
                     </button>
 
                     <a
                         href="index.php?url=employe-plats"
-                        class="btn btn-secondary"
-                    >
+                        class="btn btn-secondary">
                         Retour
                     </a>
 
