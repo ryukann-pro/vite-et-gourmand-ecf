@@ -21,33 +21,21 @@
                 </div>
             <?php endif; ?>
 
-            <form method="POST">
+            <form method="POST" enctype="multipart/form-data">
 
                 <div class="mb-4">
                     <label class="form-label">Titre</label>
-                    <input
-                        type="text"
-                        name="titre"
-                        class="form-control"
-                        required>
+                    <input type="text" name="titre" class="form-control" required>
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Description courte</label>
-                    <textarea
-                        name="description_courte"
-                        class="form-control"
-                        rows="2"
-                        required></textarea>
+                    <textarea name="description_courte" class="form-control" rows="2" required></textarea>
                 </div>
 
                 <div class="mb-4">
                     <label class="form-label">Description longue</label>
-                    <textarea
-                        name="description_longue"
-                        class="form-control"
-                        rows="5"
-                        required></textarea>
+                    <textarea name="description_longue" class="form-control" rows="5" required></textarea>
                 </div>
 
                 <div class="row">
@@ -55,10 +43,7 @@
                     <div class="col-md-6 mb-4">
                         <label class="form-label">Thème</label>
 
-                        <select
-                            name="theme_id"
-                            class="form-select"
-                            required>
+                        <select name="theme_id" class="form-select" required>
 
                             <option value="">Choisir...</option>
 
@@ -76,10 +61,7 @@
                     <div class="col-md-6 mb-4">
                         <label class="form-label">Régime</label>
 
-                        <select
-                            name="regime_id"
-                            class="form-select"
-                            required>
+                        <select name="regime_id" class="form-select" required>
 
                             <option value="">Choisir...</option>
 
@@ -101,35 +83,19 @@
                     <div class="col-md-4 mb-4">
                         <label class="form-label">Nombre minimum</label>
 
-                        <input
-                            type="number"
-                            name="nb_personnes_min"
-                            class="form-control"
-                            min="1"
-                            required>
+                        <input type="number" name="nb_personnes_min" class="form-control" min="1" required>
                     </div>
 
                     <div class="col-md-4 mb-4">
                         <label class="form-label">Prix / personne</label>
 
-                        <input
-                            type="number"
-                            name="prix_par_personne"
-                            class="form-control"
-                            step="0.01"
-                            min="0"
-                            required>
+                        <input type="number" name="prix_par_personne" class="form-control" step="0.01" min="0" required>
                     </div>
 
                     <div class="col-md-4 mb-4">
                         <label class="form-label">Stock</label>
 
-                        <input
-                            type="number"
-                            name="stock"
-                            class="form-control"
-                            min="0"
-                            required>
+                        <input type="number" name="stock" class="form-control" min="0" required>
                     </div>
 
                 </div>
@@ -137,11 +103,7 @@
                 <div class="mb-4">
                     <label class="form-label">Conditions</label>
 
-                    <textarea
-                        name="conditions"
-                        class="form-control"
-                        rows="4"
-                        required></textarea>
+                    <textarea name="conditions" class="form-control" rows="4" required></textarea>
                 </div>
 
                 <hr class="my-5">
@@ -154,10 +116,7 @@
 
                     <label class="form-label">Entrée</label>
 
-                    <select
-                        name="entree_id"
-                        class="form-select"
-                        required>
+                    <select name="entree_id" class="form-select" required>
 
                         <option value="">Choisir une entrée...</option>
 
@@ -177,10 +136,7 @@
 
                     <label class="form-label">Plat principal</label>
 
-                    <select
-                        name="plat_principal_id"
-                        class="form-select"
-                        required>
+                    <select name="plat_principal_id" class="form-select" required>
 
                         <option value="">Choisir un plat...</option>
 
@@ -200,10 +156,7 @@
 
                     <label class="form-label">Dessert</label>
 
-                    <select
-                        name="dessert_id"
-                        class="form-select"
-                        required>
+                    <select name="dessert_id" class="form-select" required>
 
                         <option value="">Choisir un dessert...</option>
 
@@ -218,10 +171,23 @@
                     </select>
 
                 </div>
+                <div class="mb-5">
+                    <label class="form-label">Images du menu (1 à 3)</label>
 
-                <button
-                    type="submit"
-                    class="btn employee-management-btn">
+                    <input
+                        type="file"
+                        id="menuImagesInput"
+                        name="images[]"
+                        class="form-control"
+                        accept="image/jpeg,image/png,image/webp"
+                        multiple
+                        required>
+                    <div id="selectedImagesList" class="mt-3"></div>
+                    <small class="form-text text-muted">
+                        Ajoutez entre 1 et 3 images au format JPG, PNG ou WEBP.
+                    </small>
+                </div>
+                <button type="submit" class="btn employee-management-btn">
                     Créer le menu
                 </button>
 
@@ -231,5 +197,5 @@
 
     </section>
 </main>
-
+<script src="/vite-et-gourmand-ecf/public/assets/js/menu-images.js"></script>
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
