@@ -1,104 +1,128 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
+<?php
+$maxCommandes = 0;
+
+foreach ($statistics as $statistic) {
+    $commandes = (int) $statistic['commandes'];
+
+    if ($commandes > $maxCommandes) {
+        $maxCommandes = $commandes;
+    }
+}
+?>
+
 <main class="admin-statistics-page py-5">
     <section class="container">
 
         <div class="admin-statistics-header mb-5">
-            <h1 class="admin-statistics-title">Statistiques des commandes</h1>
+            <h1 class="admin-statistics-title">
+                Statistiques des commandes
+            </h1>
+
             <p class="admin-statistics-text">
-                Visualisez le nombre de commandes par menu et comparez les performances.
+                Visualisez le nombre de commandes terminées par menu et comparez les performances.
             </p>
         </div>
 
         <div class="admin-statistics-card mb-5">
-            <h2 class="admin-statistics-subtitle mb-4">Commandes par menu</h2>
+            <h2 class="admin-statistics-subtitle mb-4">
+                Commandes par menu
+            </h2>
 
-            <div class="statistics-chart-placeholder">
-                <div class="statistics-bar" style="height: 75%;">
-                    <span>12</span>
-                    <p>Buffet</p>
+            <?php if ($totalCommandes > 0): ?>
+
+                <div class="statistics-chart-placeholder <?= count($statistics) > 8 ? 'statistics-scroll' : '' ?>">
+
+                    <?php foreach ($statistics as $statistic): ?>
+
+                        <?php
+                        $commandes = (int) $statistic['commandes'];
+
+                        $height = max(
+                            5,
+                            round(($commandes / $maxCommandes) * 90)
+                        );
+                        ?>
+
+                        <div
+                            class="statistics-bar"
+                            style="height: <?= $height ?>%;">
+                            <?php if ($commandes > 0): ?>
+                                <span><?= $commandes ?></span>
+                            <?php endif; ?>
+
+                            <p>
+                                <?= htmlspecialchars($statistic['menu']) ?>
+                            </p>
+                        </div>
+
+                    <?php endforeach; ?>
+
                 </div>
 
-                <div class="statistics-bar" style="height: 50%;">
-                    <span>8</span>
-                    <p>Noël végé</p>
+            <?php else: ?>
+
+                <div class="statistics-empty">
+                    <p>
+                        Aucune commande terminée pour le moment.
+                    </p>
                 </div>
 
-                <div class="statistics-bar" style="height: 65%;">
-                    <span>10</span>
-                    <p>Vegan</p>
-                </div>
-
-                <div class="statistics-bar" style="height: 35%;">
-                    <span>5</span>
-                    <p>Pâques</p>
-                </div>
-
-                <div class="statistics-bar" style="height: 45%;">
-                    <span>7</span>
-                    <p>Cocktail</p>
-                </div>
-
-                <div class="statistics-bar" style="height: 90%;">
-                    <span>15</span>
-                    <p>Festif</p>
-                </div>
-            </div>
+            <?php endif; ?>
         </div>
 
-        <div class="admin-statistics-card">
-            <h2 class="admin-statistics-subtitle mb-4">Détail comparatif</h2>
+        <?php if ($totalCommandes > 0): ?>
 
-            <div class="table-responsive">
-                <table class="table align-middle">
-                    <thead>
-                        <tr>
-                            <th>Menu</th>
-                            <th>Nombre de commandes</th>
-                            <th>Part approximative</th>
-                        </tr>
-                    </thead>
+            <div class="admin-statistics-card">
+                <h2 class="admin-statistics-subtitle mb-4">
+                    Détail comparatif
+                </h2>
 
-                    <tbody>
-                        <tr>
-                            <td>Buffet Signature Réception</td>
-                            <td>12</td>
-                            <td>21%</td>
-                        </tr>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Menu</th>
+                                <th>Nombre de commandes</th>
+                                <th>Part approximative</th>
+                            </tr>
+                        </thead>
 
-                        <tr>
-                            <td>Festin Végétarien de Noël</td>
-                            <td>8</td>
-                            <td>14%</td>
-                        </tr>
+                        <tbody>
 
-                        <tr>
-                            <td>Menu Vegan Équilibré</td>
-                            <td>10</td>
-                            <td>18%</td>
-                        </tr>
+                            <?php foreach ($statistics as $statistic): ?>
 
-                        <tr>
-                            <td>Tradition Gourmande de Pâques</td>
-                            <td>5</td>
-                            <td>9%</td>
-                        </tr>
+                                <?php
+                                $commandes = (int) $statistic['commandes'];
 
-                        <tr>
-                            <td>Cocktail Vegan Événementiel</td>
-                            <td>7</td>
-                            <td>12%</td>
-                        </tr>
+                                $part = round(
+                                    ($commandes / $totalCommandes) * 100
+                                );
+                                ?>
 
-                        <tr>
-                            <td>Menu Festif Traditionnel</td>
-                            <td>15</td>
-                            <td>26%</td>
-                        </tr>
-                    </tbody>
-                </table>
+                                <tr>
+                                    <td>
+                                        <?= htmlspecialchars($statistic['menu']) ?>
+                                    </td>
+
+                                    <td>
+                                        <?= $commandes ?>
+                                    </td>
+
+                                    <td>
+                                        <?= $part ?> %
+                                    </td>
+                                </tr>
+
+                            <?php endforeach; ?>
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+
+        <?php endif; ?>
 
     </section>
 </main>

@@ -2776,9 +2776,8 @@ TEAM SECTION
 
 
 /* ===========================================
-            PAGE STATISTIQUES
+   PAGE STATISTIQUES ADMIN
 =========================================== */
-
 
 .admin-statistics-page {
     background-color: var(--vg-bg);
@@ -2812,42 +2811,127 @@ TEAM SECTION
     font-size: 1.8rem;
 }
 
+/* ===========================================
+   GRAPHIQUE
+=========================================== */
+
 .statistics-chart-placeholder {
-    height: 300px;
+    height: 340px;
     display: flex;
-    align-items: end;
-    gap: 1.5rem;
-    padding-top: 2rem;
+    align-items: flex-end;
+    gap: 20px;
+
+    padding: 20px 10px 55px;
     border-bottom: 2px solid #e5e5e5;
 }
 
+/* Cas normal : les barres occupent toute la largeur */
 .statistics-bar {
     flex: 1;
-    min-width: 70px;
+    min-width: 80px;
+
     background-color: var(--vg-cta);
     border-radius: 8px 8px 0 0;
+
     position: relative;
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    color: #ffffff;
+
+    color: #fff;
     font-weight: 700;
     padding-top: 0.7rem;
 }
 
-.statistics-bar p {
-    position: absolute;
-    bottom: -2.5rem;
-    color: var(--bs-secondary);
-    font-size: 0.85rem;
-    text-align: center;
-    margin: 0;
-    width: 100%;
+/* Beaucoup de menus : activation du scroll */
+.statistics-chart-placeholder.statistics-scroll {
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    scrollbar-width: thin;
+    scrollbar-color: var(--vg-cta) #eeeeee;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+.statistics-chart-placeholder.statistics-scroll .statistics-bar {
+    flex: 0 0 130px;
+    min-width: 130px;
+}
+
+.statistics-chart-placeholder.statistics-scroll::-webkit-scrollbar {
+    height: 9px;
+}
+
+.statistics-chart-placeholder.statistics-scroll::-webkit-scrollbar-track {
+    background: #eeeeee;
+    border-radius: 10px;
+}
+
+.statistics-chart-placeholder.statistics-scroll::-webkit-scrollbar-thumb {
+    background: var(--vg-cta);
+    border-radius: 10px;
+}
+
+.statistics-bar span {
+    position: relative;
+    z-index: 1;
+}
+
+.statistics-bar p {
+    position: absolute;
+    bottom: -3.6rem;
+    left: 50%;
+
+    width: 125px;
+    margin: 0;
+
+    transform: translateX(-50%);
+
+    color: var(--bs-dark);
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
+}
+.statistics-empty {
+    min-height: 280px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: #fafafa;
+    border: 2px dashed #d5d5d5;
+    border-radius: 12px;
+}
+
+.statistics-empty p {
+    margin: 0;
+    color: var(--bs-dark);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+}
+/* ===========================================
+   TABLEAU COMPARATIF
+=========================================== */
+
+.admin-statistics-card .table {
+    margin-bottom: 0;
+}
+
+.admin-statistics-card .table th {
+    color: var(--bs-dark);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.admin-statistics-card .table td {
+    color: var(--bs-dark);
+    vertical-align: middle;
+}
+
+/* ===========================================
+   RESPONSIVE TABLETTE
+=========================================== */
 
 @media screen and (max-width: 992px) {
     .admin-statistics-title {
@@ -2859,25 +2943,65 @@ TEAM SECTION
     }
 
     .statistics-chart-placeholder {
-        overflow-x: auto;
+        height: 320px;
+        gap: 15px;
+        padding-bottom: 55px;
     }
 
     .statistics-bar {
-        flex: 0 0 90px;
+        flex-basis: 110px;
+        min-width: 110px;
+    }
+
+    .statistics-bar p {
+        width: 105px;
+        font-size: 0.8rem;
     }
 }
+
+/* ===========================================
+   RESPONSIVE MOBILE
+=========================================== */
 
 @media screen and (max-width: 576px) {
     .admin-statistics-title {
         font-size: 2rem;
     }
 
+    .admin-statistics-text {
+        font-size: 0.95rem;
+    }
+
     .admin-statistics-card {
         padding: 1.5rem 1rem;
+        border-radius: 12px;
+    }
+
+    .admin-statistics-subtitle {
+        font-size: 1.5rem;
+    }
+
+    .statistics-chart-placeholder {
+        height: 290px;
+        gap: 12px;
+        padding: 15px 5px 55px;
+    }
+
+    .statistics-bar {
+        flex-basis: 95px;
+        min-width: 95px;
+    }
+
+    .statistics-bar p {
+        width: 90px;
+        bottom: -3.5rem;
+        font-size: 0.76rem;
+    }
+
+    .admin-statistics-card .table {
+        min-width: 650px;
     }
 }
-
-
 /* ===========================================
             PAGE CHIFFRE D'AFFAIRES
 =========================================== */
@@ -2946,6 +3070,25 @@ TEAM SECTION
     vertical-align: middle;
 }
 
+.turnover-empty {
+    min-height: 260px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+
+    background-color: #fafafa;
+    border: 2px dashed #d5d5d5;
+    border-radius: 12px;
+}
+
+.turnover-empty p {
+    margin: 0;
+    color: var(--bs-dark);
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+}
 /* =========================
    RESPONSIVE
 ========================= */

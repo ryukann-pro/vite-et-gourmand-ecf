@@ -1,6 +1,9 @@
 # Variables sensibles
 .env
 
+# Dépendances composer
+/vendor/
+
 # Logs
 *.log
 logs/
@@ -23,3 +26,8 @@ test_password.php
 hash_client.php
 
 public/test-db.php
+public/test-mongo.php
+public/test-stats.php
+public/test-stats-sql.php
+public/test-stats-sync.php
+public/test-turnover-sync.php
