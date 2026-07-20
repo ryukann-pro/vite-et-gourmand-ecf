@@ -128,32 +128,32 @@ INSERT INTO menu (
 ('Buffet Signature Réception',
 'Buffet traiteur complet pour réceptions professionnelles ou privées, équilibré et gourmand.',
 'Un buffet complet pensé pour les réceptions professionnelles ou privées, avec une entrée fraîche, un plat généreux et un dessert gourmand.',
-10, 18.00, 10, 'Commande au moins 3 jours avant la prestation.', 2, 1, 1),
+10, 18.00, 20, 'Commande au moins 3 jours avant la prestation.', 2, 1, 1),
 
 ('Festin Végétarien de Noël',
 'Menu festif végétarien de Noël avec plats chauds et accompagnements de saison.',
 'Un menu végétarien chaleureux et festif, idéal pour célébrer Noël avec des produits de saison.',
-8, 22.00, 8, 'Commande au moins 5 jours avant la prestation.', 3, 3, 1),
+8, 22.00, 18, 'Commande au moins 5 jours avant la prestation.', 3, 3, 1),
 
 ('Menu Vegan Équilibré',
 'Menu vegan complet et équilibré pour repas du quotidien.',
 'Un menu vegan complet, équilibré et savoureux, pensé pour allier gourmandise et légèreté.',
-6, 20.00, 12, 'Commande au moins 3 jours avant la prestation.', 1, 2, 1),
+6, 20.00, 16, 'Commande au moins 3 jours avant la prestation.', 1, 2, 1),
 
 ('Tradition Gourmande de Pâques',
 'Menu traditionnel de Pâques avec plats rôtis et garnitures printanières.',
 'Un menu de Pâques généreux et traditionnel, composé de recettes gourmandes et printanières.',
-8, 24.00, 8, 'Commande au moins 5 jours avant la prestation.', 4, 1, 1),
+8, 24.00, 18, 'Commande au moins 5 jours avant la prestation.', 4, 1, 1),
 
 ('Cocktail Vegan Événementiel',
 'Buffet vegan moderne avec finger food pour événements.',
 'Un cocktail vegan moderne, pratique et convivial, idéal pour les événements professionnels ou privés.',
-15, 21.00, 10, 'Commande au moins 4 jours avant la prestation.', 2, 2, 1),
+15, 21.00, 25, 'Commande au moins 4 jours avant la prestation.', 2, 2, 1),
 
 ('Menu Festif Traditionnel',
 'Menu festif traditionnel avec entrée, plat et dessert de saison.',
 'Un menu festif classique et généreux, parfait pour les repas de fête et les grandes occasions.',
-5, 32.00, 6, 'Commande au moins 1 semaine avant la prestation.', 3, 1, 1);
+5, 32.00, 16, 'Commande au moins 1 semaine avant la prestation.', 3, 1, 1);
 
 -- Liens menus / plats
 INSERT INTO menu_plat (menu_id, plat_id) VALUES

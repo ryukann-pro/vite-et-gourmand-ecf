@@ -60,7 +60,13 @@ class OrderController
             ) {
                 $error = "Tous les champs sont obligatoires.";
             } elseif ($nbPersonnes < (int) $menu['nb_personnes_min']) {
-                $error = "Le nombre minimum de personnes pour ce menu est de " . (int) $menu['nb_personnes_min'] . ".";
+                $error = "Le nombre minimum de personnes pour ce menu est de "
+                    . (int) $menu['nb_personnes_min']
+                    . ".";
+            } elseif ($nbPersonnes > (int) $menu['stock']) {
+                $error = "Il ne reste que "
+                    . (int) $menu['stock']
+                    . " places disponibles pour ce menu.";
             } elseif (!$city) {
                 $error = "Ville invalide.";
             } elseif ($dateLivraison < $dateToday) {
