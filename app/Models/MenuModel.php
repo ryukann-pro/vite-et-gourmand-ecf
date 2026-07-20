@@ -43,6 +43,7 @@ class MenuModel
             menu.nb_personnes_min,
             menu.prix_par_personne,
             menu.conditions,
+            menu.stock,
             regime.nom AS regime,
             theme.nom AS theme
         FROM menu

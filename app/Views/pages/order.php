@@ -69,7 +69,9 @@ $total = $sousTotal - $reduction + $fraisLivraison;
                                 <label for="villeLivraison" class="form-label">Ville de livraison</label>
                                 <select id="villeLivraison" name="ville_id" class="form-select" required>
                                     <?php foreach ($cities as $city): ?>
-                                        <option value="<?= (int) $city['id'] ?>">
+                                        <option
+                                            value="<?= (int) $city['id'] ?>"
+                                            data-distance="<?= (float) $city['distance_km'] ?>">
                                             <?= htmlspecialchars($city['nom']) ?>
                                         </option>
                                     <?php endforeach; ?>
@@ -78,8 +80,15 @@ $total = $sousTotal - $reduction + $fraisLivraison;
 
                             <div class="col-12 col-md-6 mb-4">
                                 <label for="nbPersonnes" class="form-label">Nombre de personnes</label>
-                                <input type="number" id="nbPersonnes" name="nb_personnes" class="form-control"
-                                    value="<?= $nbPersonnesMin ?>" min="<?= $nbPersonnesMin ?>" required>
+                                <input
+                                    type="number"
+                                    id="nbPersonnes"
+                                    name="nb_personnes"
+                                    class="form-control"
+                                    min="<?= (int) $menu['nb_personnes_min'] ?>"
+                                    max="<?= (int) $menu['stock'] ?>"
+                                    value="<?= (int) $menu['nb_personnes_min'] ?>"
+                                    required>
                                 <small class="order-help">
                                     Minimum <?= $nbPersonnesMin ?> personnes pour ce menu
                                 </small>
@@ -157,34 +166,47 @@ $total = $sousTotal - $reduction + $fraisLivraison;
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Prix par personne</span>
-                                <strong><?= number_format($prixUnitaire, 2, ',', ' ') ?> €</strong>
+                                <strong
+                                    id="prixUnitaire"
+                                    data-prix="<?= $prixUnitaire ?>"
+                                    data-minimum="<?= $nbPersonnesMin ?>">
+                                    <?= number_format($prixUnitaire, 2, ',', ' ') ?> €
+                                </strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Nombre de personnes</span>
-                                <strong><?= $nbPersonnesMin ?></strong>
+                                <strong id="resumeNbPersonnes">
+                                    <?= $nbPersonnesMin ?>
+                                </strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Sous-total menu</span>
-                                <strong><?= number_format($sousTotal, 2, ',', ' ') ?> €</strong>
+                                <strong id="resumeSousTotal">
+                                    <?= number_format($sousTotal, 2, ',', ' ') ?> €
+                                </strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Réduction</span>
-                                <strong>- <?= number_format($reduction, 2, ',', ' ') ?> €</strong>
+                                <strong id="resumeReduction">
+                                    - <?= number_format($reduction, 2, ',', ' ') ?> €
+                                </strong>
                             </div>
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Livraison</span>
-                                <strong><?= number_format($fraisLivraison, 2, ',', ' ') ?> €</strong>
+                                <strong id="resumeLivraison">
+                                    <?= number_format($fraisLivraison, 2, ',', ' ') ?> €
+                                </strong>
                             </div>
 
                             <hr>
 
                             <div class="d-flex justify-content-between">
                                 <span>Total</span>
-                                <strong class="order-total">
+                                <strong class="order-total" id="resumeTotal">
                                     <?= number_format($total, 2, ',', ' ') ?> €
                                 </strong>
                             </div>
@@ -211,5 +233,7 @@ $total = $sousTotal - $reduction + $fraisLivraison;
         </div>
     </section>
 </main>
+
+<script src="<?= BASE_URL ?>/assets/js/order-summary.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
