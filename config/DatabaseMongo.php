@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use MongoDB\Client;
+use MongoDB\Database;
 
 class DatabaseMongo
 {
@@ -11,14 +12,22 @@ class DatabaseMongo
     public static function getConnection(): Client
     {
         if (self::$client === null) {
-            self::$client = new Client('mongodb://localhost:27017');
+            $host = getenv('MONGO_HOST') ?: 'localhost';
+            $port = getenv('MONGO_PORT') ?: '27017';
+
+            self::$client = new Client(
+                "mongodb://{$host}:{$port}"
+            );
         }
 
         return self::$client;
     }
 
-    public static function getDatabase(): \MongoDB\Database
+    public static function getDatabase(): Database
     {
-        return self::getConnection()->selectDatabase('vite_et_gourmand_stats');
+        $database = getenv('MONGO_DATABASE')
+            ?: 'vite_et_gourmand_stats';
+
+        return self::getConnection()->selectDatabase($database);
     }
 }

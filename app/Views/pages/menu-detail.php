@@ -13,9 +13,9 @@
               <?php foreach ($images as $index => $image): ?>
                 <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                   <img
-                    src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($image['url']) ?>"
+                    src="<?= BASE_URL ?>/<?= htmlspecialchars($image['url']) ?>"
                     class="d-block w-100 menu-detail-img"
-                    alt="<?= htmlspecialchars($image['texte_alternatif']) ?>"
+                    alt="<?= htmlspecialchars($image['texte_alternatif'] ?? $menu['titre']) ?>"
                     data-bs-toggle="modal"
                     data-bs-target="#galleryModal"
                   >
@@ -124,9 +124,9 @@
             <?php foreach ($images as $index => $image): ?>
               <div class="carousel-item <?= $index === 0 ? 'active' : '' ?>">
                 <img
-                  src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($image['url']) ?>"
+                  src="<?= BASE_URL ?>/<?= htmlspecialchars($image['url']) ?>"
                   class="d-block w-100 gallery-img"
-                  alt="<?= htmlspecialchars($image['texte_alternatif']) ?>"
+                  alt="<?= htmlspecialchars($image['texte_alternatif'] ?? $menu['titre']) ?>"
                 >
               </div>
             <?php endforeach; ?>

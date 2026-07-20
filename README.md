@@ -54,3 +54,15 @@ DB_PASSWORD=mot_de_passe
 Démarrez WAMP puis : 
 option 1 - accéder à l'URL suivante : http://localhost/vite-et-gourmand-ecf/public/
 option 2 - lancer localhost depuis l'interface de wamp, cliquez sur vite-et-gourmand-ecf et sur public
+
+# Démarrer les conteneurs
+docker compose up -d
+
+# Arrêter les conteneurs
+docker compose down
+
+# Ouvrir MySQL
+docker exec -it vite_et_gourmand_mysql sh -c 'mysql --default-character-set=utf8mb4 -u root -p"$MYSQL_ROOT_PASSWORD" vite_et_gourmand'
+
+# Voir les conteneurs
+docker ps
