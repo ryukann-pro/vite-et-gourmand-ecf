@@ -142,7 +142,7 @@ $total = $sousTotal - $reduction + $fraisLivraison;
 
                         <h2 class="order-summary-title mb-4">Résumé de la commande</h2>
 
-                        <img src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($images[0]['url'] ?? '') ?>"
+                        <img src="<?= BASE_URL ?>/<?= htmlspecialchars($images[0]['url'] ?? '') ?>"
                             alt="<?= htmlspecialchars($menu['titre']) ?>" class="order-summary-img mb-4">
 
                         <h3 class="order-menu-title">

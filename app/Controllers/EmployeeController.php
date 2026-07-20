@@ -177,14 +177,25 @@ class EmployeeController
 
             if ($nom === '' || $typePlat === '' || $description === '') {
                 $error = "Tous les champs sont obligatoires.";
-            } elseif (!in_array($typePlat, ['Entrée', 'Plat principal', 'Dessert'])) {
+            } elseif (!in_array(
+                $typePlat,
+                ['Entrée', 'Plat principal', 'Dessert'],
+                true
+            )) {
                 $error = "Type de plat invalide.";
             } else {
-                $platId = $platModel->create($nom, $typePlat, $description);
+                $platId = $platModel->create(
+                    $nom,
+                    $typePlat,
+                    $description
+                );
 
                 if ($platId > 0) {
                     foreach ($allergeneIds as $allergeneId) {
-                        $platModel->attachAllergeneToPlat($platId, (int) $allergeneId);
+                        $platModel->attachAllergeneToPlat(
+                            $platId,
+                            (int) $allergeneId
+                        );
                     }
 
                     header('Location: index.php?url=employe-plats');

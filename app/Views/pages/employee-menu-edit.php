@@ -197,7 +197,7 @@
                     <div class="d-flex gap-3 flex-wrap mb-3">
                         <?php foreach ($images as $image): ?>
                             <img
-                                src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($image['url']) ?>"
+                                src="<?= BASE_URL ?>/<?= htmlspecialchars($image['url']) ?>"
                                 alt="<?= htmlspecialchars($image['texte_alternatif'] ?? $menu['titre']) ?>"
                                 style="width: 160px; height: 100px; object-fit: cover; border-radius: 8px;">
                         <?php endforeach; ?>
@@ -233,5 +233,5 @@
 
     </section>
 </main>
-<script src="/vite-et-gourmand-ecf/public/assets/js/menu-images.js"></script>
+<script src="<?= BASE_URL ?>/assets/js/menu-images.js"></script>
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

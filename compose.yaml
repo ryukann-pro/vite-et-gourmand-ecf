@@ -1,0 +1,53 @@
+services:
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vite_et_gourmand_php
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+    environment:
+      APP_BASE_URL: "/public"
+
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_NAME: "${DB_NAME}"
+      DB_USER: "${DB_USER}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+
+      MONGO_HOST: "${MONGO_HOST}"
+      MONGO_PORT: "${MONGO_PORT}"
+      MONGO_DATABASE: "${MONGO_DATABASE}"
+
+    depends_on:
+      - mysql
+      - mongodb
+
+  mysql:
+    image: mysql:8.4
+    container_name: vite_et_gourmand_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${DB_NAME}"
+      MYSQL_USER: "${DB_USER}"
+      MYSQL_PASSWORD: "${DB_PASSWORD}"
+    ports:
+      - "3305:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  mongodb:
+    image: mongo:8
+    container_name: vite_et_gourmand_mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mysql_data:
+  mongodb_data:

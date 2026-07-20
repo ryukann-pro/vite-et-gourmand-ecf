@@ -7,19 +7,55 @@ class Database
     public static function getConnection(): PDO
     {
         if (self::$pdo === null) {
-            $env = parse_ini_file(__DIR__ . '/../.env');
+            $envFile = parse_ini_file(
+                __DIR__ . '/../.env',
+                false,
+                INI_SCANNER_RAW
+            ) ?: [];
 
-            $host = $env['DB_HOST'];
-            $port = $env['DB_PORT'];
-            $dbname = $env['DB_NAME'];
-            $user = $env['DB_USER'];
-            $password = $env['DB_PASSWORD'];
+            /*
+             * Dans Docker, getenv() récupère les variables transmises
+             * par compose.yaml.
+             *
+             * Sous WAMP, si la variable système n'existe pas,
+             * on utilise la valeur du fichier .env.
+             */
+            $getEnvValue = static function (
+                string $key,
+                ?string $default = null
+            ) use ($envFile): ?string {
+                $systemValue = getenv($key);
 
-            $dsn = "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4";
+                if ($systemValue !== false) {
+                    return $systemValue;
+                }
+
+                return $envFile[$key] ?? $default;
+            };
+
+            $host = $getEnvValue('DB_HOST', 'localhost');
+            $port = $getEnvValue('DB_PORT', '3306');
+            $dbname = $getEnvValue('DB_NAME');
+            $user = $getEnvValue('DB_USER');
+            $password = $getEnvValue('DB_PASSWORD');
+
+            if (!$dbname || !$user || $password === null) {
+                throw new RuntimeException(
+                    'La configuration de la base de données est incomplète.'
+                );
+            }
+
+            $dsn = sprintf(
+                'mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4',
+                $host,
+                $port,
+                $dbname
+            );
 
             self::$pdo = new PDO($dsn, $user, $password, [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                PDO::ATTR_EMULATE_PREPARES => false
             ]);
         }
 

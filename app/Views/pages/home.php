@@ -62,7 +62,7 @@
                 <div class="row justify-content-center align-items-start g-5 mb-4">
 
                     <div class="col-lg-5">
-                        <img src="/vite-et-gourmand-ecf/public/assets/images/equipe/julie.jpg"
+                        <img src="<?= BASE_URL ?>/assets/images/equipe/julie.jpg"
                             alt="Julie, cheffe et cofondatrice" class="team-img mb-4">
 
                         <h4 class="team-name">Julie</h4>
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="col-lg-5">
-                        <img src="/vite-et-gourmand-ecf/public/assets/images/equipe/josé.jpg"
+                        <img src="<?= BASE_URL ?>/assets/images/equipe/josé.jpg"
                             alt="José, chef et cofondateur" class="team-img mb-4">
 
                         <h4 class="team-name">José</h4>
