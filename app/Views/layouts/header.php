@@ -11,7 +11,8 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/svg+xml" href="/vite-et-gourmand-ecf/public/assets/images/logo/Favico.svg">
+    <link rel="icon" type="image/svg+xml"
+        href="<?= BASE_URL ?>/assets/images/logo/Favico.svg">
     <title>Vite et Gourmand</title>
 
     <!-- Google Fonts -->
@@ -27,7 +28,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 
     <!-- CSS -->
-    <link href="/vite-et-gourmand-ecf/public/assets/css/style.css" rel="stylesheet">
+    <link href="<?= BASE_URL ?>/assets/css/style.css" rel="stylesheet">
 </head>
 
 <body class="page-layout">
@@ -39,9 +40,10 @@ if (session_status() === PHP_SESSION_NONE) {
             <div class="container-fluid px-4">
 
                 <!-- Logo -->
-                <a class="navbar-brand" href="/vite-et-gourmand-ecf/public/">
+                <a class="navbar-brand" href="<?= BASE_URL ?>/">
 
-                    <img src="/vite-et-gourmand-ecf/public/assets/images/logo/logo.svg" alt="Logo Vite et Gourmand"
+                    <img src="<?= BASE_URL ?>/assets/images/logo/Logo.svg"
+                        alt="Logo Vite et Gourmand"
                         class="logo-header">
 
                 </a>

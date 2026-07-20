@@ -197,5 +197,5 @@
 
     </section>
 </main>
-<script src="/vite-et-gourmand-ecf/public/assets/js/menu-images.js"></script>
+<script src="<?= BASE_URL ?>/assets/js/menu-images.js"></script>
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

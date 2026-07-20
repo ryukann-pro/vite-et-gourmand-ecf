@@ -1,4 +1,4 @@
---Utilisation du snake_case pour les noms de table et de champs pour une meilleure lisibilité et cohérence
+-- Utilisation du snake_case pour les noms de table et de champs pour une meilleure lisibilité et cohérence
 -- Création sur MySQl
 -- Suppression de la base de données vite_et_gourmand si elle existe déjà pour éviter les erreurs lors de la création
 DROP DATABASE IF EXISTS vite_et_gourmand;

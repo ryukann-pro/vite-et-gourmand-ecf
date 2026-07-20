@@ -1,3 +1,4 @@
+const baseUrl = window.APP_BASE_URL ?? "";
 const themeFilter = document.getElementById("themeFilter");
 const regimeFilter = document.getElementById("regimeFilter");
 const menusContainer = document.getElementById("menusContainer");
@@ -8,38 +9,38 @@ const resetFilters = document.getElementById("resetFilters");
 
 
 async function loadMenus() {
-  const theme = themeFilter.value;
-  const regime = regimeFilter.value;
-  const prixMin = priceMinFilter.value;
-  const prixMax = priceMaxFilter.value;
-  const people = peopleFilter.value;
-const response = await fetch(
-  `index.php?url=api-menus&theme=${encodeURIComponent(theme)}&regime=${encodeURIComponent(regime)}&prix_min=${encodeURIComponent(prixMin)}&prix_max=${encodeURIComponent(prixMax)}&personnes=${encodeURIComponent(people)}`
-);
+    const theme = themeFilter.value;
+    const regime = regimeFilter.value;
+    const prixMin = priceMinFilter.value;
+    const prixMax = priceMaxFilter.value;
+    const people = peopleFilter.value;
+    const response = await fetch(
+        `index.php?url=api-menus&theme=${encodeURIComponent(theme)}&regime=${encodeURIComponent(regime)}&prix_min=${encodeURIComponent(prixMin)}&prix_max=${encodeURIComponent(prixMax)}&personnes=${encodeURIComponent(people)}`
+    );
 
-  const menus = await response.json();
+    const menus = await response.json();
 
-  menusContainer.innerHTML = "";
-  if (menus.length === 0) {
-  menusContainer.innerHTML = `
+    menusContainer.innerHTML = "";
+    if (menus.length === 0) {
+        menusContainer.innerHTML = `
     <div class="col-12">
       <div class="alert alert-info">
         Aucun menu ne correspond aux filtres sélectionnés.
       </div>
     </div>
   `;
-  return;
-}
+        return;
+    }
 
-  menus.forEach(menu => {
+    menus.forEach(menu => {
 
-    menusContainer.innerHTML += `
+        menusContainer.innerHTML += `
         <div class="col-12 col-md-6 col-xl-4">
             <article class="menu-card">
 
                 <div class="menu-card-img-wrapper">
                     <img
-                        src="/vite-et-gourmand-ecf/public/${menu.image_url}"
+                        src="${baseUrl}/${menu.image_url}"
                         alt="${menu.texte_alternatif}"
                         class="menu-card-img"
                     >
@@ -81,7 +82,7 @@ const response = await fetch(
             </article>
         </div>
     `;
-  });
+    });
 }
 
 themeFilter.addEventListener("change", loadMenus);

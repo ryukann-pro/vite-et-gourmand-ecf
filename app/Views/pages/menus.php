@@ -85,7 +85,7 @@
 
                         <div class="menu-card-img-wrapper">
                             <img
-                                src="/vite-et-gourmand-ecf/public/<?= htmlspecialchars($menu['image_url'] ?? 'assets/images/menus/default.jpg') ?>"
+                                src="<?= BASE_URL ?>/<?= htmlspecialchars($menu['image_url'] ?? 'assets/images/menus/default.jpg') ?>"
                                 alt="<?= htmlspecialchars($menu['texte_alternatif'] ?? $menu['titre']) ?>"
                                 class="menu-card-img">
                         </div>
@@ -128,5 +128,11 @@
         </div>
     </section>
 </main>
-<script src="/vite-et-gourmand-ecf/public/assets/js/menu-filters.js"></script>
+
+<script>
+    window.APP_BASE_URL = <?= json_encode(BASE_URL) ?>;
+</script>
+
+<script src="<?= BASE_URL ?>/assets/js/menu-filters.js"></script>
+
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
