@@ -92,7 +92,7 @@ class OrderController
 
                 $orderModel = new OrderModel();
 
-                $orderId = $orderModel->createOrder(
+                $orderId = $orderModel->createCompleteOrder(
                     $nomClient,
                     $prenomClient,
                     $telephoneClient,
@@ -113,12 +113,12 @@ class OrderController
                 );
 
                 if ($orderId > 0) {
-                    $orderModel->addOrderTracking($orderId, 1);
                     header('Location: index.php?url=mon-compte');
                     exit;
                 }
 
                 $error = "Erreur lors de la commande.";
+
             }
         }
 

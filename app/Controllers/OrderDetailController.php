@@ -42,14 +42,12 @@ class OrderDetailController
 
         $orderModel = new OrderModel();
 
-        $cancelled = $orderModel->cancelOrder(
+        $cancelled = $orderModel->cancelCompleteOrder(
             $orderId,
-            $_SESSION['user']['id']
+            (int) $_SESSION['user']['id'],
+            (int) $_SESSION['user']['id'],
+            false
         );
-
-        if ($cancelled) {
-            $orderModel->addOrderTracking($orderId, 8, $_SESSION['user']['id']);
-        }
 
         header('Location: index.php?url=detail-commande&id=' . $orderId);
         exit;
