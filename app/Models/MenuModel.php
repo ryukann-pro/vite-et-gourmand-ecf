@@ -4,11 +4,11 @@ require_once __DIR__ . '/../../config/database.php';
 
 class MenuModel
 {
-  public function getAllMenus(): array
-  {
-    $pdo = Database::getConnection();
+    public function getAllMenus(): array
+    {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
       SELECT 
           menu.id,
           menu.titre,
@@ -26,16 +26,16 @@ class MenuModel
       ORDER BY menu.id ASC
     ";
 
-    $stmt = $pdo->query($sql);
+        $stmt = $pdo->query($sql);
 
-    return $stmt->fetchAll();
-  }
+        return $stmt->fetchAll();
+    }
 
-  public function getMenuById(int $id): ?array
-  {
-    $pdo = Database::getConnection();
+    public function getMenuById(int $id): ?array
+    {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
         SELECT
             menu.id,
             menu.titre,
@@ -52,36 +52,36 @@ class MenuModel
         WHERE menu.id = ?
     ";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id]);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
 
-    $menu = $stmt->fetch();
+        $menu = $stmt->fetch();
 
-    return $menu ?: null;
-  }
+        return $menu ?: null;
+    }
 
-  public function getImagesByMenuId(int $id): array
-  {
-    $pdo = Database::getConnection();
+    public function getImagesByMenuId(int $id): array
+    {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
         SELECT url, texte_alternatif
         FROM image
         WHERE menu_id = ?
         ORDER BY ordre_affichage ASC
     ";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id]);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
 
-    return $stmt->fetchAll();
-  }
+        return $stmt->fetchAll();
+    }
 
-  public function getPlatsByMenuId(int $id): array
-  {
-    $pdo = Database::getConnection();
+    public function getPlatsByMenuId(int $id): array
+    {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
         SELECT
             plat.id,
             plat.nom,
@@ -97,16 +97,16 @@ class MenuModel
         ORDER BY FIELD(plat.type_plat, 'Entrée', 'Plat principal', 'Dessert')
     ";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id]);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
 
-    return $stmt->fetchAll();
-  }
-  public function searchMenus(?string $theme, ?string $regime, ?float $prixMin, ?float $prixMax, ?int $personnes): array
-  {
-    $pdo = Database::getConnection();
+        return $stmt->fetchAll();
+    }
+    public function searchMenus(?string $theme, ?string $regime, ?float $prixMin, ?float $prixMax, ?int $personnes): array
+    {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
         SELECT 
             menu.id,
             menu.titre,
@@ -126,70 +126,70 @@ class MenuModel
         WHERE 1 = 1
     ";
 
-    $params = [];
+        $params = [];
 
-    if ($theme !== null && $theme !== '') {
-      $sql .= " AND theme.nom = ?";
-      $params[] = $theme;
+        if ($theme !== null && $theme !== '') {
+            $sql .= " AND theme.nom = ?";
+            $params[] = $theme;
+        }
+
+        if ($regime !== null && $regime !== '') {
+            $sql .= " AND regime.nom = ?";
+            $params[] = $regime;
+        }
+
+        if ($prixMin !== null) {
+            $sql .= " AND menu.prix_par_personne >= ?";
+            $params[] = $prixMin;
+        }
+
+        if ($prixMax !== null) {
+            $sql .= " AND menu.prix_par_personne <= ?";
+            $params[] = $prixMax;
+        }
+        if ($personnes !== null) {
+            $sql .= " AND menu.nb_personnes_min <= ?";
+            $params[] = $personnes;
+        }
+
+        $sql .= " ORDER BY menu.id ASC";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll();
     }
+    public function getThemes(): array
+    {
+        $pdo = Database::getConnection();
 
-    if ($regime !== null && $regime !== '') {
-      $sql .= " AND regime.nom = ?";
-      $params[] = $regime;
-    }
-
-    if ($prixMin !== null) {
-      $sql .= " AND menu.prix_par_personne >= ?";
-      $params[] = $prixMin;
-    }
-
-    if ($prixMax !== null) {
-      $sql .= " AND menu.prix_par_personne <= ?";
-      $params[] = $prixMax;
-    }
-    if ($personnes !== null) {
-      $sql .= " AND menu.nb_personnes_min <= ?";
-      $params[] = $personnes;
-    }
-
-    $sql .= " ORDER BY menu.id ASC";
-
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
-
-    return $stmt->fetchAll();
-  }
-  public function getThemes(): array
-  {
-    $pdo = Database::getConnection();
-
-    $stmt = $pdo->query("
+        $stmt = $pdo->query("
         SELECT id, nom
         FROM theme
         ORDER BY nom ASC
     ");
 
-    return $stmt->fetchAll();
-  }
+        return $stmt->fetchAll();
+    }
 
-  public function getRegimes(): array
-  {
-    $pdo = Database::getConnection();
+    public function getRegimes(): array
+    {
+        $pdo = Database::getConnection();
 
-    $stmt = $pdo->query("
+        $stmt = $pdo->query("
         SELECT id, nom
         FROM regime
         ORDER BY nom ASC
     ");
 
-    return $stmt->fetchAll();
-  }
+        return $stmt->fetchAll();
+    }
 
-  public function getAllForEmployee(): array
-  {
-    $pdo = Database::getConnection();
+    public function getAllForEmployee(): array
+    {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
         SELECT
             menu.id,
             menu.titre,
@@ -212,25 +212,25 @@ class MenuModel
         ORDER BY menu.id DESC
     ";
 
-    $stmt = $pdo->query($sql);
+        $stmt = $pdo->query($sql);
 
-    return $stmt->fetchAll();
-  }
-  public function createMenu(
-    string $titre,
-    string $descriptionCourte,
-    string $descriptionLongue,
-    int $nbPersonnesMin,
-    float $prixParPersonne,
-    int $stock,
-    string $conditions,
-    int $themeId,
-    int $regimeId,
-    int $restaurantId = 1
-  ): int {
-    $pdo = Database::getConnection();
+        return $stmt->fetchAll();
+    }
+    public function createMenu(
+        string $titre,
+        string $descriptionCourte,
+        string $descriptionLongue,
+        int $nbPersonnesMin,
+        float $prixParPersonne,
+        int $stock,
+        string $conditions,
+        int $themeId,
+        int $regimeId,
+        int $restaurantId = 1
+    ): int {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
         INSERT INTO menu (
             titre,
             description_courte,
@@ -246,82 +246,82 @@ class MenuModel
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ";
 
-    $stmt = $pdo->prepare($sql);
+        $stmt = $pdo->prepare($sql);
 
-    $stmt->execute([
-      $titre,
-      $descriptionCourte,
-      $descriptionLongue,
-      $nbPersonnesMin,
-      $prixParPersonne,
-      $stock,
-      $conditions,
-      $themeId,
-      $regimeId,
-      $restaurantId
-    ]);
+        $stmt->execute([
+            $titre,
+            $descriptionCourte,
+            $descriptionLongue,
+            $nbPersonnesMin,
+            $prixParPersonne,
+            $stock,
+            $conditions,
+            $themeId,
+            $regimeId,
+            $restaurantId
+        ]);
 
-    return (int) $pdo->lastInsertId();
-  }
-  public function attachPlatToMenu(int $menuId, int $platId): bool
-  {
-    $pdo = Database::getConnection();
+        return (int) $pdo->lastInsertId();
+    }
+    public function attachPlatToMenu(int $menuId, int $platId): bool
+    {
+        $pdo = Database::getConnection();
 
-    $stmt = $pdo->prepare("
+        $stmt = $pdo->prepare("
         INSERT INTO menu_plat (menu_id, plat_id)
         VALUES (?, ?)
     ");
 
-    return $stmt->execute([$menuId, $platId]);
-  }
-  public function getByIdForEmployee(int $id): ?array
-  {
-    $pdo = Database::getConnection();
+        return $stmt->execute([$menuId, $platId]);
+    }
+    public function getByIdForEmployee(int $id): ?array
+    {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
         SELECT *
         FROM menu
         WHERE id = ?
     ";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$id]);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
 
-    $menu = $stmt->fetch();
+        $menu = $stmt->fetch();
 
-    return $menu ?: null;
-  }
-  public function getPlatIdsByMenuId(int $menuId): array
-{
-    $pdo = Database::getConnection();
+        return $menu ?: null;
+    }
+    public function getPlatIdsByMenuId(int $menuId): array
+    {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
         SELECT plat.id, plat.type_plat
         FROM plat
         INNER JOIN menu_plat ON plat.id = menu_plat.plat_id
         WHERE menu_plat.menu_id = ?
     ";
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$menuId]);
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$menuId]);
 
-    return $stmt->fetchAll();
-}
-public function updateMenu(
-    int $id,
-    string $titre,
-    string $descriptionCourte,
-    string $descriptionLongue,
-    int $nbPersonnesMin,
-    float $prixParPersonne,
-    int $stock,
-    string $conditions,
-    int $themeId,
-    int $regimeId
-): bool {
-    $pdo = Database::getConnection();
+        return $stmt->fetchAll();
+    }
+    public function updateMenu(
+        int $id,
+        string $titre,
+        string $descriptionCourte,
+        string $descriptionLongue,
+        int $nbPersonnesMin,
+        float $prixParPersonne,
+        int $stock,
+        string $conditions,
+        int $themeId,
+        int $regimeId
+    ): bool {
+        $pdo = Database::getConnection();
 
-    $sql = "
+        $sql = "
         UPDATE menu
         SET titre = ?,
             description_courte = ?,
@@ -335,134 +335,134 @@ public function updateMenu(
         WHERE id = ?
     ";
 
-    $stmt = $pdo->prepare($sql);
+        $stmt = $pdo->prepare($sql);
 
-    return $stmt->execute([
-        $titre,
-        $descriptionCourte,
-        $descriptionLongue,
-        $nbPersonnesMin,
-        $prixParPersonne,
-        $stock,
-        $conditions,
-        $themeId,
-        $regimeId,
-        $id
-    ]);
-}
-public function detachPlatsFromMenu(int $menuId): bool
-{
-    $pdo = Database::getConnection();
+        return $stmt->execute([
+            $titre,
+            $descriptionCourte,
+            $descriptionLongue,
+            $nbPersonnesMin,
+            $prixParPersonne,
+            $stock,
+            $conditions,
+            $themeId,
+            $regimeId,
+            $id
+        ]);
+    }
+    public function detachPlatsFromMenu(int $menuId): bool
+    {
+        $pdo = Database::getConnection();
 
-    $stmt = $pdo->prepare("
+        $stmt = $pdo->prepare("
         DELETE FROM menu_plat
         WHERE menu_id = ?
     ");
 
-    return $stmt->execute([$menuId]);
-}
-public function isUsedInOrder(int $menuId): bool
-{
-    $pdo = Database::getConnection();
+        return $stmt->execute([$menuId]);
+    }
+    public function isUsedInOrder(int $menuId): bool
+    {
+        $pdo = Database::getConnection();
 
-    $stmt = $pdo->prepare("
+        $stmt = $pdo->prepare("
         SELECT COUNT(*)
         FROM commande
         WHERE menu_id = ?
     ");
 
-    $stmt->execute([$menuId]);
+        $stmt->execute([$menuId]);
 
-    return (int) $stmt->fetchColumn() > 0;
-}
+        return (int) $stmt->fetchColumn() > 0;
+    }
 
-public function deleteMenu(int $menuId): bool
-{
-    $this->deleteImagesByMenuId($menuId);
-    $this->detachPlatsFromMenu($menuId);
+    public function deleteMenu(int $menuId): bool
+    {
+        $this->deleteImagesByMenuId($menuId);
+        $this->detachPlatsFromMenu($menuId);
 
-    $pdo = Database::getConnection();
+        $pdo = Database::getConnection();
 
-    $stmt = $pdo->prepare("
+        $stmt = $pdo->prepare("
         DELETE FROM menu
         WHERE id = ?
     ");
 
-    return $stmt->execute([$menuId]);
-}
-private function slugify(string $text): string
-{
-    $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
-    $text = strtolower($text);
-    $text = preg_replace('/[^a-z0-9]+/', '-', $text);
-    $text = trim($text, '-');
+        return $stmt->execute([$menuId]);
+    }
+    private function slugify(string $text): string
+    {
+        $text = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
+        $text = strtolower($text);
+        $text = preg_replace('/[^a-z0-9]+/', '-', $text);
+        $text = trim($text, '-');
 
-    return $text ?: 'menu';
-}
-public function getThemeNameById(int $id): ?string
-{
-    $pdo = Database::getConnection();
+        return $text ?: 'menu';
+    }
+    public function getThemeNameById(int $id): ?string
+    {
+        $pdo = Database::getConnection();
 
-    $stmt = $pdo->prepare("
+        $stmt = $pdo->prepare("
         SELECT nom
         FROM theme
         WHERE id = ?
     ");
 
-    $stmt->execute([$id]);
+        $stmt->execute([$id]);
 
-    $theme = $stmt->fetchColumn();
+        $theme = $stmt->fetchColumn();
 
-    return $theme ?: null;
-}
-public function saveMenuImages(
-    int $menuId,
-    string $titre,
-    string $theme,
-    array $images
-): bool {
-    $allowedTypes = [
-        'image/jpeg' => 'jpg',
-        'image/png' => 'png',
-        'image/webp' => 'webp'
-    ];
-
-    $themeSlug = $this->getThemeFolder($theme);
-    $menuSlug = $menuId . '-' . $this->slugify($titre);
-
-    $relativeDir = "assets/images/menus/$themeSlug/$menuSlug";
-    $absoluteDir = __DIR__ . "/../../public/$relativeDir";
-
-    if (!is_dir($absoluteDir)) {
-        mkdir($absoluteDir, 0777, true);
+        return $theme ?: null;
     }
+    public function saveMenuImages(
+        int $menuId,
+        string $titre,
+        string $theme,
+        array $images
+    ): bool {
+        $allowedTypes = [
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+            'image/webp' => 'webp'
+        ];
 
-    $pdo = Database::getConnection();
+        $themeSlug = $this->getThemeFolder($theme);
+        $menuSlug = $menuId . '-' . $this->slugify($titre);
 
-    foreach ($images['name'] as $index => $name) {
-        if ($images['error'][$index] !== UPLOAD_ERR_OK) {
-            return false;
+        $relativeDir = "assets/images/menus/$themeSlug/$menuSlug";
+        $absoluteDir = __DIR__ . "/../../public/$relativeDir";
+
+        if (!is_dir($absoluteDir)) {
+            mkdir($absoluteDir, 0777, true);
         }
 
-        $tmpName = $images['tmp_name'][$index];
-        $mimeType = mime_content_type($tmpName);
+        $pdo = Database::getConnection();
 
-        if (!isset($allowedTypes[$mimeType])) {
-            return false;
-        }
+        foreach ($images['name'] as $index => $name) {
+            if ($images['error'][$index] !== UPLOAD_ERR_OK) {
+                return false;
+            }
 
-        $order = $index + 1;
-        $extension = $allowedTypes[$mimeType];
+            $tmpName = $images['tmp_name'][$index];
+            $mimeType = mime_content_type($tmpName);
 
-        $fileName = "image-$order.$extension";
-        $relativePath = "$relativeDir/$fileName";
-        $absolutePath = "$absoluteDir/$fileName";
+            if (!isset($allowedTypes[$mimeType])) {
+                return false;
+            }
 
-        if (!move_uploaded_file($tmpName, $absolutePath)) {
-            return false;
-        }
+            $order = $index + 1;
+            $extension = $allowedTypes[$mimeType];
 
-        $stmt = $pdo->prepare("
+            $fileName = "image-$order.$extension";
+            $relativePath = "$relativeDir/$fileName";
+            $absolutePath = "$absoluteDir/$fileName";
+
+            if (!move_uploaded_file($tmpName, $absolutePath)) {
+                return false;
+            }
+
+            $stmt = $pdo->prepare("
             INSERT INTO image (
                 url,
                 texte_alternatif,
@@ -472,117 +472,155 @@ public function saveMenuImages(
             VALUES (?, ?, ?, ?)
         ");
 
-        $stmt->execute([
-            $relativePath,
+            $stmt->execute([
+                $relativePath,
+                $titre,     
+                $order,
+                $menuId
+            ]);
+        }
+
+        return true;
+    }
+    private function getThemeFolder(string $theme): string
+    {
+        return match ($theme) {
+            'Classique' => 'classique',
+            'Événement' => 'evenement',
+            'Noël' => 'noel',
+            'Pâques' => 'paques',
+            default => $this->slugify($theme),
+        };
+    }
+    public function deleteImagesByMenuId(int $menuId): bool
+    {
+        $images = $this->getImagesByMenuId($menuId);
+
+        $oldDirectory = null;
+
+        if (!empty($images)) {
+            $oldDirectory = dirname(__DIR__ . '/../../public/' . $images[0]['url']);
+        }
+
+        foreach ($images as $image) {
+            $absolutePath = __DIR__ . '/../../public/' . $image['url'];
+
+            if (file_exists($absolutePath)) {
+                unlink($absolutePath);
+            }
+        }
+
+        if ($oldDirectory !== null && is_dir($oldDirectory)) {
+            $filesInDirectory = array_diff(scandir($oldDirectory), ['.', '..']);
+
+            if (empty($filesInDirectory)) {
+                rmdir($oldDirectory);
+            }
+        }
+
+        $pdo = Database::getConnection();
+
+        $stmt = $pdo->prepare("
+        DELETE FROM image
+        WHERE menu_id = ?
+    ");
+
+        return $stmt->execute([$menuId]);
+    }
+    public function replaceMenuImages(
+        int $menuId,
+        string $titre,
+        string $theme,
+        array $files
+    ): bool {
+
+        // Récupère les anciennes images
+        $images = $this->getImagesByMenuId($menuId);
+
+        $oldDirectory = null;
+
+        // Récupère le dossier des anciennes images
+        if (!empty($images)) {
+            $oldDirectory = dirname(__DIR__ . '/../../public/' . $images[0]['url']);
+        }
+
+        // Supprime les anciens fichiers
+        foreach ($images as $image) {
+
+            $absolutePath = __DIR__ . '/../../public/' . $image['url'];
+
+            if (file_exists($absolutePath)) {
+                unlink($absolutePath);
+            }
+        }
+
+        // Supprime le dossier s'il est vide
+        if (
+            $oldDirectory !== null &&
+            is_dir($oldDirectory)
+        ) {
+
+            $filesInDirectory = array_diff(scandir($oldDirectory), ['.', '..']);
+
+            if (empty($filesInDirectory)) {
+                rmdir($oldDirectory);
+            }
+        }
+
+        // Supprime les anciennes lignes de la base
+        $pdo = Database::getConnection();
+
+        $stmt = $pdo->prepare("
+        DELETE FROM image
+        WHERE menu_id = ?
+    ");
+
+        $stmt->execute([$menuId]);
+
+        // Enregistre les nouvelles images
+        return $this->saveMenuImages(
+            $menuId,
             $titre,
-            $order,
+            $theme,
+            $files
+        );
+    }
+    public function decrementStock(int $menuId, int $quantite): bool
+    {
+        $pdo = Database::getConnection();
+        $sql = "
+            UPDATE menu
+            SET stock = stock - ?
+            WHERE id = ?
+            AND stock >= ?
+        ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            $quantite,
+            $menuId,
+            $quantite
+        ]);
+        return $stmt->rowCount() > 0;
+    }
+    public function incrementStock(
+        int $menuId,
+        int $nbPersonnes
+    ): bool {
+
+        $pdo = Database::getConnection();
+
+        $sql = "
+        UPDATE menu
+        SET stock = stock + ?
+        WHERE id = ?
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([
+            $nbPersonnes,
             $menuId
         ]);
     }
 
-    return true;
-}
-private function getThemeFolder(string $theme): string
-{
-    return match ($theme) {
-        'Classique' => 'classique',
-        'Événement' => 'evenement',
-        'Noël' => 'noel',
-        'Pâques' => 'paques',
-        default => $this->slugify($theme),
-    };
-}
-public function deleteImagesByMenuId(int $menuId): bool
-{
-    $images = $this->getImagesByMenuId($menuId);
-
-    $oldDirectory = null;
-
-    if (!empty($images)) {
-        $oldDirectory = dirname(__DIR__ . '/../../public/' . $images[0]['url']);
-    }
-
-    foreach ($images as $image) {
-        $absolutePath = __DIR__ . '/../../public/' . $image['url'];
-
-        if (file_exists($absolutePath)) {
-            unlink($absolutePath);
-        }
-    }
-
-    if ($oldDirectory !== null && is_dir($oldDirectory)) {
-        $filesInDirectory = array_diff(scandir($oldDirectory), ['.', '..']);
-
-        if (empty($filesInDirectory)) {
-            rmdir($oldDirectory);
-        }
-    }
-
-    $pdo = Database::getConnection();
-
-    $stmt = $pdo->prepare("
-        DELETE FROM image
-        WHERE menu_id = ?
-    ");
-
-    return $stmt->execute([$menuId]);
-}
-public function replaceMenuImages(
-    int $menuId,
-    string $titre,
-    string $theme,
-    array $files
-): bool {
-
-    // Récupère les anciennes images
-    $images = $this->getImagesByMenuId($menuId);
-
-    $oldDirectory = null;
-
-    // Récupère le dossier des anciennes images
-    if (!empty($images)) {
-        $oldDirectory = dirname(__DIR__ . '/../../public/' . $images[0]['url']);
-    }
-
-    // Supprime les anciens fichiers
-    foreach ($images as $image) {
-
-        $absolutePath = __DIR__ . '/../../public/' . $image['url'];
-
-        if (file_exists($absolutePath)) {
-            unlink($absolutePath);
-        }
-    }
-
-    // Supprime le dossier s'il est vide
-    if (
-        $oldDirectory !== null &&
-        is_dir($oldDirectory)
-    ) {
-
-        $filesInDirectory = array_diff(scandir($oldDirectory), ['.', '..']);
-
-        if (empty($filesInDirectory)) {
-            rmdir($oldDirectory);
-        }
-    }
-
-    // Supprime les anciennes lignes de la base
-    $pdo = Database::getConnection();
-
-    $stmt = $pdo->prepare("
-        DELETE FROM image
-        WHERE menu_id = ?
-    ");
-
-    $stmt->execute([$menuId]);
-
-    // Enregistre les nouvelles images
-    return $this->saveMenuImages(
-        $menuId,
-        $titre,
-        $theme,
-        $files
-    );
-}
 }

@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../../config/database.php';
+require_once __DIR__ . '/MenuModel.php';
 
 class OrderModel
 {
@@ -368,5 +369,155 @@ class OrderModel
         $stmt->execute([$orderId]);
 
         return $stmt->rowCount() > 0;
+    }
+    public function getOrderStockData(int $orderId): ?array
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        SELECT
+            menu_id,
+            nb_personnes
+        FROM commande
+        WHERE id = ?
+    ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$orderId]);
+
+        $order = $stmt->fetch();
+
+        return $order ?: null;
+    }
+
+    public function createCompleteOrder(
+        string $nomClient,
+        string $prenomClient,
+        string $telephoneClient,
+        string $emailClient,
+        int $nbPersonnes,
+        float $prixUnitaire,
+        string $adresseLivraison,
+        string $dateLivraison,
+        string $heureLivraison,
+        float $fraisLivraison,
+        float $reduction,
+        float $prixTotal,
+        bool $pretMateriel,
+        int $utilisateurId,
+        int $menuId,
+        int $villeId,
+        int $statutId
+    ): int {
+        $pdo = Database::getConnection();
+        try {
+            $pdo->beginTransaction();
+
+            $orderId = $this->createOrder(
+                $nomClient,
+                $prenomClient,
+                $telephoneClient,
+                $emailClient,
+                $nbPersonnes,
+                $prixUnitaire,
+                $adresseLivraison,
+                $dateLivraison,
+                $heureLivraison,
+                $fraisLivraison,
+                $reduction,
+                $prixTotal,
+                $pretMateriel,
+                $utilisateurId,
+                $menuId,
+                $villeId,
+                $statutId
+            );
+            if ($orderId === 0) {
+                throw new Exception("Impossible de créer la commande.");
+            }
+            $menuModel = new MenuModel();
+
+            $stockUpdated = $menuModel->decrementStock(
+                $menuId,
+                $nbPersonnes
+            );
+            if (!$stockUpdated) {
+                throw new Exception("Impossible de mettre à jour le stock.");
+            }
+            $trackingAdded = $this->addOrderTracking(
+                $orderId,
+                1
+            );
+            // TEST UNIQUEMENT $trackingAdded = false; 
+            if (!$trackingAdded) {
+                throw new Exception("Impossible de créer le suivi de commande.");
+            }
+            $pdo->commit();
+            return $orderId;
+        } catch (Exception $e) {
+            $pdo->rollBack();
+            return 0;
+        }
+    }
+
+    public function cancelCompleteOrder(
+        int $orderId,
+        ?int $userId,
+        int $trackingUserId,
+        bool $isEmployee
+    ): bool {
+
+        $pdo = Database::getConnection();
+
+        try {
+
+            $pdo->beginTransaction();
+
+            // La logique arrivera ensuite
+            $order = $this->getOrderStockData($orderId);
+
+            if ($order === null) {
+                throw new Exception("Commande introuvable.");
+            }
+            if ($isEmployee) {
+
+                $cancelled = $this->cancelOrderByEmployee($orderId);
+            } else {
+
+                $cancelled = $this->cancelOrder(
+                    $orderId,
+                    $userId
+                );
+            }
+
+            if (!$cancelled) {
+                throw new Exception("Impossible d'annuler la commande.");
+            }
+            $menuModel = new MenuModel();
+
+            $stockUpdated = $menuModel->incrementStock(
+                (int) $order['menu_id'],
+                (int) $order['nb_personnes']
+            );
+
+            if (!$stockUpdated) {
+                throw new Exception("Impossible de remettre le stock.");
+            }
+            $trackingAdded = $this->addOrderTracking(
+                $orderId,
+                8,
+                $trackingUserId
+            );
+
+            if (!$trackingAdded) {
+                throw new Exception("Impossible d'ajouter le suivi de commande.");
+            }
+            $pdo->commit();
+            return true;
+        } catch (Exception $e) {
+
+            $pdo->rollBack();
+            return false;
+        }
     }
 }
