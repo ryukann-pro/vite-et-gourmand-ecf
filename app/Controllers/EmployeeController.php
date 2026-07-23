@@ -63,15 +63,12 @@ class EmployeeController
                 && $clientContacte === 'oui'
                 && $motifAnnulation !== ''
             ) {
-                $cancelled = $orderModel->cancelOrderByEmployee($orderId);
-
-                if ($cancelled) {
-                    $orderModel->addOrderTracking(
-                        $orderId,
-                        8,
-                        (int) $_SESSION['user']['id']
-                    );
-                }
+                $cancelled = $orderModel->cancelCompleteOrder(
+                    $orderId,
+                    null,
+                    (int) $_SESSION['user']['id'],
+                    true
+                );
             }
 
             header('Location: index.php?url=employe-detail-commande&id=' . $orderId);
