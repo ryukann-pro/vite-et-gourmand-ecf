@@ -1,4 +1,4 @@
-# Installation du projet Vite et Gourmand
+# Installation du projet Vite et Gourmand avec WAMP (ou autre)
 
 ## Prérequis
 
@@ -54,6 +54,26 @@ DB_PASSWORD=mot_de_passe
 Démarrez WAMP puis : 
 option 1 - accéder à l'URL suivante : http://localhost/vite-et-gourmand-ecf/public/
 option 2 - lancer localhost depuis l'interface de wamp, cliquez sur vite-et-gourmand-ecf et sur public
+
+
+
+# Installation du projet Vite et Gourmand avec WAMP (ou autre)
+
+## Prérequis
+
+Installer les outils suivants :
+
+- Docker Desktop
+- Git
+- Un navigateur web
+
+# 1. Cloner le projet
+
+Ouvrir un terminal dans le dossier de votre choix (ou le projet sera copié) de :
+puis taper la commande :
+git clone https://github.com/ryukann-pro/vite-et-gourmand-ecf.git
+
+
 
 # Démarrer les conteneurs
 docker compose up -d
