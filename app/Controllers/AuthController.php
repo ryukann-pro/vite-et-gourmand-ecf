@@ -95,7 +95,6 @@ class AuthController
                 if (!preg_match($regexPassword, $password)) {
 
                     $error = "Le mot de passe doit contenir au moins 10 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
-
                 } else {
 
                     $userModel = new UserModel();
@@ -103,7 +102,6 @@ class AuthController
                     if ($userModel->emailExists($email)) {
 
                         $error = "Cette adresse email existe déjà.";
-
                     } else {
 
                         $passwordHash = password_hash($password, PASSWORD_DEFAULT);
@@ -130,7 +128,12 @@ class AuthController
                                 'email' => $user['email'],
                                 'role' => $user['role']
                             ];
-
+                            $mailService = new MailService();
+                            $mailService->sendWelcomeEmail(
+                                $email,
+                                $prenom,
+                                $nom
+                            );
                             header('Location: index.php?url=mon-compte');
                             exit;
                         }

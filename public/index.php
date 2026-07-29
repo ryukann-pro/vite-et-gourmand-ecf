@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/../vendor/autoload.php';
 
 require_once __DIR__ . '/../app/Controllers/HomeController.php';
 require_once __DIR__ . '/../app/Controllers/MenuController.php';
@@ -13,6 +14,7 @@ require_once __DIR__ . '/../app/Controllers/ProfileController.php';
 require_once __DIR__ . '/../app/Controllers/EmployeeController.php';
 require_once __DIR__ . '/../app/Controllers/AdminController.php';
 require_once __DIR__ . '/../app/Helpers/Auth.php';
+require_once __DIR__ . '/../app/Helpers/MailService.php';
 require_once __DIR__ . '/../app/Controllers/ReviewController.php';
 require_once __DIR__ . '/../app/Controllers/EmployeeReviewController.php';
 require_once __DIR__ . '/../config/config.php';
