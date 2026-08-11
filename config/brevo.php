@@ -24,11 +24,13 @@ $getEnvValue = static function (
 $brevoApiKey = $getEnvValue('BREVO_API_KEY');
 $mailFrom = $getEnvValue('MAIL_FROM');
 $mailFromName = $getEnvValue('MAIL_FROM_NAME');
+$contactEmail = $getEnvValue('CONTACT_EMAIL');
 
 if (
     !$brevoApiKey
     || !$mailFrom
     || !$mailFromName
+    || !$contactEmail
 ) {
     throw new RuntimeException(
         'La configuration Brevo est incomplète.'
@@ -47,4 +49,5 @@ return [
     'client' => $brevoClient,
     'sender_email' => $mailFrom,
     'sender_name' => $mailFromName,
+    'contact_email' => $contactEmail,
 ];

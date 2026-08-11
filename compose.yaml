@@ -10,7 +10,7 @@ services:
       - .:/var/www/html
     environment:
       APP_BASE_URL: "/public"
-
+      APP_URL: "http://localhost:8080/public"
       DB_HOST: mysql
       DB_PORT: "3306"
       DB_NAME: "${DB_NAME}"

@@ -113,12 +113,17 @@ class OrderController
                 );
 
                 if ($orderId > 0) {
+                    $order = $orderModel->getOrderByIdAndUserId(
+                        $orderId,
+                        $_SESSION['user']['id']
+                    );
+                    $mailService = new MailService();   
+                    $mailService->sendOrderConfirmationEmail($order);
                     header('Location: index.php?url=mon-compte');
                     exit;
                 }
 
                 $error = "Erreur lors de la commande.";
-
             }
         }
 

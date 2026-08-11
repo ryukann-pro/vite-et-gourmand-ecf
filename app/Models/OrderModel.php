@@ -303,6 +303,52 @@ class OrderModel
 
         return $stmt->fetchAll();
     }
+
+    public function updateCompleteStatus(
+        int $orderId,
+        int $statusId,
+        int $employeeId
+    ): bool {
+        $pdo = Database::getConnection();
+
+        try {
+            $pdo->beginTransaction();
+
+            $updated = $this->updateStatus(
+                $orderId,
+                $statusId
+            );
+
+            if (!$updated) {
+                throw new Exception(
+                    'Impossible de modifier le statut de la commande.'
+                );
+            }
+
+            $trackingAdded = $this->addOrderTracking(
+                $orderId,
+                $statusId,
+                $employeeId
+            );
+
+            if (!$trackingAdded) {
+                throw new Exception(
+                    'Impossible d’ajouter le suivi de la commande.'
+                );
+            }
+
+            $pdo->commit();
+
+            return true;
+        } catch (Exception $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+
+            return false;
+        }
+    }
+
     public function searchOrders(?int $statusId, ?string $clientSearch): array
     {
         $pdo = Database::getConnection();

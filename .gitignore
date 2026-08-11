@@ -32,3 +32,4 @@ public/test-stats-sql.php
 public/test-stats-sync.php
 public/test-turnover-sync.php
 /public/test-mail.php
+public/test-post.php

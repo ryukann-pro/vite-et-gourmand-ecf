@@ -10,6 +10,7 @@ class MailService
     private Brevo $client;
     private string $senderEmail;
     private string $senderName;
+    private string $contactEmail;
 
     public function __construct()
     {
@@ -18,8 +19,135 @@ class MailService
         $this->client = $config['client'];
         $this->senderEmail = $config['sender_email'];
         $this->senderName = $config['sender_name'];
+        $this->contactEmail = $config['contact_email'];
     }
 
+
+    public function sendWelcomeEmail(
+        string $recipientEmail,
+        string $firstName,
+        string $lastName
+    ): bool {
+        $fullName = trim($firstName . ' ' . $lastName);
+
+        $htmlContent = $this->renderView(
+            'welcome',
+            [
+                'firstName' => $firstName
+            ]
+        );
+
+        return $this->send(
+            $recipientEmail,
+            $fullName,
+            'Bienvenue chez Vite & Gourmand',
+            $htmlContent
+        );
+    }
+
+    public function sendOrderConfirmationEmail(
+        array $order
+    ): bool {
+
+        $fullName = trim(
+            $order['prenom_client']
+                . ' '
+                . $order['nom_client']
+        );
+
+        $htmlContent = $this->renderView(
+            'order-confirmation',
+            [
+                'order' => $order
+            ]
+        );
+
+        return $this->send(
+            $order['email_client'],
+            $fullName,
+            'Confirmation de votre commande',
+            $htmlContent
+        );
+    }
+
+    public function sendReviewInvitationEmail(
+        array $order,
+        string $reviewLink
+    ): bool {
+        $fullName = trim(
+            $order['prenom_client']
+                . ' '
+                . $order['nom_client']
+        );
+
+        $htmlContent = $this->renderView(
+            'review-invitation',
+            [
+                'order' => $order,
+                'reviewLink' => $reviewLink
+            ]
+        );
+
+        return $this->send(
+            $order['email_client'],
+            $fullName,
+            'Partagez votre avis sur votre commande',
+            $htmlContent
+        );
+    }
+
+    public function sendEquipmentReturnEmail(
+        array $order
+    ): bool {
+        $fullName = trim(
+            $order['prenom_client']
+                . ' '
+                . $order['nom_client']
+        );
+
+        $htmlContent = $this->renderView(
+            'equipment-return',
+            [
+                'order' => $order
+            ]
+        );
+
+        return $this->send(
+            $order['email_client'],
+            $fullName,
+            'Retour du matériel prêté',
+            $htmlContent
+        );
+    }
+
+    public function sendContactEmail(
+        string $lastName,
+        string $firstName,
+        string $email,
+        ?string $phone,
+        string $title,
+        string $message
+    ): bool {
+        $htmlContent = $this->renderView(
+            'contact',
+            [
+                'lastName' => $lastName,
+                'firstName' => $firstName,
+                'email' => $email,
+                'phone' => $phone,
+                'title' => $title,
+                'message' => $message
+            ]
+        );
+
+        return $this->send(
+            $this->contactEmail,
+            'Vite & Gourmand',
+            'Nouvelle demande de contact : ' . $title,
+            $htmlContent
+        );
+    }
+    
     private function send(
         string $recipientEmail,
         string $recipientName,
@@ -57,28 +185,6 @@ class MailService
 
             return false;
         }
-    }
-    
-    public function sendWelcomeEmail(
-        string $recipientEmail,
-        string $firstName,
-        string $lastName
-    ): bool {
-        $fullName = trim($firstName . ' ' . $lastName);
-
-        $htmlContent = $this->renderView(
-            'welcome',
-            [
-                'firstName' => $firstName
-            ]
-        );
-
-        return $this->send(
-            $recipientEmail,
-            $fullName,
-            'Bienvenue chez Vite & Gourmand',
-            $htmlContent
-        );
     }
 
     private function renderView(
