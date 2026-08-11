@@ -37,6 +37,17 @@ class ContactController
                 );
 
                 if ($created) {
+                    $mailService = new MailService();
+
+                    $mailService->sendContactEmail(
+                        $nom,
+                        $prenom,
+                        $email,
+                        $telephone !== '' ? $telephone : null,
+                        $titre,
+                        $message
+                    );
+
                     $success = "Votre message a bien été envoyé.";
                 } else {
                     $error = "Une erreur est survenue lors de l'envoi du message.";

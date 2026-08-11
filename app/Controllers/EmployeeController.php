@@ -30,6 +30,7 @@ class EmployeeController
 
         require_once __DIR__ . '/../Views/pages/employee-orders.php';
     }
+
     public function orderDetail(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
@@ -79,17 +80,56 @@ class EmployeeController
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $statusId = (int) ($_POST['statut_id'] ?? 0);
 
-            if ($statusId >= 1 && $statusId <= 7) {
-                $updated = $orderModel->updateStatus(
+            $currentStatus = (int) $order['statut_id'];
+            $hasEquipmentLoan = (bool) $order['pret_materiel'];
+
+            $nextStatuses = [
+                1 => [2],
+                2 => [3],
+                3 => [4],
+                4 => [5],
+                6 => [7]
+            ];
+
+            if ($currentStatus === 5) {
+                $nextStatuses[5] = $hasEquipmentLoan
+                    ? [6]
+                    : [7];
+            }
+
+            $allowedStatuses = $nextStatuses[$currentStatus] ?? [];
+            if (in_array($statusId, $allowedStatuses, true)) {
+                $updated = $orderModel->updateCompleteStatus(
                     $orderId,
-                    $statusId
+                    $statusId,
+                    (int) $_SESSION['user']['id']
                 );
 
-                if ($updated) {
-                    $orderModel->addOrderTracking(
-                        $orderId,
-                        $statusId,
-                        (int) $_SESSION['user']['id']
+                if ($updated && $statusId === 7) {
+                    $order = $orderModel->getOrderByIdForEmployee(
+                        $orderId
+                    );
+
+                    $reviewLink = APP_URL
+                        . '/index.php?url=detail-commande&id='
+                        . $orderId;
+                    $mailService = new MailService();
+
+                    $mailService->sendReviewInvitationEmail(
+                        $order,
+                        $reviewLink
+                    );
+                }
+                
+                if ($updated && $statusId === 6) {
+                    $order = $orderModel->getOrderByIdForEmployee(
+                        $orderId
+                    );
+
+                    $mailService = new MailService();
+
+                    $mailService->sendEquipmentReturnEmail(
+                        $order
                     );
                 }
             }
