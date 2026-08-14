@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../Helpers/Auth.php';
 require_once __DIR__ . '/../Models/StatsSqlModel.php';
 require_once __DIR__ . '/../Models/StatsModel.php';
+require_once __DIR__ . '/../Models/UserModel.php';
 
 class AdminController
 {
@@ -14,12 +15,98 @@ class AdminController
   public function employees(): void
   {
     Auth::requireRole(['Admin']);
+
+    $userModel = new UserModel();
+    $employees = $userModel->getAllEmployees();
+
     require_once __DIR__ . '/../Views/pages/admin-employees.php';
   }
 
   public function createEmployee(): void
   {
     Auth::requireRole(['Admin']);
+
+    $error = null;
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+      $nom = trim($_POST['nom'] ?? '');
+      $prenom = trim($_POST['prenom'] ?? '');
+      $email = trim($_POST['email'] ?? '');
+      $password = $_POST['password'] ?? '';
+      $confirmPassword = $_POST['confirm_password'] ?? '';
+
+      if (
+        $nom === ''
+        || $prenom === ''
+        || $email === ''
+        || $password === ''
+        || $confirmPassword === ''
+      ) {
+        $error = "Tous les champs sont obligatoires.";
+      } elseif (
+        strlen($nom) > 50
+        || strlen($prenom) > 50
+        || strlen($email) > 191
+      ) {
+        $error = "Un ou plusieurs champs sont trop longs.";
+      } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+        $error = "Adresse email invalide.";
+      } elseif ($password !== $confirmPassword) {
+
+        $error = "Les mots de passe ne correspondent pas.";
+      } else {
+
+        $regexPassword =
+          '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/';
+
+        if (!preg_match($regexPassword, $password)) {
+
+          $error = "Le mot de passe doit contenir au moins 10 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
+        } else {
+
+          $userModel = new UserModel();
+
+          if ($userModel->emailExists($email)) {
+
+            $error = "Cette adresse email existe déjà.";
+          } else {
+
+            $passwordHash = password_hash(
+              $password,
+              PASSWORD_DEFAULT
+            );
+
+            $employeeCreated = $userModel->createEmployee(
+              $nom,
+              $prenom,
+              $email,
+              $passwordHash
+            );
+
+            if ($employeeCreated) {
+
+              $mailService = new MailService();
+
+              $mailService->sendEmployeeAccountCreatedEmail(
+                $email,
+                $prenom,
+                $nom
+              );
+
+              header(
+                'Location: index.php?url=admin-employes'
+              );
+              exit;
+            }
+
+            $error = "Erreur lors de la création du compte employé.";
+          }
+        }
+      }
+    }
+
     require_once __DIR__ . '/../Views/pages/admin-create-employee.php';
   }
 
@@ -87,5 +174,113 @@ class AdminController
     }
 
     require_once __DIR__ . '/../Views/pages/admin-turnover.php';
+  }
+
+  public function editEmployee(): void
+  {
+    Auth::requireRole(['Admin']);
+
+    $error = null;
+    $employeeId = (int) ($_GET['id'] ?? 0);
+
+    $userModel = new UserModel();
+
+    $employee = $userModel->getEmployeeById($employeeId);
+
+    if (!$employee) {
+      http_response_code(404);
+      echo "Employé introuvable.";
+      return;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+      $nom = trim($_POST['nom'] ?? '');
+      $prenom = trim($_POST['prenom'] ?? '');
+      $email = trim($_POST['email'] ?? '');
+
+      if (
+        $nom === ''
+        || $prenom === ''
+        || $email === ''
+      ) {
+        $error = "Tous les champs sont obligatoires.";
+      } elseif (
+        strlen($nom) > 50
+        || strlen($prenom) > 50
+        || strlen($email) > 191
+      ) {
+        $error = "Un ou plusieurs champs sont trop longs.";
+      } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+
+        $error = "Adresse email invalide.";
+      } else {
+
+        $existingUser = $userModel->findByEmail($email);
+
+        if (
+          $existingUser
+          && (int) $existingUser['id'] !== $employeeId
+        ) {
+          $error = "Cette adresse email existe déjà.";
+        } else {
+
+          $updated = $userModel->updateEmployee(
+            $employeeId,
+            $nom,
+            $prenom,
+            $email
+          );
+
+          if ($updated) {
+            header(
+              'Location: index.php?url=admin-employes'
+            );
+            exit;
+          }
+
+          $error = "Erreur lors de la modification de l'employé.";
+        }
+      }
+    }
+
+    require_once __DIR__ . '/../Views/pages/admin-edit-employee.php';
+  }
+
+  public function toggleEmployeeStatus(): void
+  {
+    Auth::requireRole(['Admin']);
+
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+      http_response_code(405);
+      return;
+    }
+
+    $employeeId = (int) ($_GET['id'] ?? 0);
+
+    $userModel = new UserModel();
+    $employee = $userModel->getEmployeeById($employeeId);
+
+    if (!$employee) {
+      http_response_code(404);
+      echo "Employé introuvable.";
+      return;
+    }
+
+    $newStatus = !((bool) $employee['actif']);
+
+    $updated = $userModel->updateEmployeeStatus(
+      $employeeId,
+      $newStatus
+    );
+
+    if (!$updated) {
+      http_response_code(500);
+      echo "Impossible de modifier le statut de l'employé.";
+      return;
+    }
+
+    header('Location: index.php?url=admin-employes');
+    exit;
   }
 }

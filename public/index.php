@@ -127,9 +127,17 @@ switch ($url) {
         $controller = new AdminController();
         $controller->createEmployee();
         break;
+    case 'admin-modification-employe':
+        $controller = new AdminController();
+        $controller->editEmployee();
+        break;
     case 'admin-statistiques':
         $controller = new AdminController();
         $controller->statistics();
+        break;
+    case 'admin-statut-employe':
+        $controller = new AdminController();
+        $controller->toggleEmployeeStatus();
         break;
     case 'admin-chiffre-affaires':
         $controller = new AdminController();

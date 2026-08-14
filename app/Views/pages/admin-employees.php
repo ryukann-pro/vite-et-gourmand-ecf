@@ -49,77 +49,80 @@
 
                     <tbody>
 
-                        <tr>
+                        <?php foreach ($employees as $employee): ?>
 
-                            <td>Julie Martin</td>
+                            <tr>
 
-                            <td>
-                                julie@email.com
-                            </td>
+                                <td>
+                                    <?= htmlspecialchars($employee['prenom'], ENT_QUOTES, 'UTF-8') ?>
+                                    <?= htmlspecialchars($employee['nom'], ENT_QUOTES, 'UTF-8') ?>
+                                </td>
 
-                            <td>
-                                Employé
-                            </td>
+                                <td>
+                                    <?= htmlspecialchars($employee['email'], ENT_QUOTES, 'UTF-8') ?>
+                                </td>
 
-                            <td>
-                                <span class="badge bg-success">
-                                    Actif
-                                </span>
-                            </td>
+                                <td>
+                                    <?= htmlspecialchars($employee['role'], ENT_QUOTES, 'UTF-8') ?>
+                                </td>
 
-                            <td>
+                                <td>
+                                    <?php if ((int) $employee['actif'] === 1): ?>
 
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
+                                        <span class="badge bg-success">
+                                            Actif
+                                        </span>
 
-                                    <button class="btn btn-sm admin-employees-secondary-btn">
-                                        Modifier
-                                    </button>
+                                    <?php else: ?>
 
-                                    <button class="btn btn-sm admin-employees-danger-btn">
-                                        Désactiver
-                                    </button>
+                                        <span class="badge bg-secondary">
+                                            Inactif
+                                        </span>
 
-                                </div>
+                                    <?php endif; ?>
+                                </td>
 
-                            </td>
+                                <td>
 
-                        </tr>
+                                    <div class="d-flex justify-content-end gap-2 flex-wrap">
 
-                        <tr>
+                                        <a
+                                            href="index.php?url=admin-modification-employe&id=<?= (int) $employee['id'] ?>"
+                                            class="btn btn-sm admin-employees-secondary-btn">
+                                            Modifier
+                                        </a>
 
-                            <td>Lucas Bernard</td>
+                                        <form
+                                            method="POST"
+                                            action="index.php?url=admin-statut-employe&id=<?= (int) $employee['id'] ?>"
+                                            class="d-inline">
+                                            <?php if ((int) $employee['actif'] === 1): ?>
 
-                            <td>
-                                lucas@email.com
-                            </td>
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-sm admin-employees-danger-btn admin-employees-status-btn"
+                                                    onclick="return confirm('Désactiver cet employé ?')">
+                                                    Désactiver
+                                                </button>
 
-                            <td>
-                                Employé
-                            </td>
+                                            <?php else: ?>
 
-                            <td>
-                                <span class="badge bg-secondary">
-                                    Inactif
-                                </span>
-                            </td>
+                                                <button
+                                                    type="submit"
+                                                    class="btn btn-sm admin-employees-btn admin-employees-status-btn">
+                                                    Réactiver
+                                                </button>
 
-                            <td>
+                                            <?php endif; ?>
+                                        </form>
 
-                                <div class="d-flex justify-content-end gap-2 flex-wrap">
+                                    </div>
 
-                                    <button class="btn btn-sm admin-employees-secondary-btn">
-                                        Modifier
-                                    </button>
+                                </td>
 
-                                    <button class="btn btn-sm admin-employees-btn">
-                                        Réactiver
-                                    </button>
+                            </tr>
 
-                                </div>
-
-                            </td>
-
-                        </tr>
+                        <?php endforeach; ?>
 
                     </tbody>
 

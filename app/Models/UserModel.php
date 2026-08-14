@@ -17,6 +17,7 @@ class UserModel
                 utilisateur.telephone,
                 utilisateur.adresse,
                 utilisateur.mot_de_passe_hash,
+                utilisateur.actif,
                 role.nom AS role
             FROM utilisateur
             INNER JOIN role ON utilisateur.role_id = role.id
@@ -91,6 +92,7 @@ class UserModel
             utilisateur.telephone,
             utilisateur.adresse,
             utilisateur.mot_de_passe_hash,
+            utilisateur.actif,
             role.nom AS role
         FROM utilisateur
         INNER JOIN role ON utilisateur.role_id = role.id
@@ -129,6 +131,134 @@ class UserModel
             $email,
             $telephone,
             $adresse,
+            $id
+        ]);
+    }
+    public function getAllEmployees(): array
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        SELECT
+            utilisateur.id,
+            utilisateur.nom,
+            utilisateur.prenom,
+            utilisateur.email,
+            utilisateur.actif,
+            role.nom AS role
+        FROM utilisateur
+        INNER JOIN role ON utilisateur.role_id = role.id
+        WHERE role.nom = 'Employé'
+        ORDER BY utilisateur.nom ASC, utilisateur.prenom ASC
+    ";
+
+        $stmt = $pdo->query($sql);
+
+        return $stmt->fetchAll();
+    }
+
+    public function createEmployee(
+        string $nom,
+        string $prenom,
+        string $email,
+        string $passwordHash
+    ): bool {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        INSERT INTO utilisateur (
+            nom,
+            prenom,
+            email,
+            mot_de_passe_hash,
+            date_inscription,
+            actif,
+            role_id
+        )
+        VALUES (?, ?, ?, ?, NOW(), 1, 2)
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([
+            $nom,
+            $prenom,
+            $email,
+            $passwordHash
+        ]);
+    }
+
+    public function getEmployeeById(int $id): ?array
+    {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        SELECT
+            utilisateur.id,
+            utilisateur.nom,
+            utilisateur.prenom,
+            utilisateur.email,
+            utilisateur.actif,
+            role.nom AS role
+        FROM utilisateur
+        INNER JOIN role ON utilisateur.role_id = role.id
+        WHERE utilisateur.id = ?
+        AND role.nom = 'Employé'
+    ";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id]);
+
+        $employee = $stmt->fetch();
+
+        return $employee ?: null;
+    }
+
+    public function updateEmployee(
+        int $id,
+        string $nom,
+        string $prenom,
+        string $email
+    ): bool {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        UPDATE utilisateur
+        SET
+            nom = ?,
+            prenom = ?,
+            email = ?
+        WHERE id = ?
+        AND role_id = 2
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([
+            $nom,
+            $prenom,
+            $email,
+            $id
+        ]);
+    }
+
+    public function updateEmployeeStatus(
+        int $id,
+        bool $active
+    ): bool {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        UPDATE utilisateur
+        SET actif = ?
+        WHERE id = ?
+        AND role_id = 2
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([
+            $active ? 1 : 0,
             $id
         ]);
     }

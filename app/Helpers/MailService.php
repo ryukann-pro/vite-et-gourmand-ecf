@@ -147,7 +147,30 @@ class MailService
             $htmlContent
         );
     }
-    
+
+    public function sendEmployeeAccountCreatedEmail(
+        string $email,
+        string $firstName,
+        string $lastName
+    ): bool {
+        $fullName = trim($firstName . ' ' . $lastName);
+
+        $htmlContent = $this->renderView(
+            'employee-account-created',
+            [
+                'firstName' => $firstName,
+                'email' => $email
+            ]
+        );
+
+        return $this->send(
+            $email,
+            $fullName,
+            'Votre compte employé a été créé',
+            $htmlContent
+        );
+    }
+
     private function send(
         string $recipientEmail,
         string $recipientName,
