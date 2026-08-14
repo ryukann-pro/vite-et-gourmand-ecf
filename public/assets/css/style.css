@@ -2653,6 +2653,10 @@ TEAM SECTION
     color: #ffffff;
 }
 
+.admin-employees-status-btn {
+    min-width: 105px;
+}
+
 /* =========================
    RESPONSIVE
 ========================= */

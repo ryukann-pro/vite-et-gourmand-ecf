@@ -1,5 +1,7 @@
 <?php
+
 require_once __DIR__ . '/../Models/UserModel.php';
+
 class AuthController
 {
     public function login(): void
@@ -22,12 +24,23 @@ class AuthController
             ) {
                 $error = "Email ou mot de passe incorrect.";
             } else {
+
                 $userModel = new UserModel();
                 $user = $userModel->findByEmail($email);
 
-                if (!$user || !password_verify($password, $user['mot_de_passe_hash'])) {
+                if (
+                    !$user ||
+                    !password_verify(
+                        $password,
+                        $user['mot_de_passe_hash']
+                    )
+                ) {
                     $error = "Email ou mot de passe incorrect.";
+                } elseif (!(bool) $user['actif']) {
+
+                    $error = "Ce compte est désactivé.";
                 } else {
+
                     session_regenerate_id(true);
 
                     $_SESSION['user'] = [

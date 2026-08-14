@@ -30,6 +30,7 @@ CREATE TABLE utilisateur (
     adresse VARCHAR(255),
     mot_de_passe_hash VARCHAR(255) NOT NULL,
     date_inscription DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    actif TINYINT(1) NOT NULL DEFAULT 1,
     role_id INT NOT NULL
 );
 

@@ -6,26 +6,26 @@
         <div class="admin-create-employee-card">
 
             <h1 class="admin-create-employee-title mb-5">
-                Créer un compte employé
+                Modifier un employé
             </h1>
 
-            <div class="alert alert-info admin-create-employee-info mb-5">
-                Le compte créé sera uniquement de type employé. Il ne sera pas possible de créer un compte administrateur depuis l’application.
-            </div>
             <?php if ($error): ?>
                 <div class="alert alert-danger">
                     <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
                 </div>
             <?php endif; ?>
+
             <form method="POST">
+
                 <div class="mb-4">
                     <label class="form-label">Nom</label>
                     <input
                         type="text"
                         name="nom"
                         class="form-control"
-                        placeholder="Nom"
-                        required>
+                        value="<?= htmlspecialchars($employee['nom'], ENT_QUOTES, 'UTF-8') ?>"
+                        required
+                    >
                 </div>
 
                 <div class="mb-4">
@@ -34,48 +34,26 @@
                         type="text"
                         name="prenom"
                         class="form-control"
-                        placeholder="Prénom"
-                        required>
+                        value="<?= htmlspecialchars($employee['prenom'], ENT_QUOTES, 'UTF-8') ?>"
+                        required
+                    >
                 </div>
-                <div class="mb-4">
+
+                <div class="mb-5">
                     <label class="form-label">Adresse email</label>
                     <input
                         type="email"
                         name="email"
                         class="form-control"
-                        placeholder="email@exemple.fr"
-                        required>
-                </div>
-
-                <div class="mb-4">
-                    <label class="form-label">Mot de passe</label>
-                    <input
-                        type="password"
-                        name="password"
-                        class="form-control"
-                        placeholder="Mot de passe"
-                        required>
-
-                    <small class="admin-create-employee-help">
-                        L’employé recevra un mail l’informant de la création du compte,
-                        mais le mot de passe ne sera pas communiqué dans le mail.
-                    </small>
-                </div>
-
-                <div class="mb-5">
-                    <label class="form-label">Confirmation du mot de passe</label>
-                    <input
-                        type="password"
-                        name="confirm_password"
-                        class="form-control"
-                        placeholder="Confirmez le mot de passe"
-                        required>
+                        value="<?= htmlspecialchars($employee['email'], ENT_QUOTES, 'UTF-8') ?>"
+                        required
+                    >
                 </div>
 
                 <div class="admin-create-employee-actions">
 
                     <button type="submit" class="btn admin-create-employee-btn">
-                        Créer le compte employé
+                        Enregistrer les modifications
                     </button>
 
                     <a href="index.php?url=admin-employes"
