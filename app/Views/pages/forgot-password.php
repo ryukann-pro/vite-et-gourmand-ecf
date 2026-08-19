@@ -15,19 +15,41 @@
         un lien de réinitialisation.
       </p>
 
-      <form>
+      <?php if (!empty($error)): ?>
+        <div class="alert alert-danger">
+          <?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?>
+        </div>
+      <?php endif; ?>
+
+      <?php if (!empty($success)): ?>
+        <div class="alert alert-success">
+          <?= htmlspecialchars($success, ENT_QUOTES, 'UTF-8') ?>
+        </div>
+      <?php endif; ?>
+
+      <form method="POST" action="index.php?url=mot-de-passe-oublie">
 
         <div class="mb-4">
           <label for="email" class="form-label">
             Adresse email
           </label>
 
-          <input type="email" id="email" class="form-control" placeholder="Votre adresse email">
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            placeholder="Votre adresse email"
+            required
+          >
         </div>
 
-        <button type="submit" class="btn forgot-password-btn w-100 mb-4">
+        <button
+          type="submit"
+          class="btn forgot-password-btn w-100 mb-4">
           Valider
         </button>
+
       </form>
 
     </div>

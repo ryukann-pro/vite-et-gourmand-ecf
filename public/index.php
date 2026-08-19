@@ -51,6 +51,10 @@ switch ($url) {
         $controller = new AuthController();
         $controller->forgotPassword();
         break;
+    case 'reinitialisation-mot-de-passe':
+        $controller = new AuthController();
+        $controller->resetPassword();
+        break;
     case 'contact':
         $controller = new ContactController();
         $controller->index();

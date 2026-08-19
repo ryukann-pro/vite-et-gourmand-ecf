@@ -223,4 +223,27 @@ class MailService
 
         return ob_get_clean();
     }
+
+    public function sendPasswordResetEmail(
+        string $email,
+        string $firstName,
+        string $resetLink
+    ): bool {
+        $htmlContent = $this->renderView(
+            'password-reset',
+            [
+                'firstName' => $firstName,
+                'resetLink' => $resetLink
+            ]
+        );
+
+        return $this->send(
+            $email,
+            $firstName,
+            'Réinitialisation de votre mot de passe',
+            $htmlContent
+        );
+    }
+
+    
 }
