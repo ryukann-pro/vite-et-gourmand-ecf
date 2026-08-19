@@ -262,4 +262,24 @@ class UserModel
             $id
         ]);
     }
+
+    public function updatePassword(
+        int $userId,
+        string $passwordHash
+    ): bool {
+        $pdo = Database::getConnection();
+
+        $sql = "
+        UPDATE utilisateur
+        SET mot_de_passe_hash = ?
+        WHERE id = ?
+    ";
+
+        $stmt = $pdo->prepare($sql);
+
+        return $stmt->execute([
+            $passwordHash,
+            $userId
+        ]);
+    }
 }
