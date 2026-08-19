@@ -34,6 +34,16 @@ CREATE TABLE utilisateur (
     role_id INT NOT NULL
 );
 
+-- Création de la table reinitialisation_mot_de_passe
+
+CREATE TABLE reinitialisation_mot_de_passe (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    utilisateur_id INT NOT NULL UNIQUE,
+    token_hash CHAR(64) NOT NULL UNIQUE,
+    date_expiration DATETIME NOT NULL,
+    date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
 -- Création de la table restaurant
 
 CREATE TABLE restaurant (
@@ -172,6 +182,8 @@ CREATE TABLE commande (
     statut_id INT NOT NULL
 );
 
+
+
 -- Création table suivi_commande
 CREATE TABLE suivi_commande (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -195,6 +207,7 @@ CREATE TABLE avis (
 -- Passage des tables en INNODB pour supporter les clés étrangères
 ALTER TABLE role ENGINE = InnoDB;
 ALTER TABLE utilisateur ENGINE = InnoDB;
+ALTER TABLE reinitialisation_mot_de_passe ENGINE = InnoDB;
 ALTER TABLE restaurant ENGINE = InnoDB;
 ALTER TABLE horaire ENGINE = InnoDB;
 ALTER TABLE message_contact ENGINE = InnoDB;
@@ -222,6 +235,13 @@ ALTER TABLE utilisateur
 ADD CONSTRAINT fk_utilisateur_role
 FOREIGN KEY (role_id) REFERENCES role(id);
 
+-- Clé étrangère pour la table reinitialisation_mot_de_passe
+
+ALTER TABLE reinitialisation_mot_de_passe
+ADD CONSTRAINT fk_reinitialisation_mot_de_passe_utilisateur
+FOREIGN KEY (utilisateur_id)
+REFERENCES utilisateur(id)
+ON DELETE CASCADE;
 
 -- Clés étrangères pour la table horaire
 ALTER TABLE horaire

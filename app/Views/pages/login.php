@@ -36,7 +36,9 @@
                 </div>
 
                 <div class="text-end mb-4 text-center">
-                    <a href="#" class="forgot-password-link">
+                    <a
+                        href="index.php?url=mot-de-passe-oublie"
+                        class="forgot-password-link">
                         Mot de passe oublié ?
                     </a>
                 </div>

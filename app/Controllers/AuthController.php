@@ -1,6 +1,8 @@
 <?php
 
 require_once __DIR__ . '/../Models/UserModel.php';
+require_once __DIR__ . '/../Models/PasswordResetModel.php';
+require_once __DIR__ . '/../Helpers/MailService.php';
 
 class AuthController
 {
@@ -162,8 +164,69 @@ class AuthController
 
     public function forgotPassword(): void
     {
+        $error = null;
+        $success = null;
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $email = trim($_POST['email'] ?? '');
+
+            if (
+                $email === ''
+                || !filter_var($email, FILTER_VALIDATE_EMAIL)
+                || strlen($email) > 191
+            ) {
+                $error = "Adresse email invalide.";
+            } else {
+
+                $userModel = new UserModel();
+                $user = $userModel->findByEmail($email);
+
+                if ($user) {
+
+                    $token = bin2hex(random_bytes(32));
+
+                    $tokenHash = hash(
+                        'sha256',
+                        $token
+                    );
+
+                    $expirationDate = date(
+                        'Y-m-d H:i:s',
+                        time() + 3600
+                    );
+
+                    $passwordResetModel = new PasswordResetModel();
+
+                    $created = $passwordResetModel->createOrReplace(
+                        (int) $user['id'],
+                        $tokenHash,
+                        $expirationDate
+                    );
+
+                    if ($created) {
+
+                        $resetLink = APP_URL
+                            . '/index.php?url=reinitialisation-mot-de-passe&token='
+                            . urlencode($token);
+
+                        $mailService = new MailService();
+
+                        $mailService->sendPasswordResetEmail(
+                            $user['email'],
+                            $user['prenom'],
+                            $resetLink
+                        );
+                    }
+                }
+
+                $success = "Si un compte correspond à cette adresse, un lien de réinitialisation vous a été envoyé.";
+            }
+        }
+
         require_once __DIR__ . '/../Views/pages/forgot-password.php';
     }
+
     public function logout(): void
     {
         session_start();
@@ -174,5 +237,87 @@ class AuthController
 
         header('Location: index.php');
         exit;
+    }
+
+    public function resetPassword(): void
+    {
+        $error = null;
+        $success = null;
+
+        $token = trim($_GET['token'] ?? '');
+
+        if ($token === '') {
+            $error = "Lien de réinitialisation invalide.";
+            require_once __DIR__ . '/../Views/pages/reset-password.php';
+            return;
+        }
+
+        $tokenHash = hash('sha256', $token);
+
+        $passwordResetModel = new PasswordResetModel();
+
+        $reset = $passwordResetModel->findValidByTokenHash(
+            $tokenHash
+        );
+
+        if (!$reset) {
+            $error = "Ce lien de réinitialisation est invalide ou a expiré.";
+            require_once __DIR__ . '/../Views/pages/reset-password.php';
+            return;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $password = $_POST['password'] ?? '';
+            $confirmPassword = $_POST['confirm_password'] ?? '';
+
+            if (
+                $password === ''
+                || $confirmPassword === ''
+            ) {
+                $error = "Tous les champs sont obligatoires.";
+            } elseif ($password !== $confirmPassword) {
+
+                $error = "Les mots de passe ne correspondent pas.";
+            } else {
+
+                $regexPassword =
+                    '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/';
+
+                if (!preg_match($regexPassword, $password)) {
+
+                    $error = "Le mot de passe doit contenir au moins 10 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
+                } else {
+
+                    $userModel = new UserModel();
+
+                    $passwordHash = password_hash(
+                        $password,
+                        PASSWORD_DEFAULT
+                    );
+
+                    $updated = $userModel->updatePassword(
+                        (int) $reset['utilisateur_id'],
+                        $passwordHash
+                    );
+
+                    if ($updated) {
+
+                        $passwordResetModel->deleteByUserId(
+                            (int) $reset['utilisateur_id']
+                        );
+
+                        header(
+                            'Location: index.php?url=connexion'
+                        );
+                        exit;
+                    }
+
+                    $error = "Une erreur est survenue lors de la modification du mot de passe.";
+                }
+            }
+        }
+
+        require_once __DIR__ . '/../Views/pages/reset-password.php';
     }
 }
