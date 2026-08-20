@@ -1,39 +1,143 @@
-# Installation du projet Vite et Gourmand avec WAMP (ou autre)
+# Vite et Gourmand
 
-## Prérequis
+Application web réalisée dans le cadre du titre professionnel
+Développeur Web et Web Mobile.
 
-Installer les outils suivants :
-
-- WAMP ou équivalent
-- Git
-- Un navigateur web
+Le projet utilise PHP, MySQL et MongoDB.
 
 ---
 
-# 1. Cloner le projet
+# Installation avec Docker (recommandée)
 
-Ouvrir un terminal dans le dossier `www` de WAMP :
-puis taper la commande :
+## Prérequis
+
+Installer :
+
+- Docker Desktop
+- Git
+- Un navigateur web
+
+## 1. Cloner le projet
+
+Ouvrir un terminal dans le dossier de votre choix puis exécuter :
+
 git clone https://github.com/ryukann-pro/vite-et-gourmand-ecf.git
 
-# 2. Créer la base de données
+Se placer dans le projet :
 
-Dans phpMyAdmin éxecuter les lignes SQL suivantes
+cd vite-et-gourmand-ecf
+
+## 2. Configurer les variables d'environnement
+
+Créer un fichier `.env` à la racine du projet.
+
+Renseigner les variables nécessaires à l'application à partir du fichier
+`.env.example`.
+
+Le fichier `.env` contient notamment la configuration de MySQL,
+MongoDB et des services d'envoi d'e-mails.
+
+Le fichier `.env` ne doit pas être envoyé sur Git.
+
+## 3. Démarrer l'application
+
+Lancer :
+
+docker compose up -d --build
+
+Lors du premier démarrage, Docker :
+
+- construit l'environnement PHP / Apache ;
+- installe les dépendances Composer ;
+- démarre MySQL ;
+- crée automatiquement la base de données ;
+- exécute `database/schema.sql` ;
+- exécute `database/data.sql` ;
+- démarre MongoDB.
+
+Le premier démarrage peut prendre quelques instants.
+
+## 4. Accéder à l'application
+
+Ouvrir dans un navigateur :
+
+http://localhost:8080/public
+
+## Commandes Docker utiles
+
+Voir les conteneurs :
+
+docker compose ps
+
+Afficher les logs :
+
+docker compose logs
+
+Ouvrir MySQL dans le terminal :
+
+docker exec -it vite_et_gourmand_mysql sh -c 'mysql --default-character-set=utf8mb4 -u root -p"$MYSQL_ROOT_PASSWORD" vite_et_gourmand'
+
+Arrêter les conteneurs :
+
+docker compose down
+
+Redémarrer les conteneurs :
+
+docker compose up -d
+
+Reconstruire les images après une modification du Dockerfile :
+
+docker compose up -d --build
+
+---
+
+# Installation manuelle avec WAMP
+
+Cette méthode permet d'exécuter le projet sans Docker.
+
+## Prérequis
+
+Installer :
+
+- WAMP ou équivalent
+- Git
+- Composer
+- MongoDB
+- Un navigateur web
+
+## 1. Cloner le projet
+
+Dans le dossier `www` de WAMP :
+
+git clone https://github.com/ryukann-pro/vite-et-gourmand-ecf.git
+
+Puis :
+
+cd vite-et-gourmand-ecf
+
+## 2. Installer les dépendances PHP
+
+composer install
+
+## 3. Créer la base MySQL
+
+Dans phpMyAdmin ou MySQL :
+
 CREATE DATABASE vite_et_gourmand
 CHARACTER SET utf8mb4
 COLLATE utf8mb4_unicode_ci;
 
-# 3. Importer les fichiers SQL
+## 4. Importer les données
 
-Importer les fichiers suivant dans l'ordre 
-database/schema.sql
-database/data.sql
+Importer dans cet ordre :
 
-# 4. Créer l’utilisateur MySQL
+1. `database/schema.sql`
+2. `database/data.sql`
 
-Taper ces requêtes SQL suivantes:
+## 5. Créer l'utilisateur MySQL
+
 CREATE USER 'app_vite_gourmand'@'localhost'
-IDENTIFIED BY 'mot_de_passe'; --en utilisant un mot de passe sécurisé
+IDENTIFIED BY 'mot_de_passe';
 
 GRANT SELECT, INSERT, UPDATE, DELETE
 ON vite_et_gourmand.*
@@ -41,48 +145,26 @@ TO 'app_vite_gourmand'@'localhost';
 
 FLUSH PRIVILEGES;
 
-# 5. Configurer le fichier .env
+## 6. Configurer `.env`
 
-Créer un fichier .env à la racine avec dedans : 
+Créer le fichier `.env` à la racine du projet à partir de `.env.example`
+et renseigner les paramètres correspondant à votre environnement local.
+
+Pour une installation avec WAMP, remplacer notamment :
+
+DB_HOST=mysql
+par :
 DB_HOST=localhost
-DB_NAME=vite_et_gourmand
-DB_USER=app_vite_gourmand
-DB_PASSWORD=mot_de_passe
 
-# 6. Lancer le projet
+et :
 
-Démarrez WAMP puis : 
-option 1 - accéder à l'URL suivante : http://localhost/vite-et-gourmand-ecf/public/
-option 2 - lancer localhost depuis l'interface de wamp, cliquez sur vite-et-gourmand-ecf et sur public
+MONGO_HOST=mongodb
+par :
+MONGO_HOST=localhost
 
+## 7. Lancer l'application
 
+Démarrer WAMP puis accéder à :
 
-# Installation du projet Vite et Gourmand avec WAMP (ou autre)
+http://localhost/vite-et-gourmand-ecf/public/
 
-## Prérequis
-
-Installer les outils suivants :
-
-- Docker Desktop
-- Git
-- Un navigateur web
-
-# 1. Cloner le projet
-
-Ouvrir un terminal dans le dossier de votre choix (ou le projet sera copié) de :
-puis taper la commande :
-git clone https://github.com/ryukann-pro/vite-et-gourmand-ecf.git
-
-
-
-# Démarrer les conteneurs
-docker compose up -d
-
-# Arrêter les conteneurs
-docker compose down
-
-# Ouvrir MySQL
-docker exec -it vite_et_gourmand_mysql sh -c 'mysql --default-character-set=utf8mb4 -u root -p"$MYSQL_ROOT_PASSWORD" vite_et_gourmand'
-
-# Voir les conteneurs
-docker ps
