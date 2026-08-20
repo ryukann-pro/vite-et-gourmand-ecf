@@ -183,8 +183,17 @@ switch ($url) {
         $controller = new EmployeeController();
         $controller->deleteMenu();
         break;
+    case 'mentions-legales':
+        $controller = new HomeController();
+        $controller->legalNotice();
+    break;
+    case 'cgv':
+        $controller = new HomeController();
+        $controller->termsAndConditions();
+break;
     default:
         http_response_code(404);
         echo "Page introuvable";
         break;
+        
 }
