@@ -1,12 +1,3 @@
--- Utilisation du snake_case pour les noms de table et de champs pour une meilleure lisibilité et cohérence
--- Création sur MySQl
--- Suppression de la base de données vite_et_gourmand si elle existe déjà pour éviter les erreurs lors de la création
-DROP DATABASE IF EXISTS vite_et_gourmand;
-
-CREATE DATABASE vite_et_gourmand;
--- USE pour sélectionner la base de données vite_et_gourmand pour les prochaines commandes
-USE vite_et_gourmand;
-
 -- Je vais créer les tables sans les contraintes de clés étrangères pour éviter les problèmes d'ordre de création, 
 -- Mais je les ajouterai ensuite pour assurer l'intégrité référentielle.
 
@@ -55,15 +46,14 @@ CREATE TABLE restaurant (
     email VARCHAR(191) NOT NULL UNIQUE
 );
 
-
 -- Création de la table horaire
-    CREATE TABLE horaire (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        jour_semaine ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche') NOT NULL,
-        heure_ouverture TIME NOT NULL,
-        heure_fermeture TIME NOT NULL,
-        restaurant_id INT NOT NULL
-    );
+CREATE TABLE horaire (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    jour_semaine ENUM('Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche') NOT NULL,
+    heure_ouverture TIME NOT NULL,
+    heure_fermeture TIME NOT NULL,
+    restaurant_id INT NOT NULL
+);
 
 
 -- Création de la table message_contact
@@ -81,11 +71,10 @@ CREATE TABLE message_contact (
 );
 
 -- Création de la table allergene
-
-    CREATE TABLE allergene (
-        id INT AUTO_INCREMENT PRIMARY KEY,
-        nom VARCHAR(100) NOT NULL UNIQUE
-    );
+CREATE TABLE allergene (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL UNIQUE
+);
 
 -- Création de la table plat
 CREATE TABLE plat (
