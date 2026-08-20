@@ -85,26 +85,25 @@ $footerHoraires = $horaireModel->getAll();
 
                 <nav class="footer-links">
 
-                    <a href="index.php?url=accueil">
+                    <a href="<?= BASE_URL ?>/index.php?url=accueil">
                         Accueil
                     </a>
 
-                    <a href="index.php?url=menus">
+                    <a href="<?= BASE_URL ?>/index.php?url=menus">
                         Menus
                     </a>
 
-                    <a href="index.php?url=contact">
+                    <a href="<?= BASE_URL ?>/index.php?url=contact">
                         Contact
                     </a>
 
-                    <a href="#">
+                    <a href="<?= BASE_URL ?>/index.php?url=mentions-legales">
                         Mentions légales
                     </a>
 
-                    <a href="#">
+                    <a href="<?= BASE_URL ?>/index.php?url=cgv">
                         CGV
                     </a>
-
                 </nav>
 
             </div>
