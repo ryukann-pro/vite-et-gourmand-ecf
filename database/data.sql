@@ -1,3 +1,5 @@
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
 -- Rôles
 INSERT INTO role (nom) VALUES
 ('Client'),

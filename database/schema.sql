@@ -1,3 +1,5 @@
+SET NAMES utf8mb4;
+SET CHARACTER SET utf8mb4;
 -- Je vais créer les tables sans les contraintes de clés étrangères pour éviter les problèmes d'ordre de création, 
 -- Mais je les ajouterai ensuite pour assurer l'intégrité référentielle.
 
