@@ -7,11 +7,11 @@ class Database
     public static function getConnection(): PDO
     {
         if (self::$pdo === null) {
-            $envFile = parse_ini_file(
-                __DIR__ . '/../.env',
-                false,
-                INI_SCANNER_RAW
-            ) ?: [];
+            $envPath = __DIR__ . '/../.env';
+
+            $envFile = file_exists($envPath)
+                ? (parse_ini_file($envPath, false, INI_SCANNER_RAW) ?: [])
+                : [];
 
             /*
              * Dans Docker, getenv() récupère les variables transmises
@@ -33,13 +33,27 @@ class Database
                 return $envFile[$key] ?? $default;
             };
 
-            $host = $getEnvValue('DB_HOST', 'localhost');
-            $port = $getEnvValue('DB_PORT', '3306');
-            $dbname = $getEnvValue('DB_NAME');
-            $user = $getEnvValue('DB_USER');
-            $password = $getEnvValue('DB_PASSWORD');
+            $jawsDbUrl = getenv('JAWSDB_URL');
 
-            if (!$dbname || !$user || $password === null) {
+            if ($jawsDbUrl) {
+                $parts = parse_url($jawsDbUrl);
+
+                $host = $parts['host'] ?? null;
+                $port = (string) ($parts['port'] ?? 3306);
+                $dbname = isset($parts['path'])
+                    ? ltrim($parts['path'], '/')
+                    : null;
+                $user = $parts['user'] ?? null;
+                $password = $parts['pass'] ?? null;
+            } else {
+                $host = $getEnvValue('DB_HOST', 'localhost');
+                $port = $getEnvValue('DB_PORT', '3306');
+                $dbname = $getEnvValue('DB_NAME');
+                $user = $getEnvValue('DB_USER');
+                $password = $getEnvValue('DB_PASSWORD');
+            }
+
+            if (!$host || !$dbname || !$user || $password === null) {
                 throw new RuntimeException(
                     'La configuration de la base de données est incomplète.'
                 );
