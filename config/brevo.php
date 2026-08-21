@@ -2,11 +2,11 @@
 
 use Brevo\Brevo;
 
-$envFile = parse_ini_file(
-    __DIR__ . '/../.env',
-    false,
-    INI_SCANNER_RAW
-) ?: [];
+$envPath = __DIR__ . '/../.env';
+
+$envFile = file_exists($envPath)
+    ? (parse_ini_file($envPath, false, INI_SCANNER_RAW) ?: [])
+    : [];
 
 $getEnvValue = static function (
     string $key,

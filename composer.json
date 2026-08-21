@@ -1,5 +1,7 @@
 {
     "require": {
+        "php": "^8.3",
+        "ext-mongodb": "^2.3",
         "mongodb/mongodb": "^2.3",
         "getbrevo/brevo-php": "^5.0",
         "guzzlehttp/guzzle": "^8.0"

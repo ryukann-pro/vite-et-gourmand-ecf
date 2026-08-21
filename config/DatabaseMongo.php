@@ -12,12 +12,18 @@ class DatabaseMongo
     public static function getConnection(): Client
     {
         if (self::$client === null) {
-            $host = getenv('MONGO_HOST') ?: 'localhost';
-            $port = getenv('MONGO_PORT') ?: '27017';
+            $mongoUri = getenv('MONGO_URI');
 
-            self::$client = new Client(
-                "mongodb://{$host}:{$port}"
-            );
+            if ($mongoUri) {
+                self::$client = new Client($mongoUri);
+            } else {
+                $host = getenv('MONGO_HOST') ?: 'localhost';
+                $port = getenv('MONGO_PORT') ?: '27017';
+
+                self::$client = new Client(
+                    "mongodb://{$host}:{$port}"
+                );
+            }
         }
 
         return self::$client;
