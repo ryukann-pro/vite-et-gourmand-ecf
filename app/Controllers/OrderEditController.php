@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../Helpers/Auth.php';
 require_once __DIR__ . '/../Models/OrderModel.php';
 require_once __DIR__ . '/../Models/CityModel.php';
+require_once __DIR__ . '/../Entities/Commande.php';
 
 class OrderEditController
 {
@@ -68,23 +69,17 @@ class OrderEditController
                 $error = "La date de livraison ne peut pas être dans le passé.";
             } else {
 
+                $commande = new Commande(
+                    $nbPersonnes,
+                    (float) $order['prix_unitaire'],
+                    (int) $order['menu_nb_personnes_min'],
+                    (float) $city['distance_km']
+                );
                 $prixUnitaire = (float) $order['prix_unitaire'];
 
-                $fraisLivraison = 5;
-
-                if ($city['distance_km'] > 0) {
-                    $fraisLivraison += $city['distance_km'] * 0.59;
-                }
-
-                $reduction = 0;
-
-                if ($nbPersonnes >= 10) {
-                    $reduction = ($prixUnitaire * $nbPersonnes) * 0.10;
-                }
-
-                $sousTotal = $prixUnitaire * $nbPersonnes;
-
-                $prixTotal = $sousTotal - $reduction + $fraisLivraison;
+                $fraisLivraison = $commande->calculerFraisLivraison();
+                $reduction = $commande->calculerReduction();
+                $prixTotal = $commande->calculerTotal();
 
                 $updated = $orderModel->updateOrder(
                     $orderId,
@@ -112,5 +107,4 @@ class OrderEditController
 
         require_once __DIR__ . '/../Views/pages/order-edit.php';
     }
-
 }

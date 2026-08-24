@@ -110,6 +110,7 @@ class OrderModel
         SELECT
             commande.*,
             menu.titre AS menu_titre,
+            menu.nb_personnes_min AS menu_nb_personnes_min,
             statut_commande.nom AS statut,
             ville_commande.nom AS ville
         FROM commande

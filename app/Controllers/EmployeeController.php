@@ -120,7 +120,7 @@ class EmployeeController
                         $reviewLink
                     );
                 }
-                
+
                 if ($updated && $statusId === 6) {
                     $order = $orderModel->getOrderByIdForEmployee(
                         $orderId
@@ -142,6 +142,7 @@ class EmployeeController
 
         require_once __DIR__ . '/../Views/pages/employee-order-detail.php';
     }
+
     public function reviews(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
@@ -187,6 +188,7 @@ class EmployeeController
 
         require_once __DIR__ . '/../Views/pages/employee-hours.php';
     }
+
     public function plats(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
@@ -197,6 +199,7 @@ class EmployeeController
 
         require_once __DIR__ . '/../Views/pages/employee-plats.php';
     }
+
     public function createPlat(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
@@ -245,6 +248,7 @@ class EmployeeController
 
         require_once __DIR__ . '/../Views/pages/employee-plat-create.php';
     }
+
     public function editPlat(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
@@ -326,6 +330,7 @@ class EmployeeController
 
         exit;
     }
+
     public function createMenu(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
@@ -361,13 +366,16 @@ class EmployeeController
 
             $imageCount = count(array_filter($_FILES['images']['name'] ?? []));
 
+            $menuEntity = new Menu(
+                $titre,
+                $nbPersonnesMin,
+                $prixParPersonne,
+                $stock
+            );
             if (
-                $titre === '' ||
+                !$menuEntity->aDesValeursValides() ||
                 $descriptionCourte === '' ||
                 $descriptionLongue === '' ||
-                $nbPersonnesMin <= 0 ||
-                $prixParPersonne <= 0 ||
-                $stock < 0 ||
                 $conditions === '' ||
                 $themeId <= 0 ||
                 $regimeId <= 0 ||
@@ -420,6 +428,7 @@ class EmployeeController
 
         require_once __DIR__ . '/../Views/pages/employee-menu-create.php';
     }
+
     public function editMenu(): void
     {
         Auth::requireRole(['Employé', 'Admin']);
@@ -475,13 +484,16 @@ class EmployeeController
 
             $imageCount = count(array_filter($_FILES['images']['name'] ?? []));
 
+            $menuEntity = new Menu(
+                $titre,
+                $nbPersonnesMin,
+                $prixParPersonne,
+                $stock
+            );
             if (
-                $titre === '' ||
+                !$menuEntity->aDesValeursValides() ||
                 $descriptionCourte === '' ||
                 $descriptionLongue === '' ||
-                $nbPersonnesMin <= 0 ||
-                $prixParPersonne <= 0 ||
-                $stock < 0 ||
                 $conditions === '' ||
                 $themeId <= 0 ||
                 $regimeId <= 0 ||

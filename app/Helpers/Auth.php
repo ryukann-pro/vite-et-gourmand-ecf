@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../Models/UserModel.php';
+require_once __DIR__ . '/../Entities/Utilisateur.php';
 
 class Auth
 {
@@ -32,8 +33,7 @@ class Auth
         $user = $userModel->findById(
             (int) $_SESSION['user']['id']
         );
-
-        if (!$user || !(bool) $user['actif']) {
+        if (!$user) {
             $_SESSION = [];
             session_destroy();
 
@@ -41,9 +41,23 @@ class Auth
             exit;
         }
 
-        $userRole = $user['role'];
+        $utilisateur = new Utilisateur(
+            $user['nom'],
+            $user['prenom'],
+            $user['email'],
+            (bool) $user['actif'],
+            $user['role']
+        );
 
-        if (!in_array($userRole, $roles, true)) {
+        if (!$utilisateur->estActif()) {
+            $_SESSION = [];
+            session_destroy();
+
+            header('Location: index.php?url=connexion');
+            exit;
+        }
+
+        if (!$utilisateur->aUnDesRoles($roles)) {
             header('Location: index.php');
             exit;
         }
