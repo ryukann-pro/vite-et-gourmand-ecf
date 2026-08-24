@@ -109,7 +109,7 @@
                             name="prix_par_personne"
                             class="form-control"
                             step="0.01"
-                            min="0"
+                            min="0.01"
                             value="<?= htmlspecialchars($menu['prix_par_personne']) ?>"
                             required>
                     </div>

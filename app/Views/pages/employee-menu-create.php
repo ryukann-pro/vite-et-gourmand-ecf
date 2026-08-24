@@ -89,7 +89,7 @@
                     <div class="col-md-4 mb-4">
                         <label class="form-label">Prix / personne</label>
 
-                        <input type="number" name="prix_par_personne" class="form-control" step="0.01" min="0" required>
+                        <input type="number" name="prix_par_personne" class="form-control" step="0.01" min="0.01" required>
                     </div>
 
                     <div class="col-md-4 mb-4">
