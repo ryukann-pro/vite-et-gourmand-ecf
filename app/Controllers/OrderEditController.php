@@ -57,6 +57,10 @@ class OrderEditController
 
             $dateToday = date('Y-m-d');
 
+            $maxPersonnes =
+                (int) $order['menu_stock']
+                + (int) $order['nb_personnes'];
+
             if (
                 !$city ||
                 $adresseLivraison === '' ||
@@ -65,6 +69,12 @@ class OrderEditController
                 $nbPersonnes <= 0
             ) {
                 $error = "Tous les champs sont obligatoires.";
+            } elseif ($nbPersonnes < (int) $order['menu_nb_personnes_min']) {
+                $error = "Le nombre minimum de personnes pour ce menu est de "
+                    . (int) $order['menu_nb_personnes_min']
+                    . ".";
+            } elseif ($nbPersonnes > $maxPersonnes) {
+                $error = "Il ne reste pas assez de stock disponible pour cette quantité.";
             } elseif ($dateLivraison < $dateToday) {
                 $error = "La date de livraison ne peut pas être dans le passé.";
             } else {
@@ -75,13 +85,13 @@ class OrderEditController
                     (int) $order['menu_nb_personnes_min'],
                     (float) $city['distance_km']
                 );
-                $prixUnitaire = (float) $order['prix_unitaire'];
+                
 
                 $fraisLivraison = $commande->calculerFraisLivraison();
                 $reduction = $commande->calculerReduction();
                 $prixTotal = $commande->calculerTotal();
 
-                $updated = $orderModel->updateOrder(
+                $updated = $orderModel->updateCompleteOrder(
                     $orderId,
                     $_SESSION['user']['id'],
                     $adresseLivraison,

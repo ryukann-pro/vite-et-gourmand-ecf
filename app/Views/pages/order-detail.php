@@ -126,4 +126,6 @@
 
 </main>
 
+<script src="<?= BASE_URL ?>/assets/js/order-summary.js"></script>
+
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
