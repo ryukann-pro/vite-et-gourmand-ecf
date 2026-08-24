@@ -111,6 +111,7 @@ class OrderModel
             commande.*,
             menu.titre AS menu_titre,
             menu.nb_personnes_min AS menu_nb_personnes_min,
+            menu.stock AS menu_stock,
             statut_commande.nom AS statut,
             ville_commande.nom AS ville
         FROM commande
@@ -176,6 +177,87 @@ class OrderModel
             $orderId,
             $userId
         ]);
+    }
+
+    public function updateCompleteOrder(
+        int $orderId,
+        int $userId,
+        string $adresseLivraison,
+        string $dateLivraison,
+        string $heureLivraison,
+        int $newNbPersonnes,
+        int $villeId,
+        float $fraisLivraison,
+        float $reduction,
+        float $prixTotal,
+        bool $pretMateriel
+    ): bool {
+        $pdo = Database::getConnection();
+
+        try {
+            $pdo->beginTransaction();
+
+            $order = $this->getOrderStockData($orderId);
+
+            if ($order === null) {
+                throw new Exception("Commande introuvable.");
+            }
+
+            $oldNbPersonnes = (int) $order['nb_personnes'];
+            $menuId = (int) $order['menu_id'];
+
+            $difference = $newNbPersonnes - $oldNbPersonnes;
+
+            $menuModel = new MenuModel();
+
+            if ($difference > 0) {
+                $stockUpdated = $menuModel->decrementStock(
+                    $menuId,
+                    $difference
+                );
+
+                if (!$stockUpdated) {
+                    throw new Exception("Stock insuffisant.");
+                }
+            } elseif ($difference < 0) {
+                $stockUpdated = $menuModel->incrementStock(
+                    $menuId,
+                    abs($difference)
+                );
+
+                if (!$stockUpdated) {
+                    throw new Exception("Impossible de remettre le stock.");
+                }
+            }
+
+            $updated = $this->updateOrder(
+                $orderId,
+                $userId,
+                $adresseLivraison,
+                $dateLivraison,
+                $heureLivraison,
+                $newNbPersonnes,
+                $villeId,
+                $fraisLivraison,
+                $reduction,
+                $prixTotal,
+                $pretMateriel
+            );
+
+            if (!$updated) {
+                throw new Exception("Impossible de modifier la commande.");
+            }
+
+            $pdo->commit();
+
+            return true;
+        } catch (Exception $e) {
+            if ($pdo->inTransaction()) {
+                $pdo->rollBack();
+            }
+
+            return false;
+        }
     }
 
     public function cancelOrder(int $orderId, int $userId): bool

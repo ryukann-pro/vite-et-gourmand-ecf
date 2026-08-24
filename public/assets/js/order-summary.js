@@ -23,11 +23,10 @@ function calculerResumeCommande() {
         nbPersonnes = minimum;
     }
 
-    if (nbPersonnes > maximum) {
+    if (!Number.isNaN(maximum) && nbPersonnes > maximum) {
         nbPersonnes = maximum;
         nbPersonnesInput.value = maximum;
     }
-
     // Sous-total
     const sousTotal = prix * nbPersonnes;
 
@@ -61,7 +60,7 @@ function calculerResumeCommande() {
 
     resumeLivraison.textContent =
         fraisLivraison.toFixed(2).replace('.', ',') + ' €';
-        
+
     resumeTotal.textContent =
         total.toFixed(2).replace('.', ',') + ' €';
 }
