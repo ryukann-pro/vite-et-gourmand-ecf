@@ -5,7 +5,7 @@ require_once __DIR__ . '/../Entities/Utilisateur.php';
 
 class Auth
 {
-    private const SESSION_TIMEOUT = 60;
+    private const SESSION_TIMEOUT = 1800; // 30 minutes
 
     private static function startSession(): void
     {
