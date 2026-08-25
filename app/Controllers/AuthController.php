@@ -62,7 +62,7 @@ class AuthController
                             'email' => $user['email'],
                             'role' => $user['role']
                         ];
-
+                        $_SESSION['last_activity'] = time();
                         if ($utilisateur->aLeRole('Admin')) {
                             header('Location: index.php?url=espace-admin');
                             exit;
@@ -159,6 +159,7 @@ class AuthController
                                 'email' => $user['email'],
                                 'role' => $user['role']
                             ];
+                            $_SESSION['last_activity'] = time();
                             $mailService = new MailService();
                             $mailService->sendWelcomeEmail(
                                 $email,
@@ -243,17 +244,21 @@ class AuthController
         require_once __DIR__ . '/../Views/pages/forgot-password.php';
     }
 
-    public function logout(): void
-    {
-        session_start();
+public function logout(): void
+{
+    session_start();
 
-        $_SESSION = [];
+    $_SESSION = [];
+    session_destroy();
 
-        session_destroy();
-
-        header('Location: index.php');
+    if (($_GET['session'] ?? '') === 'expired') {
+        header('Location: index.php?url=connexion&session=expired');
         exit;
     }
+
+    header('Location: index.php');
+    exit;
+}
 
     public function resetPassword(): void
     {

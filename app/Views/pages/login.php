@@ -14,6 +14,14 @@
                     <?= htmlspecialchars($error) ?>
                 </div>
             <?php endif; ?>
+            <?php if (($_GET['session'] ?? '') === 'expired'): ?>
+
+                <div class="alert alert-warning">
+                    Votre session a expiré pour cause d'inactivité.
+                    Veuillez vous reconnecter.
+                </div>
+
+            <?php endif; ?>
             <form method="post">
 
                 <div class="mb-4">
@@ -36,9 +44,7 @@
                 </div>
 
                 <div class="text-end mb-4 text-center">
-                    <a
-                        href="index.php?url=mot-de-passe-oublie"
-                        class="forgot-password-link">
+                    <a href="index.php?url=mot-de-passe-oublie" class="forgot-password-link">
                         Mot de passe oublié ?
                     </a>
                 </div>
