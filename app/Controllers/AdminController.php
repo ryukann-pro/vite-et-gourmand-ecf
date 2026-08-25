@@ -3,6 +3,7 @@ require_once __DIR__ . '/../Helpers/Auth.php';
 require_once __DIR__ . '/../Models/StatsSqlModel.php';
 require_once __DIR__ . '/../Models/StatsModel.php';
 require_once __DIR__ . '/../Models/UserModel.php';
+require_once __DIR__ . '/../Entities/Utilisateur.php';
 
 class AdminController
 {
@@ -36,33 +37,30 @@ class AdminController
       $password = $_POST['password'] ?? '';
       $confirmPassword = $_POST['confirm_password'] ?? '';
 
+      $utilisateur = new Utilisateur(
+        $nom,
+        $prenom,
+        $email,
+        true,
+        'Employé'
+      );
+
       if (
-        $nom === ''
-        || $prenom === ''
-        || $email === ''
+        !$utilisateur->informationsValides()
         || $password === ''
         || $confirmPassword === ''
       ) {
         $error = "Tous les champs sont obligatoires.";
-      } elseif (
-        strlen($nom) > 50
-        || strlen($prenom) > 50
-        || strlen($email) > 191
-      ) {
+      } elseif (!$utilisateur->longueursValides()) {
         $error = "Un ou plusieurs champs sont trop longs.";
-      } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-
+      } elseif (!$utilisateur->emailValide()) {
         $error = "Adresse email invalide.";
       } elseif ($password !== $confirmPassword) {
 
         $error = "Les mots de passe ne correspondent pas.";
       } else {
 
-        $regexPassword =
-          '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/';
-
-        if (!preg_match($regexPassword, $password)) {
-
+        if (!Utilisateur::motDePasseValide($password)) {
           $error = "Le mot de passe doit contenir au moins 10 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
         } else {
 
@@ -199,20 +197,19 @@ class AdminController
       $prenom = trim($_POST['prenom'] ?? '');
       $email = trim($_POST['email'] ?? '');
 
-      if (
-        $nom === ''
-        || $prenom === ''
-        || $email === ''
-      ) {
-        $error = "Tous les champs sont obligatoires.";
-      } elseif (
-        strlen($nom) > 50
-        || strlen($prenom) > 50
-        || strlen($email) > 191
-      ) {
-        $error = "Un ou plusieurs champs sont trop longs.";
-      } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $utilisateur = new Utilisateur(
+        $nom,
+        $prenom,
+        $email,
+        (bool) $employee['actif'],
+        'Employé'
+      );
 
+      if (!$utilisateur->informationsValides()) {
+        $error = "Tous les champs sont obligatoires.";
+      } elseif (!$utilisateur->longueursValides()) {
+        $error = "Un ou plusieurs champs sont trop longs.";
+      } elseif (!$utilisateur->emailValide()) {
         $error = "Adresse email invalide.";
       } else {
 
@@ -266,8 +263,15 @@ class AdminController
       echo "Employé introuvable.";
       return;
     }
+    $utilisateur = new Utilisateur(
+      $employee['nom'],
+      $employee['prenom'],
+      $employee['email'],
+      (bool) $employee['actif'],
+      $employee['role']
+    );
 
-    $newStatus = !((bool) $employee['actif']);
+    $newStatus = !$utilisateur->estActif();
 
     $updated = $userModel->updateEmployeeStatus(
       $employeeId,

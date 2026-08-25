@@ -4,6 +4,9 @@ require_once __DIR__ . '/../Helpers/Auth.php';
 require_once __DIR__ . '/../Models/OrderModel.php';
 require_once __DIR__ . '/../Models/MenuModel.php';
 require_once __DIR__ . '/../Models/CityModel.php';
+require_once __DIR__ . '/../Entities/Commande.php';
+require_once __DIR__ . '/../Entities/Menu.php';
+
 class OrderController
 {
     public function create(): void
@@ -27,7 +30,12 @@ class OrderController
             header('Location: index.php?url=menus');
             exit;
         }
-
+        $menuEntity = new Menu(
+            $menu['titre'],
+            (int) $menu['nb_personnes_min'],
+            (float) $menu['prix_par_personne'],
+            (int) $menu['stock']
+        );
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $villeId = (int) ($_POST['ville_id'] ?? 0);
@@ -59,36 +67,31 @@ class OrderController
                 $heureLivraison === ''
             ) {
                 $error = "Tous les champs sont obligatoires.";
-            } elseif ($nbPersonnes < (int) $menu['nb_personnes_min']) {
+            } elseif (!$menuEntity->respecteMinimum($nbPersonnes)) {
                 $error = "Le nombre minimum de personnes pour ce menu est de "
-                    . (int) $menu['nb_personnes_min']
+                    . $menuEntity->getNbPersonnesMin()
                     . ".";
-            } elseif ($nbPersonnes > (int) $menu['stock']) {
+            } elseif (!$menuEntity->aAssezDeStock($nbPersonnes)) {
                 $error = "Il ne reste que "
-                    . (int) $menu['stock']
+                    . $menuEntity->getStock()
                     . " places disponibles pour ce menu.";
             } elseif (!$city) {
                 $error = "Ville invalide.";
             } elseif ($dateLivraison < $dateToday) {
                 $error = "La date de livraison ne peut pas être dans le passé.";
             } else {
+                $commande = new Commande(
+                    $nbPersonnes,
+                    $menuEntity->getPrixParPersonne(),
+                    $menuEntity->getNbPersonnesMin(),
+                    (float) $city['distance_km']
+                );
 
-                $prixUnitaire = (float) $menu['prix_par_personne'];
+                $prixUnitaire = $menuEntity->getPrixParPersonne();
 
-                $fraisLivraison = 5;
-
-                if ($city['distance_km'] > 0) {
-                    $fraisLivraison += $city['distance_km'] * 0.59;
-                }
-                $reduction = 0;
-
-                if ($nbPersonnes >= ($menu['nb_personnes_min'] + 5)) {
-                    $reduction = ($prixUnitaire * $nbPersonnes) * 0.10;
-                }
-
-                $sousTotal = $prixUnitaire * $nbPersonnes;
-
-                $prixTotal = $sousTotal - $reduction + $fraisLivraison;
+                $fraisLivraison = $commande->calculerFraisLivraison();
+                $reduction = $commande->calculerReduction();
+                $prixTotal = $commande->calculerTotal();
 
                 $orderModel = new OrderModel();
 
@@ -117,7 +120,7 @@ class OrderController
                         $orderId,
                         $_SESSION['user']['id']
                     );
-                    $mailService = new MailService();   
+                    $mailService = new MailService();
                     $mailService->sendOrderConfirmationEmail($order);
                     header('Location: index.php?url=mon-compte');
                     exit;

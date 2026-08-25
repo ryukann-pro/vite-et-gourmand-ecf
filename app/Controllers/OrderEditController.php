@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../Helpers/Auth.php';
 require_once __DIR__ . '/../Models/OrderModel.php';
 require_once __DIR__ . '/../Models/CityModel.php';
+require_once __DIR__ . '/../Entities/Commande.php';
 
 class OrderEditController
 {
@@ -56,6 +57,10 @@ class OrderEditController
 
             $dateToday = date('Y-m-d');
 
+            $maxPersonnes =
+                (int) $order['menu_stock']
+                + (int) $order['nb_personnes'];
+
             if (
                 !$city ||
                 $adresseLivraison === '' ||
@@ -64,29 +69,29 @@ class OrderEditController
                 $nbPersonnes <= 0
             ) {
                 $error = "Tous les champs sont obligatoires.";
+            } elseif ($nbPersonnes < (int) $order['menu_nb_personnes_min']) {
+                $error = "Le nombre minimum de personnes pour ce menu est de "
+                    . (int) $order['menu_nb_personnes_min']
+                    . ".";
+            } elseif ($nbPersonnes > $maxPersonnes) {
+                $error = "Il ne reste pas assez de stock disponible pour cette quantité.";
             } elseif ($dateLivraison < $dateToday) {
                 $error = "La date de livraison ne peut pas être dans le passé.";
             } else {
 
-                $prixUnitaire = (float) $order['prix_unitaire'];
+                $commande = new Commande(
+                    $nbPersonnes,
+                    (float) $order['prix_unitaire'],
+                    (int) $order['menu_nb_personnes_min'],
+                    (float) $city['distance_km']
+                );
+                
 
-                $fraisLivraison = 5;
+                $fraisLivraison = $commande->calculerFraisLivraison();
+                $reduction = $commande->calculerReduction();
+                $prixTotal = $commande->calculerTotal();
 
-                if ($city['distance_km'] > 0) {
-                    $fraisLivraison += $city['distance_km'] * 0.59;
-                }
-
-                $reduction = 0;
-
-                if ($nbPersonnes >= 10) {
-                    $reduction = ($prixUnitaire * $nbPersonnes) * 0.10;
-                }
-
-                $sousTotal = $prixUnitaire * $nbPersonnes;
-
-                $prixTotal = $sousTotal - $reduction + $fraisLivraison;
-
-                $updated = $orderModel->updateOrder(
+                $updated = $orderModel->updateCompleteOrder(
                     $orderId,
                     $_SESSION['user']['id'],
                     $adresseLivraison,
@@ -112,5 +117,4 @@ class OrderEditController
 
         require_once __DIR__ . '/../Views/pages/order-edit.php';
     }
-
 }

@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="col-lg-5">
-                        <img src="<?= BASE_URL ?>/assets/images/equipe/josé.jpg"
+                        <img src="<?= BASE_URL ?>/assets/images/equipe/jose.jpg"
                             alt="José, chef et cofondateur" class="team-img mb-4">
 
                         <h4 class="team-name">José</h4>

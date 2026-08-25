@@ -3,6 +3,7 @@
 require_once __DIR__ . '/../Models/UserModel.php';
 require_once __DIR__ . '/../Models/PasswordResetModel.php';
 require_once __DIR__ . '/../Helpers/MailService.php';
+require_once __DIR__ . '/../Entities/Utilisateur.php';
 
 class AuthController
 {
@@ -38,33 +39,43 @@ class AuthController
                     )
                 ) {
                     $error = "Email ou mot de passe incorrect.";
-                } elseif (!(bool) $user['actif']) {
-
-                    $error = "Ce compte est désactivé.";
                 } else {
 
-                    session_regenerate_id(true);
+                    $utilisateur = new Utilisateur(
+                        $user['nom'],
+                        $user['prenom'],
+                        $user['email'],
+                        (bool) $user['actif'],
+                        $user['role']
+                    );
 
-                    $_SESSION['user'] = [
-                        'id' => $user['id'],
-                        'nom' => $user['nom'],
-                        'prenom' => $user['prenom'],
-                        'email' => $user['email'],
-                        'role' => $user['role']
-                    ];
+                    if (!$utilisateur->estActif()) {
+                        $error = "Ce compte est désactivé.";
+                    } else {
 
-                    if ($user['role'] === 'Admin') {
-                        header('Location: index.php?url=espace-admin');
+                        session_regenerate_id(true);
+
+                        $_SESSION['user'] = [
+                            'id' => $user['id'],
+                            'nom' => $user['nom'],
+                            'prenom' => $user['prenom'],
+                            'email' => $user['email'],
+                            'role' => $user['role']
+                        ];
+                        $_SESSION['last_activity'] = time();
+                        if ($utilisateur->aLeRole('Admin')) {
+                            header('Location: index.php?url=espace-admin');
+                            exit;
+                        }
+
+                        if ($utilisateur->aLeRole('Employé')) {
+                            header('Location: index.php?url=espace-employe');
+                            exit;
+                        }
+
+                        header('Location: index.php?url=mon-compte');
                         exit;
                     }
-
-                    if ($user['role'] === 'Employé') {
-                        header('Location: index.php?url=espace-employe');
-                        exit;
-                    }
-
-                    header('Location: index.php?url=mon-compte');
-                    exit;
                 }
             }
         }
@@ -87,27 +98,32 @@ class AuthController
             $password = $_POST['password'] ?? '';
             $confirmPassword = $_POST['confirm_password'] ?? '';
 
+            $utilisateur = new Utilisateur(
+                $nom,
+                $prenom,
+                $email,
+                true,
+                'Client'
+            );
             if (
-                $nom === '' ||
-                $prenom === '' ||
-                $email === '' ||
+                !$utilisateur->informationsValides() ||
                 $telephone === '' ||
                 $adresse === '' ||
                 $password === '' ||
                 $confirmPassword === ''
             ) {
                 $error = "Tous les champs sont obligatoires.";
-            } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            } elseif (!$utilisateur->longueursValides()) {
+                $error = "Un ou plusieurs champs sont trop longs.";
+            } elseif (!$utilisateur->emailValide()) {
                 $error = "Adresse email invalide.";
-            } elseif (!preg_match('/^0[1-9][0-9]{8}$/', $telephone)) {
+            } elseif (!Utilisateur::telephoneValide($telephone)) {
                 $error = "Numéro de téléphone invalide.";
             } elseif ($password !== $confirmPassword) {
                 $error = "Les mots de passe ne correspondent pas.";
             } else {
 
-                $regexPassword = '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/';
-
-                if (!preg_match($regexPassword, $password)) {
+                if (!Utilisateur::motDePasseValide($password)) {
 
                     $error = "Le mot de passe doit contenir au moins 10 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
                 } else {
@@ -143,6 +159,7 @@ class AuthController
                                 'email' => $user['email'],
                                 'role' => $user['role']
                             ];
+                            $_SESSION['last_activity'] = time();
                             $mailService = new MailService();
                             $mailService->sendWelcomeEmail(
                                 $email,
@@ -227,17 +244,21 @@ class AuthController
         require_once __DIR__ . '/../Views/pages/forgot-password.php';
     }
 
-    public function logout(): void
-    {
-        session_start();
+public function logout(): void
+{
+    session_start();
 
-        $_SESSION = [];
+    $_SESSION = [];
+    session_destroy();
 
-        session_destroy();
-
-        header('Location: index.php');
+    if (($_GET['session'] ?? '') === 'expired') {
+        header('Location: index.php?url=connexion&session=expired');
         exit;
     }
+
+    header('Location: index.php');
+    exit;
+}
 
     public function resetPassword(): void
     {
@@ -281,11 +302,7 @@ class AuthController
                 $error = "Les mots de passe ne correspondent pas.";
             } else {
 
-                $regexPassword =
-                    '/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{10,}$/';
-
-                if (!preg_match($regexPassword, $password)) {
-
+                if (!Utilisateur::motDePasseValide($password)) {
                     $error = "Le mot de passe doit contenir au moins 10 caractères, une majuscule, une minuscule, un chiffre et un caractère spécial.";
                 } else {
 

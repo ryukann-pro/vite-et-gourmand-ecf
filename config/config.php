@@ -1,8 +1,12 @@
 <?php
 
+$appBaseUrl = getenv('APP_BASE_URL');
+
 define(
     'BASE_URL',
-    getenv('APP_BASE_URL') ?: '/vite-et-gourmand-ecf/public'
+    $appBaseUrl !== false
+        ? $appBaseUrl
+        : '/vite-et-gourmand-ecf/public'
 );
 
 define(
