@@ -60,8 +60,7 @@ $footerHoraires = $horaireModel->getAll();
                     05 56 00 00 00
                 </a>
 
-                <a href="mailto:contact@viteetgourmand.fr"
-                    class="footer-contact-link footer-email">
+                <a href="mailto:contact@viteetgourmand.fr" class="footer-contact-link footer-email">
 
                     <i class="bi bi-envelope-fill"></i>
 
@@ -118,7 +117,32 @@ $footerHoraires = $horaireModel->getAll();
 
 </footer>
 
+<?php if (isset($_SESSION['user'])): ?>
+
+    <div
+        id="sessionWarning"
+        class="alert alert-warning position-fixed bottom-0 end-0 m-4 d-none"
+        role="alert"
+        style="z-index: 9999;"
+    >
+        <p class="mb-2">
+            Votre session va bientôt expirer pour cause d'inactivité.
+        </p>
+
+        <button
+            type="button"
+            id="stayConnected"
+            class="btn btn-sm btn-dark"
+        >
+            Rester connecté
+        </button>
+    </div>
+
+    <script src="<?= BASE_URL ?>/assets/js/session-timeout.js"></script>
+
+<?php endif; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 
 </html>
