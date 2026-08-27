@@ -2950,10 +2950,16 @@ TEAM SECTION
         height: 320px;
         gap: 15px;
         padding-bottom: 55px;
+
+        overflow-x: auto;
+        overflow-y: hidden;
+
+        scrollbar-width: thin;
+        scrollbar-color: var(--vg-cta) #eeeeee;
     }
 
     .statistics-bar {
-        flex-basis: 110px;
+        flex: 0 0 110px;
         min-width: 110px;
     }
 
@@ -2992,7 +2998,7 @@ TEAM SECTION
     }
 
     .statistics-bar {
-        flex-basis: 95px;
+        flex: 0 0 95px;
         min-width: 95px;
     }
 
