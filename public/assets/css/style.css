@@ -255,7 +255,7 @@ HERO HOME
 ========================= */
 
 .hero-home {
-    background-image: url('../images/home/logo-vite-gourmand.jpg');
+    background-image: url('../images/home/logo-vite-gourmand.webp');
     background-size: cover;
     background-position: center;
     min-height: 650px;
