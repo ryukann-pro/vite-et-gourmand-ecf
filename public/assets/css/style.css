@@ -2,12 +2,12 @@
 
 :root {
     --bs-primary: #1F2A44;
-    --bs-secondary: #A69F9F;
+    --bs-secondary: #6F6F6F;
     --bs-warning: #F4C542;
     --bs-dark: #333333;
 
     --vg-bg: #F7F7F5;
-    --vg-cta: #C85A2A;
+    --vg-cta: #A94B23;
     --vg-white: #FFFFFF;
 }
 
@@ -90,8 +90,8 @@ main {
 }
 
 .btn-primary:hover {
-    background-color: #a94b23;
-    border-color: #a94b23;
+    background-color: #8f3f1d;
+    border-color: #8f3f1d;
 }
 
 .btn-warning {
@@ -697,7 +697,7 @@ TEAM SECTION
 }
 
 .menu-card-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -831,7 +831,7 @@ TEAM SECTION
 }
 
 .menu-order-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -963,7 +963,7 @@ TEAM SECTION
 }
 
 .login-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #FFFFFF;
 }
 
@@ -1061,7 +1061,7 @@ TEAM SECTION
 }
 
 .register-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #FFFFFF;
 }
 
@@ -1158,7 +1158,7 @@ TEAM SECTION
 }
 
 .forgot-password-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #FFFFFF;
 }
 
@@ -1256,7 +1256,7 @@ TEAM SECTION
 }
 
 .contact-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #FFFFFF;
 }
 
@@ -1320,7 +1320,7 @@ TEAM SECTION
 }
 
 .account-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #FFFFFF;
 }
 
@@ -1407,7 +1407,7 @@ TEAM SECTION
 }
 
 .order-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -1591,7 +1591,7 @@ TEAM SECTION
 }
 
 .order-review-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -1725,7 +1725,7 @@ TEAM SECTION
 }
 
 .order-edit-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -1818,7 +1818,7 @@ TEAM SECTION
 }
 
 .profile-edit-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -1995,7 +1995,7 @@ TEAM SECTION
 }
 
 .employee-orders-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -2073,7 +2073,7 @@ TEAM SECTION
 }
 
 .employee-order-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -2212,7 +2212,7 @@ TEAM SECTION
 }
 
 .employee-review-validate-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -2306,7 +2306,7 @@ TEAM SECTION
 }
 
 .employee-management-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -2427,7 +2427,7 @@ TEAM SECTION
 }
 
 .employee-hours-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
@@ -2618,7 +2618,7 @@ TEAM SECTION
 }
 
 .admin-employees-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
 
     color: #ffffff;
 }
@@ -2740,7 +2740,7 @@ TEAM SECTION
 }
 
 .admin-create-employee-btn:hover {
-    background-color: #a94b23;
+    background-color: #8f3f1d;
     color: #ffffff;
 }
 
