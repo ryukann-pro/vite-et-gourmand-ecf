@@ -4,7 +4,10 @@
     <section class="container">
 
         <div class="employee-hours-header mb-5">
-            <h1 class="employee-hours-title">Gestion des horaires</h1>
+            <h1 class="employee-hours-title">
+                Gestion des horaires
+            </h1>
+
             <p class="employee-hours-text">
                 Modifiez les horaires d’ouverture du restaurant.
             </p>
@@ -12,11 +15,18 @@
 
         <div class="employee-hours-card">
 
-            <h2 class="employee-hours-subtitle mb-4">Horaires hebdomadaires</h2>
+            <h2 class="employee-hours-subtitle mb-4">
+                Horaires hebdomadaires
+            </h2>
 
             <form method="POST" action="index.php?url=employe-horaires">
 
                 <?php foreach ($horaires as $horaire): ?>
+
+                    <?php
+                    $horaireId = (int) $horaire['id'];
+                    ?>
+
                     <div class="employee-hour-row">
 
                         <div class="employee-hour-day">
@@ -24,21 +34,44 @@
                         </div>
 
                         <div>
-                            <label class="form-label">Ouverture</label>
-                            <input type="time" name="horaires[<?= (int) $horaire['id'] ?>][ouverture]" class="form-control"
-                                value="<?= htmlspecialchars(substr($horaire['heure_ouverture'], 0, 5)) ?>" required>
+                            <label
+                                for="ouverture_<?= $horaireId ?>"
+                                class="form-label">
+                                Ouverture
+                            </label>
+
+                            <input
+                                type="time"
+                                id="ouverture_<?= $horaireId ?>"
+                                name="horaires[<?= $horaireId ?>][ouverture]"
+                                class="form-control"
+                                value="<?= htmlspecialchars(substr($horaire['heure_ouverture'], 0, 5)) ?>"
+                                required>
                         </div>
 
                         <div>
-                            <label class="form-label">Fermeture</label>
-                            <input type="time" name="horaires[<?= (int) $horaire['id'] ?>][fermeture]" class="form-control"
-                                value="<?= htmlspecialchars(substr($horaire['heure_fermeture'], 0, 5)) ?>" required>
+                            <label
+                                for="fermeture_<?= $horaireId ?>"
+                                class="form-label">
+                                Fermeture
+                            </label>
+
+                            <input
+                                type="time"
+                                id="fermeture_<?= $horaireId ?>"
+                                name="horaires[<?= $horaireId ?>][fermeture]"
+                                class="form-control"
+                                value="<?= htmlspecialchars(substr($horaire['heure_fermeture'], 0, 5)) ?>"
+                                required>
                         </div>
 
                     </div>
+
                 <?php endforeach; ?>
 
-                <button type="submit" class="btn employee-hours-btn mt-4">
+                <button
+                    type="submit"
+                    class="btn employee-hours-btn mt-4">
                     Enregistrer les horaires
                 </button>
 

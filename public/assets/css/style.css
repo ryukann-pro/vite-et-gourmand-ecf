@@ -2824,20 +2824,28 @@ TEAM SECTION
     display: flex;
     align-items: flex-end;
     gap: 20px;
-
-    padding: 20px 10px 55px;
+    padding: 20px 10px 0;
     border-bottom: 2px solid #e5e5e5;
 }
 
-/* Cas normal : les barres occupent toute la largeur */
-.statistics-bar {
+.statistics-item {
     flex: 1;
     min-width: 80px;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.statistics-bar {
+    width: 100%;
+    min-height: 5px;
 
     background-color: var(--vg-cta);
     border-radius: 8px 8px 0 0;
 
-    position: relative;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -2845,6 +2853,23 @@ TEAM SECTION
     color: #fff;
     font-weight: 700;
     padding-top: 0.7rem;
+}
+
+.statistics-bar span {
+    position: relative;
+    z-index: 1;
+}
+
+.statistics-label {
+    width: 125px;
+    min-height: 55px;
+    margin: 0.5rem 0 0;
+
+    color: var(--bs-dark);
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.25;
+    text-align: center;
 }
 
 /* Beaucoup de menus : activation du scroll */
@@ -2856,7 +2881,7 @@ TEAM SECTION
     scrollbar-color: var(--vg-cta) #eeeeee;
 }
 
-.statistics-chart-placeholder.statistics-scroll .statistics-bar {
+.statistics-chart-placeholder.statistics-scroll .statistics-item {
     flex: 0 0 130px;
     min-width: 130px;
 }
@@ -2875,27 +2900,6 @@ TEAM SECTION
     border-radius: 10px;
 }
 
-.statistics-bar span {
-    position: relative;
-    z-index: 1;
-}
-
-.statistics-bar p {
-    position: absolute;
-    bottom: -3.6rem;
-    left: 50%;
-
-    width: 125px;
-    margin: 0;
-
-    transform: translateX(-50%);
-
-    color: var(--bs-dark);
-    font-size: 0.85rem;
-    font-weight: 600;
-    line-height: 1.25;
-    text-align: center;
-}
 .statistics-empty {
     min-height: 280px;
     display: flex;
@@ -2914,6 +2918,7 @@ TEAM SECTION
     font-weight: 500;
     text-align: center;
 }
+
 /* ===========================================
    TABLEAU COMPARATIF
 =========================================== */
@@ -2949,7 +2954,6 @@ TEAM SECTION
     .statistics-chart-placeholder {
         height: 320px;
         gap: 15px;
-        padding-bottom: 55px;
 
         overflow-x: auto;
         overflow-y: hidden;
@@ -2958,12 +2962,12 @@ TEAM SECTION
         scrollbar-color: var(--vg-cta) #eeeeee;
     }
 
-    .statistics-bar {
+    .statistics-item {
         flex: 0 0 110px;
         min-width: 110px;
     }
 
-    .statistics-bar p {
+    .statistics-label {
         width: 105px;
         font-size: 0.8rem;
     }
@@ -2994,17 +2998,16 @@ TEAM SECTION
     .statistics-chart-placeholder {
         height: 290px;
         gap: 12px;
-        padding: 15px 5px 55px;
+        padding: 15px 5px 0;
     }
 
-    .statistics-bar {
+    .statistics-item {
         flex: 0 0 95px;
         min-width: 95px;
     }
 
-    .statistics-bar p {
+    .statistics-label {
         width: 90px;
-        bottom: -3.5rem;
         font-size: 0.76rem;
     }
 
@@ -3123,4 +3126,18 @@ TEAM SECTION
     .admin-turnover-stat-card {
         padding: 1.5rem 1rem;
     }
+}
+
+/* ===========================================
+   PAGES LÉGALES
+=========================================== */
+
+.legal-page a {
+    color: #7a3218;
+    text-decoration: underline;
+}
+
+.legal-page a:hover,
+.legal-page a:focus {
+    color: #572311;
 }

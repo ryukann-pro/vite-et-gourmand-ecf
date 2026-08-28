@@ -18,9 +18,10 @@
             <form method="POST">
 
                 <div class="mb-4">
-                    <label class="form-label">Nom</label>
+                    <label for="nom" class="form-label">Nom</label>
                     <input
                         type="text"
+                        id="nom"
                         name="nom"
                         class="form-control"
                         value="<?= htmlspecialchars($employee['nom'], ENT_QUOTES, 'UTF-8') ?>"
@@ -29,9 +30,10 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label">Prénom</label>
+                    <label for="prenom" class="form-label">Prénom</label>
                     <input
                         type="text"
+                        id="prenom"
                         name="prenom"
                         class="form-control"
                         value="<?= htmlspecialchars($employee['prenom'], ENT_QUOTES, 'UTF-8') ?>"
@@ -40,9 +42,10 @@
                 </div>
 
                 <div class="mb-5">
-                    <label class="form-label">Adresse email</label>
+                    <label for="email" class="form-label">Adresse email</label>
                     <input
                         type="email"
+                        id="email"
                         name="email"
                         class="form-control"
                         value="<?= htmlspecialchars($employee['email'], ENT_QUOTES, 'UTF-8') ?>"
@@ -56,7 +59,8 @@
                         Enregistrer les modifications
                     </button>
 
-                    <a href="index.php?url=admin-employes"
+                    <a
+                        href="index.php?url=admin-employes"
                         class="btn account-secondary-btn">
                         Retour aux employés
                     </a>

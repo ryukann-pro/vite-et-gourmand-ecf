@@ -14,9 +14,9 @@ $footerHoraires = $horaireModel->getAll();
             <!-- Horaires -->
             <div class="footer-column">
 
-                <h3 class="footer-hours-title">
+                <h2 class="footer-hours-title">
                     Nos horaires
-                </h3>
+                </h2>
 
                 <div class="footer-hours-list">
 
@@ -47,9 +47,9 @@ $footerHoraires = $horaireModel->getAll();
             <!-- Contact -->
             <div class="footer-column">
 
-                <h3 class="footer-hours-title">
+                <h2 class="footer-hours-title">
                     Contact
-                </h3>
+                </h2>
 
                 <p class="footer-help">
                     Besoin d’aide ? Des questions ?
@@ -78,9 +78,9 @@ $footerHoraires = $horaireModel->getAll();
             <!-- Navigation -->
             <div class="footer-column">
 
-                <h3 class="footer-hours-title">
+                <h2 class="footer-hours-title">
                     Navigation
-                </h3>
+                </h2>
 
                 <nav class="footer-links">
 

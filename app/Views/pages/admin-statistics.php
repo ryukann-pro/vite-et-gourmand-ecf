@@ -45,16 +45,20 @@ foreach ($statistics as $statistic) {
                         );
                         ?>
 
-                        <div
-                            class="statistics-bar"
-                            style="height: <?= $height ?>%;">
-                            <?php if ($commandes > 0): ?>
-                                <span><?= $commandes ?></span>
-                            <?php endif; ?>
+                        <div class="statistics-item">
 
-                            <p>
+                            <div class="statistics-bar" style="height: <?= $height ?>%;">
+
+                                <?php if ($commandes > 0): ?>
+                                    <span><?= $commandes ?></span>
+                                <?php endif; ?>
+
+                            </div>
+
+                            <p class="statistics-label">
                                 <?= htmlspecialchars($statistic['menu']) ?>
                             </p>
+
                         </div>
 
                     <?php endforeach; ?>
