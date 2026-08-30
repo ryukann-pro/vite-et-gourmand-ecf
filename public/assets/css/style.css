@@ -2111,6 +2111,36 @@ TEAM SECTION
 }
 
 /* =========================
+   DETAIL FINANCIER
+========================= */
+
+.employee-order-price-summary {
+    background-color: #ffffff;
+    border-radius: 10px;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid #e5e5e5;
+}
+
+.employee-order-price-summary > div {
+    gap: 1rem;
+}
+
+.employee-order-price-summary span {
+    color: var(--bs-dark);
+}
+
+.employee-order-price-summary strong {
+    color: var(--bs-dark);
+    white-space: nowrap;
+}
+
+.employee-order-price-summary hr {
+    margin: 1.25rem 0;
+    border-color: #d8d8d8;
+    opacity: 1;
+}
+
+/* =========================
    RESPONSIVE
 ========================= */
 
@@ -2126,7 +2156,12 @@ TEAM SECTION
 
 @media screen and (max-width: 576px) {
     .employee-order-detail-card {
-        padding: 2rem 1rem;
+        padding: 1.5rem 0.5rem;
+    }
+
+    .employee-order-info-box,
+    .employee-order-section {
+        padding: 1.25rem;
     }
 
     .employee-order-detail-title {
@@ -2135,6 +2170,14 @@ TEAM SECTION
 
     .employee-order-danger-btn {
         width: 100%;
+    }
+
+    .employee-order-price-summary {
+        padding: 1rem;
+    }
+
+    .employee-order-price-summary .d-flex {
+        gap: 0.75rem;
     }
 }
 

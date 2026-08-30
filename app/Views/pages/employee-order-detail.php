@@ -9,9 +9,34 @@
                 Détail commande #CMD-<?= (int) $order['id'] ?>
             </h1>
 
+            <?php
+            $sousTotal =
+                (float) $order['prix_unitaire']
+                * (int) $order['nb_personnes'];
+
+            $statusLabels = [
+                'en_attente' => 'En attente',
+                'acceptee' => 'Acceptée',
+                'en_preparation' => 'En préparation',
+                'en_cours_de_livraison' => 'En cours de livraison',
+                'livree' => 'Livrée',
+                'en_attente_retour_materiel' => 'En attente du retour du matériel',
+                'terminee' => 'Terminée',
+                'annulee' => 'Annulée'
+            ];
+
+            $statutKey = strtolower(trim($order['statut']));
+
+            $statutAffiche =
+                $statusLabels[$statutKey]
+                ?? ucfirst(str_replace('_', ' ', $statutKey));
+            ?>
+
             <div class="row g-4 mb-5">
+
                 <div class="col-12 col-lg-6">
                     <div class="employee-order-info-box h-100">
+
                         <h2>Informations client</h2>
 
                         <p>
@@ -35,11 +60,13 @@
                             <?= htmlspecialchars($order['adresse_livraison']) ?>,
                             <?= htmlspecialchars($order['ville']) ?>
                         </p>
+
                     </div>
                 </div>
 
                 <div class="col-12 col-lg-6">
                     <div class="employee-order-info-box h-100">
+
                         <h2>Informations commande</h2>
 
                         <p>
@@ -48,20 +75,28 @@
                         </p>
 
                         <p>
-                            <strong>Date livraison :</strong>
-                            <?= date('d/m/Y', strtotime($order['date_livraison'])) ?>
+                            <strong>Date de commande :</strong>
+                            <?= date(
+                                'd/m/Y à H:i',
+                                strtotime($order['date_creation'])
+                            ) ?>
+                        </p>
+
+                        <p>
+                            <strong>Date de livraison :</strong>
+                            <?= date(
+                                'd/m/Y',
+                                strtotime($order['date_livraison'])
+                            ) ?>
                             à
-                            <?= htmlspecialchars(substr($order['heure_livraison'], 0, 5)) ?>
+                            <?= htmlspecialchars(
+                                substr($order['heure_livraison'], 0, 5)
+                            ) ?>
                         </p>
 
                         <p>
                             <strong>Nombre de personnes :</strong>
                             <?= (int) $order['nb_personnes'] ?>
-                        </p>
-
-                        <p>
-                            <strong>Total :</strong>
-                            <?= number_format((float) $order['prix_total'], 2, ',', ' ') ?> €
                         </p>
 
                         <p>
@@ -71,10 +106,109 @@
 
                         <p>
                             <strong>Statut :</strong>
-                            <?= htmlspecialchars($order['statut']) ?>
+                            <?= htmlspecialchars($statutAffiche) ?>
                         </p>
+
                     </div>
                 </div>
+
+            </div>
+
+            <div class="employee-order-section mb-5">
+
+                <h2 class="employee-order-section-title mb-4">
+                    Détail financier
+                </h2>
+
+                <div class="employee-order-price-summary">
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Prix par personne</span>
+
+                        <strong>
+                            <?= number_format(
+                                (float) $order['prix_unitaire'],
+                                2,
+                                ',',
+                                ' '
+                            ) ?> €
+                        </strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Nombre de personnes</span>
+
+                        <strong>
+                            <?= (int) $order['nb_personnes'] ?>
+                        </strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Sous-total</span>
+
+                        <strong>
+                            <?= number_format(
+                                $sousTotal,
+                                2,
+                                ',',
+                                ' '
+                            ) ?> €
+                        </strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Réduction</span>
+
+                        <strong>
+                            <?php if ((float) $order['reduction'] > 0): ?>
+
+                                - <?= number_format(
+                                    (float) $order['reduction'],
+                                    2,
+                                    ',',
+                                    ' '
+                                ) ?> €
+
+                            <?php else: ?>
+
+                                0,00 €
+
+                            <?php endif; ?>
+                        </strong>
+                    </div>
+
+                    <div class="d-flex justify-content-between mb-3">
+                        <span>Frais de livraison</span>
+
+                        <strong>
+                            <?= number_format(
+                                (float) $order['frais_livraison'],
+                                2,
+                                ',',
+                                ' '
+                            ) ?> €
+                        </strong>
+                    </div>
+
+                    <hr>
+
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fs-5">
+                            Total
+                        </span>
+
+                        <strong class="fs-4">
+                            <?= number_format(
+                                (float) $order['prix_total'],
+                                2,
+                                ',',
+                                ' '
+                            ) ?> €
+                        </strong>
+                    </div>
+
+                </div>
+
             </div>
 
             <?php
@@ -91,16 +225,25 @@
 
             if ($currentStatus === 5) {
                 if ($hasEquipmentLoan) {
-                    $nextStatuses[5] = [6 => 'En attente retour matériel'];
+                    $nextStatuses[5] = [
+                        6 => 'En attente retour matériel'
+                    ];
                 } else {
-                    $nextStatuses[5] = [7 => 'Terminée'];
+                    $nextStatuses[5] = [
+                        7 => 'Terminée'
+                    ];
                 }
             }
 
-            $availableStatuses = $nextStatuses[$currentStatus] ?? [];
+            $availableStatuses =
+                $nextStatuses[$currentStatus] ?? [];
             ?>
 
-            <?php if (!in_array((int) $order['statut_id'], [7, 8])): ?>
+            <?php if (!in_array(
+                (int) $order['statut_id'],
+                [7, 8],
+                true
+            )): ?>
 
                 <div class="employee-order-section mb-5">
 
@@ -114,30 +257,45 @@
 
                             <div class="col-12 col-lg-8">
 
-                                <label for="statut_id" class="form-label">
+                                <label
+                                    for="statut_id"
+                                    class="form-label"
+                                >
                                     Nouveau statut
                                 </label>
 
                                 <select
                                     id="statut_id"
                                     class="form-select"
-                                    name="statut_id">
+                                    name="statut_id"
+                                >
 
-                                    <?php foreach ($availableStatuses as $statusId => $statusLabel): ?>
+                                    <?php foreach (
+                                        $availableStatuses
+                                        as $statusId => $statusLabel
+                                    ): ?>
+
                                         <option value="<?= $statusId ?>">
-                                            <?= $statusLabel ?>
+                                            <?= htmlspecialchars(
+                                                $statusLabel
+                                            ) ?>
                                         </option>
+
                                     <?php endforeach; ?>
 
                                 </select>
+
                             </div>
 
                             <div class="col-12 col-lg-4 d-flex align-items-end">
+
                                 <button
                                     type="submit"
-                                    class="btn employee-order-btn w-100">
+                                    class="btn employee-order-btn w-100"
+                                >
                                     Mettre à jour
                                 </button>
+
                             </div>
 
                         </div>
@@ -148,13 +306,17 @@
 
             <?php else: ?>
 
-                <div class="alert alert-secondary">
+                <div class="alert alert-secondary mb-5">
                     Cette commande est clôturée et ne peut plus changer de statut.
                 </div>
 
             <?php endif; ?>
 
-            <?php if (in_array((int) $order['statut_id'], [1, 2, 3])): ?>
+            <?php if (in_array(
+                (int) $order['statut_id'],
+                [1, 2, 3],
+                true
+            )): ?>
 
                 <div class="employee-order-section mb-5">
 
@@ -163,7 +325,8 @@
                     </h2>
 
                     <div class="alert alert-warning">
-                        Avant toute annulation, le client doit être contacté par téléphone ou par email.
+                        Avant toute annulation, le client doit être contacté
+                        par téléphone ou par email.
                     </div>
 
                     <form method="POST">
@@ -172,7 +335,10 @@
 
                             <div class="col-12 col-md-6">
 
-                                <label for="mode_contact" class="form-label">
+                                <label
+                                    for="mode_contact"
+                                    class="form-label"
+                                >
                                     Mode de contact
                                 </label>
 
@@ -180,17 +346,29 @@
                                     id="mode_contact"
                                     class="form-select"
                                     name="mode_contact"
-                                    required>
+                                    required
+                                >
+                                    <option value="">
+                                        Choisir
+                                    </option>
 
-                                    <option value="">Choisir</option>
-                                    <option value="telephone">Téléphone</option>
-                                    <option value="email">Email</option>
+                                    <option value="telephone">
+                                        Téléphone
+                                    </option>
+
+                                    <option value="email">
+                                        Email
+                                    </option>
                                 </select>
+
                             </div>
 
                             <div class="col-12 col-md-6">
 
-                                <label for="client_contacte" class="form-label">
+                                <label
+                                    for="client_contacte"
+                                    class="form-label"
+                                >
                                     Client contacté ?
                                 </label>
 
@@ -198,17 +376,29 @@
                                     id="client_contacte"
                                     class="form-select"
                                     name="client_contacte"
-                                    required>
+                                    required
+                                >
+                                    <option value="">
+                                        Choisir
+                                    </option>
 
-                                    <option value="">Choisir</option>
-                                    <option value="oui">Oui</option>
-                                    <option value="non">Non</option>
+                                    <option value="oui">
+                                        Oui
+                                    </option>
+
+                                    <option value="non">
+                                        Non
+                                    </option>
                                 </select>
+
                             </div>
 
                             <div class="col-12">
 
-                                <label for="motif_annulation" class="form-label">
+                                <label
+                                    for="motif_annulation"
+                                    class="form-label"
+                                >
                                     Motif d’annulation
                                 </label>
 
@@ -217,16 +407,21 @@
                                     class="form-control"
                                     name="motif_annulation"
                                     rows="5"
-                                    required></textarea>
+                                    required
+                                ></textarea>
+
                             </div>
 
                             <div class="col-12">
+
                                 <button
                                     type="submit"
                                     name="cancel_order"
-                                    class="btn employee-order-danger-btn">
+                                    class="btn employee-order-danger-btn"
+                                >
                                     Annuler la commande
                                 </button>
+
                             </div>
 
                         </div>
@@ -247,14 +442,56 @@
 
                     <?php foreach ($tracking as $track): ?>
 
+                        <?php
+                        $trackStatutKey =
+                            strtolower(trim($track['statut']));
+
+                        $trackStatut =
+                            $statusLabels[$trackStatutKey]
+                            ?? ucfirst(
+                                str_replace(
+                                    '_',
+                                    ' ',
+                                    $trackStatutKey
+                                )
+                            );
+                        ?>
+
                         <li>
+
                             <i class="bi bi-check-circle-fill"></i>
 
                             <span>
-                                <?= htmlspecialchars($track['statut']) ?>
+
+                                <?= htmlspecialchars($trackStatut) ?>
                                 —
-                                <?= date('d/m/Y H:i', strtotime($track['date_changement'])) ?>
+                                <?= date(
+                                    'd/m/Y H:i',
+                                    strtotime($track['date_changement'])
+                                ) ?>
+
+                                <?php if (!empty($track['auteur_nom'])): ?>
+
+                                    <br>
+
+                                    <small class="text-muted">
+                                        Par
+                                        <?= htmlspecialchars(
+                                            $track['auteur_prenom']
+                                            . ' '
+                                            . $track['auteur_nom']
+                                        ) ?>
+                                        (
+                                        <?= htmlspecialchars(
+                                            $track['auteur_role']
+                                        ) ?>
+                                        )
+                                    </small>
+
+                                <?php endif; ?>
+
                             </span>
+
                         </li>
 
                     <?php endforeach; ?>
