@@ -11,30 +11,145 @@
                 <?= (int) $order['id'] ?>
             </h1>
 
+            <?php
+            $statutLabels = [
+                'en_attente' => 'En attente',
+                'acceptee' => 'Acceptée',
+                'en_preparation' => 'En préparation',
+                'en_cours_de_livraison' => 'En cours de livraison',
+                'livree' => 'Livrée',
+                'en_attente_retour_materiel' => 'En attente du retour du matériel',
+                'terminee' => 'Terminée',
+                'annulee' => 'Annulée'
+            ];
+
+            $sousTotal =
+                (float) $order['prix_unitaire']
+                * (int) $order['nb_personnes'];
+
+            $statutAffiche =
+                $statutLabels[$order['statut']]
+                ?? ucfirst(str_replace('_', ' ', $order['statut']));
+            ?>
+
             <div class="order-detail-info">
-                <p><strong>Menu :</strong>
+
+                <h2 class="order-detail-section-title mb-4">
+                    Informations de la commande
+                </h2>
+
+                <p>
+                    <strong>Menu :</strong>
                     <?= htmlspecialchars($order['menu_titre']) ?>
                 </p>
-                <p><strong>Date de commande :</strong>
+
+                <p>
+                    <strong>Date de commande :</strong>
                     <?= date('d/m/Y à H:i', strtotime($order['date_creation'])) ?>
                 </p>
-                <p><strong>Date de livraison :</strong>
-                    <?= date('d/m/Y', strtotime($order['date_livraison'])) ?> à
+
+                <p>
+                    <strong>Date de livraison :</strong>
+                    <?= date('d/m/Y', strtotime($order['date_livraison'])) ?>
+                    à
                     <?= htmlspecialchars(substr($order['heure_livraison'], 0, 5)) ?>
                 </p>
-                <p><strong>Adresse :</strong>
+
+                <p>
+                    <strong>Adresse :</strong>
                     <?= htmlspecialchars($order['adresse_livraison']) ?>,
                     <?= htmlspecialchars($order['ville']) ?>
                 </p>
-                <p><strong>Nombre de personnes :</strong>
-                    <?= (int) $order['nb_personnes'] ?>
+
+                <p>
+                    <strong>Prêt de matériel :</strong>
+                    <?= (bool) $order['pret_materiel'] ? 'Oui' : 'Non' ?>
                 </p>
-                <p><strong>Statut :</strong>
-                    <?= htmlspecialchars($order['statut']) ?>
+
+                <p>
+                    <strong>Statut :</strong>
+                    <?= htmlspecialchars($statutAffiche) ?>
                 </p>
-                <p><strong>Total :</strong>
-                    <?= number_format((float) $order['prix_total'], 2, ',', ' ') ?> €
-                </p>
+
+            </div>
+
+            <hr class="order-detail-divider">
+
+            <h2 class="order-detail-section-title mb-4">
+                Récapitulatif financier
+            </h2>
+
+            <div class="order-detail-summary">
+
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Prix par personne</span>
+                    <strong>
+                        <?= number_format(
+                            (float) $order['prix_unitaire'],
+                            2,
+                            ',',
+                            ' '
+                        ) ?> €
+                    </strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Nombre de personnes</span>
+                    <strong>
+                        <?= (int) $order['nb_personnes'] ?>
+                    </strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Sous-total</span>
+                    <strong>
+                        <?= number_format(
+                            $sousTotal,
+                            2,
+                            ',',
+                            ' '
+                        ) ?> €
+                    </strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Réduction</span>
+                    <strong>
+                        - <?= number_format(
+                            (float) $order['reduction'],
+                            2,
+                            ',',
+                            ' '
+                        ) ?> €
+                    </strong>
+                </div>
+
+                <div class="d-flex justify-content-between mb-3">
+                    <span>Frais de livraison</span>
+                    <strong>
+                        <?= number_format(
+                            (float) $order['frais_livraison'],
+                            2,
+                            ',',
+                            ' '
+                        ) ?> €
+                    </strong>
+                </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="fs-5">Total</span>
+                    <strong class="fs-4">
+                        <?= number_format(
+                            (float) $order['prix_total'],
+                            2,
+                            ',',
+                            ' '
+                        ) ?> €
+                    </strong>
+                </div>
+
             </div>
 
             <hr class="order-detail-divider">
@@ -49,7 +164,13 @@
                         <i class="bi bi-check-circle-fill"></i>
 
                         <span>
-                            <?= htmlspecialchars($track['statut']) ?>
+                            <?php
+                            $trackStatut =
+                                $statutLabels[$track['statut']]
+                                ?? ucfirst(str_replace('_', ' ', $track['statut']));
+                            ?>
+
+                            <?= htmlspecialchars($trackStatut) ?>
                             —
                             <?= date('d/m/Y H:i', strtotime($track['date_changement'])) ?>
 
@@ -126,6 +247,6 @@
 
 </main>
 
-<script src="<?= BASE_URL ?>/assets/js/order-summary.js"></script>
+
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

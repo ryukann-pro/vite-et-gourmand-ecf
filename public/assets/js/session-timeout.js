@@ -1,5 +1,5 @@
-const SESSION_TIMEOUT = 60 * 1000;
-const WARNING_BEFORE = 15 * 1000;
+const SESSION_TIMEOUT = 30 * 60 * 1000;
+const WARNING_BEFORE = 2 * 60 * 1000;
 
 let timeoutId;
 let warningId;

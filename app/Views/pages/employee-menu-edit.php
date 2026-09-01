@@ -24,9 +24,13 @@
             <form method="POST" enctype="multipart/form-data">
 
                 <div class="mb-4">
-                    <label class="form-label">Titre</label>
+                    <label for="titre" class="form-label">
+                        Titre
+                    </label>
+
                     <input
                         type="text"
+                        id="titre"
                         name="titre"
                         class="form-control"
                         value="<?= htmlspecialchars($menu['titre']) ?>"
@@ -34,8 +38,12 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label">Description courte</label>
+                    <label for="description_courte" class="form-label">
+                        Description courte
+                    </label>
+
                     <textarea
+                        id="description_courte"
                         name="description_courte"
                         class="form-control"
                         rows="2"
@@ -43,8 +51,12 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label">Description longue</label>
+                    <label for="description_longue" class="form-label">
+                        Description longue
+                    </label>
+
                     <textarea
+                        id="description_longue"
                         name="description_longue"
                         class="form-control"
                         rows="5"
@@ -54,9 +66,16 @@
                 <div class="row">
 
                     <div class="col-md-6 mb-4">
-                        <label class="form-label">Thème</label>
+                        <label for="theme_id" class="form-label">
+                            Thème
+                        </label>
 
-                        <select name="theme_id" class="form-select" required>
+                        <select
+                            id="theme_id"
+                            name="theme_id"
+                            class="form-select"
+                            required>
+
                             <option value="">Choisir...</option>
 
                             <?php foreach ($themes as $theme): ?>
@@ -66,13 +85,21 @@
                                     <?= htmlspecialchars($theme['nom']) ?>
                                 </option>
                             <?php endforeach; ?>
+
                         </select>
                     </div>
 
                     <div class="col-md-6 mb-4">
-                        <label class="form-label">Régime</label>
+                        <label for="regime_id" class="form-label">
+                            Régime
+                        </label>
 
-                        <select name="regime_id" class="form-select" required>
+                        <select
+                            id="regime_id"
+                            name="regime_id"
+                            class="form-select"
+                            required>
+
                             <option value="">Choisir...</option>
 
                             <?php foreach ($regimes as $regime): ?>
@@ -82,6 +109,7 @@
                                     <?= htmlspecialchars($regime['nom']) ?>
                                 </option>
                             <?php endforeach; ?>
+
                         </select>
                     </div>
 
@@ -90,10 +118,13 @@
                 <div class="row">
 
                     <div class="col-md-4 mb-4">
-                        <label class="form-label">Nombre minimum</label>
+                        <label for="nb_personnes_min" class="form-label">
+                            Nombre minimum
+                        </label>
 
                         <input
                             type="number"
+                            id="nb_personnes_min"
                             name="nb_personnes_min"
                             class="form-control"
                             min="1"
@@ -102,10 +133,13 @@
                     </div>
 
                     <div class="col-md-4 mb-4">
-                        <label class="form-label">Prix / personne</label>
+                        <label for="prix_par_personne" class="form-label">
+                            Prix / personne
+                        </label>
 
                         <input
                             type="number"
+                            id="prix_par_personne"
                             name="prix_par_personne"
                             class="form-control"
                             step="0.01"
@@ -115,10 +149,13 @@
                     </div>
 
                     <div class="col-md-4 mb-4">
-                        <label class="form-label">Stock</label>
+                        <label for="stock" class="form-label">
+                            Stock
+                        </label>
 
                         <input
                             type="number"
+                            id="stock"
                             name="stock"
                             class="form-control"
                             min="0"
@@ -129,9 +166,12 @@
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label">Conditions</label>
+                    <label for="conditions" class="form-label">
+                        Conditions
+                    </label>
 
                     <textarea
+                        id="conditions"
                         name="conditions"
                         class="form-control"
                         rows="4"
@@ -140,14 +180,21 @@
 
                 <hr class="my-5">
 
-                <h3 class="employee-management-subtitle mb-4">
+                <h2 class="employee-management-subtitle mb-4">
                     Composition du menu
-                </h3>
+                </h2>
 
                 <div class="mb-4">
-                    <label class="form-label">Entrée</label>
+                    <label for="entree_id" class="form-label">
+                        Entrée
+                    </label>
 
-                    <select name="entree_id" class="form-select" required>
+                    <select
+                        id="entree_id"
+                        name="entree_id"
+                        class="form-select"
+                        required>
+
                         <option value="">Choisir une entrée...</option>
 
                         <?php foreach ($entrees as $plat): ?>
@@ -157,13 +204,21 @@
                                 <?= htmlspecialchars($plat['nom']) ?>
                             </option>
                         <?php endforeach; ?>
+
                     </select>
                 </div>
 
                 <div class="mb-4">
-                    <label class="form-label">Plat principal</label>
+                    <label for="plat_principal_id" class="form-label">
+                        Plat principal
+                    </label>
 
-                    <select name="plat_principal_id" class="form-select" required>
+                    <select
+                        id="plat_principal_id"
+                        name="plat_principal_id"
+                        class="form-select"
+                        required>
+
                         <option value="">Choisir un plat...</option>
 
                         <?php foreach ($platsPrincipaux as $plat): ?>
@@ -173,13 +228,21 @@
                                 <?= htmlspecialchars($plat['nom']) ?>
                             </option>
                         <?php endforeach; ?>
+
                     </select>
                 </div>
 
                 <div class="mb-5">
-                    <label class="form-label">Dessert</label>
+                    <label for="dessert_id" class="form-label">
+                        Dessert
+                    </label>
 
-                    <select name="dessert_id" class="form-select" required>
+                    <select
+                        id="dessert_id"
+                        name="dessert_id"
+                        class="form-select"
+                        required>
+
                         <option value="">Choisir un dessert...</option>
 
                         <?php foreach ($desserts as $plat): ?>
@@ -189,10 +252,15 @@
                                 <?= htmlspecialchars($plat['nom']) ?>
                             </option>
                         <?php endforeach; ?>
+
                     </select>
                 </div>
+
                 <div class="mb-5">
-                    <label class="form-label">Images actuelles</label>
+
+                    <p class="form-label">
+                        Images actuelles
+                    </p>
 
                     <div class="d-flex gap-3 flex-wrap mb-3">
                         <?php foreach ($images as $image): ?>
@@ -203,7 +271,9 @@
                         <?php endforeach; ?>
                     </div>
 
-                    <label class="form-label">Remplacer les images du menu</label>
+                    <label for="menuImagesInput" class="form-label">
+                        Remplacer les images du menu
+                    </label>
 
                     <input
                         type="file"
@@ -216,14 +286,18 @@
                     <div id="selectedImagesList" class="mt-3"></div>
 
                     <small class="form-text text-muted">
-                        Laissez vide pour conserver les images actuelles. Sinon, ajoutez entre 1 et 3 nouvelles images.
+                        Laissez vide pour conserver les images actuelles.
+                        Sinon, ajoutez entre 1 et 3 nouvelles images.
                     </small>
                 </div>
+
                 <button type="submit" class="btn employee-management-btn">
                     Enregistrer les modifications
                 </button>
 
-                <a href="index.php?url=employe-menus" class="btn btn-secondary ms-2">
+                <a
+                    href="index.php?url=employe-menus"
+                    class="btn btn-secondary ms-2">
                     Retour
                 </a>
 
@@ -233,5 +307,7 @@
 
     </section>
 </main>
+
 <script src="<?= BASE_URL ?>/assets/js/menu-images.js"></script>
+
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>

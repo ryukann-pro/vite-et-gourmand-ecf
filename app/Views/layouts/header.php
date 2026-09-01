@@ -11,6 +11,8 @@ if (session_status() === PHP_SESSION_NONE) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Vite & Gourmand, service traiteur à Bordeaux : découvrez nos menus et commandez votre prestation en ligne.">
     <link rel="icon" type="image/svg+xml"
         href="<?= BASE_URL ?>/assets/images/logo/Favico.svg">
     <title>Vite et Gourmand</title>

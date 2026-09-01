@@ -1,5 +1,6 @@
 <?php require_once __DIR__ . '/../layouts/header.php';
 ?>
+
 <main class="menus-page py-5">
 
     <section class="container">
@@ -11,24 +12,42 @@
 
                 <div class="col-12 col-md-6 col-lg">
                     <div class="filter-item">
-                        <label class="form-label">Nombre de personnes</label>
-                        <input type="number" id="peopleFilter" class="form-control" min="1" placeholder="Ex : 10">
-                        <small class="filter-help">Nombre de personnes prévu</small>
+                        <label for="peopleFilter" class="form-label">
+                            Nombre de personnes
+                        </label>
+
+                        <input
+                            type="number"
+                            id="peopleFilter"
+                            class="form-control"
+                            min="1"
+                            placeholder="Ex : 10">
+
+                        <small class="filter-help">
+                            Nombre de personnes prévu
+                        </small>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg">
                     <div class="filter-item">
-                        <label class="form-label">Régime</label>
+                        <label for="regimeFilter" class="form-label">
+                            Régime
+                        </label>
+
                         <select id="regimeFilter" class="form-select">
                             <option value="">Tous les régimes</option>
                             <option value="Standard">Standard</option>
                             <option value="Vegan">Vegan</option>
                             <option value="Végétarien">Végétarien</option>
                         </select>
-                        <small class="filter-help invisible">placeholder</small>
+
+                        <small class="filter-help invisible">
+                            placeholder
+                        </small>
                     </div>
                 </div>
+
                 <div class="col-12 col-md-6 col-lg">
                     <div class="filter-item">
 
@@ -36,7 +55,12 @@
                             Prix minimum
                         </label>
 
-                        <input type="number" id="priceMinFilter" class="form-control" min="0" placeholder="Ex : 20">
+                        <input
+                            type="number"
+                            id="priceMinFilter"
+                            class="form-control"
+                            min="0"
+                            placeholder="Ex : 20">
 
                     </div>
                 </div>
@@ -48,14 +72,22 @@
                             Prix maximum
                         </label>
 
-                        <input type="number" id="priceMaxFilter" class="form-control" min="0" placeholder="Ex : 50">
+                        <input
+                            type="number"
+                            id="priceMaxFilter"
+                            class="form-control"
+                            min="0"
+                            placeholder="Ex : 50">
 
                     </div>
                 </div>
 
                 <div class="col-12 col-md-6 col-lg">
                     <div class="filter-item">
-                        <label class="form-label">Thème</label>
+                        <label for="themeFilter" class="form-label">
+                            Thème
+                        </label>
+
                         <select id="themeFilter" class="form-select">
                             <option value="">Tous les thèmes</option>
                             <option value="Classique">Classique</option>
@@ -63,18 +95,27 @@
                             <option value="Noël">Noël</option>
                             <option value="Pâques">Pâques</option>
                         </select>
-                        <small class="filter-help invisible">placeholder</small>
+
+                        <small class="filter-help invisible">
+                            placeholder
+                        </small>
                     </div>
                 </div>
 
             </div>
+
             <div class="col-12 mt-3 d-flex justify-content-center">
-                <button type="button" id="resetFilters" class="btn btn-outline-secondary">
+                <button
+                    type="button"
+                    id="resetFilters"
+                    class="btn btn-outline-secondary">
                     Réinitialiser les filtres
                 </button>
             </div>
+
         </div>
     </section>
+
     <section class="container menus-list-section">
         <div id="menusContainer" class="row g-5">
 
@@ -114,7 +155,9 @@
                                 </strong>
                             </div>
 
-                            <a href="index.php?url=menu-detail&id=<?= (int) $menu['id'] ?>" class="btn menu-card-btn">
+                            <a
+                                href="index.php?url=menu-detail&id=<?= (int) $menu['id'] ?>"
+                                class="btn menu-card-btn">
                                 Voir les détails du menu
                             </a>
 
@@ -127,6 +170,7 @@
 
         </div>
     </section>
+
 </main>
 
 <script>

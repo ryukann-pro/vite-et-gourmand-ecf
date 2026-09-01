@@ -62,16 +62,16 @@
                 <div class="row justify-content-center align-items-start g-5 mb-4">
 
                     <div class="col-lg-5">
-                        <img src="<?= BASE_URL ?>/assets/images/equipe/julie.jpg"
-                            alt="Julie, cheffe et cofondatrice" class="team-img mb-4">
+                        <img src="<?= BASE_URL ?>/assets/images/equipe/julie.webp" alt="Julie, cheffe et cofondatrice"
+                            class="team-img mb-4">
 
                         <h4 class="team-name">Julie</h4>
                         <p class="team-role">cheffe et cofondatrice</p>
                     </div>
 
                     <div class="col-lg-5">
-                        <img src="<?= BASE_URL ?>/assets/images/equipe/jose.jpg"
-                            alt="José, chef et cofondateur" class="team-img mb-4">
+                        <img src="<?= BASE_URL ?>/assets/images/equipe/jose.webp" alt="José, chef et cofondateur"
+                            class="team-img mb-4">
 
                         <h4 class="team-name">José</h4>
                         <p class="team-role">chef et co-fondateur</p>

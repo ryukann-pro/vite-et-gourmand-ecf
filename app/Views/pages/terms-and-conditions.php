@@ -1,6 +1,6 @@
 <?php require_once __DIR__ . '/../layouts/header.php'; ?>
 
-<main class="container py-5">
+<main class="container py-5 legal-page" >
 
     <h1>Conditions générales de vente</h1>
 

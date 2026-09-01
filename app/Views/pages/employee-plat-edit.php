@@ -29,13 +29,8 @@
                         Nom du plat
                     </label>
 
-                    <input
-                        type="text"
-                        id="nom"
-                        name="nom"
-                        class="form-control"
-                        value="<?= htmlspecialchars($plat['nom']) ?>"
-                        required>
+                    <input type="text" id="nom" name="nom" class="form-control"
+                        value="<?= htmlspecialchars($plat['nom']) ?>" required>
                 </div>
 
                 <div class="mb-4">
@@ -43,11 +38,7 @@
                         Type du plat
                     </label>
 
-                    <select
-                        id="type_plat"
-                        name="type_plat"
-                        class="form-select"
-                        required>
+                    <select id="type_plat" name="type_plat" class="form-select" required>
                         <option value="Entrée" <?= $plat['type_plat'] === 'Entrée' ? 'selected' : '' ?>>
                             Entrée
                         </option>
@@ -67,17 +58,14 @@
                         Description
                     </label>
 
-                    <textarea
-                        id="description"
-                        name="description"
-                        class="form-control"
-                        rows="5"
+                    <textarea id="description" name="description" class="form-control" rows="5"
                         required><?= htmlspecialchars($plat['description']) ?></textarea>
                 </div>
-                <div class="mb-4">
-                    <label class="form-label">
+                <fieldset class="mb-4">
+
+                    <legend class="form-label">
                         Allergènes
-                    </label>
+                    </legend>
 
                     <div class="row">
 
@@ -86,17 +74,15 @@
                             <div class="col-md-4 mb-2">
                                 <div class="form-check">
 
-                                    <input
-                                        class="form-check-input"
-                                        type="checkbox"
-                                        name="allergenes[]"
-                                        value="<?= (int) $allergene['id'] ?>"
-                                        id="allergene<?= (int) $allergene['id'] ?>"
-                                        <?= in_array((int) $allergene['id'], array_map('intval', $selectedAllergenes), true) ? 'checked' : '' ?>>
+                                    <input class="form-check-input" type="checkbox" name="allergenes[]"
+                                        value="<?= (int) $allergene['id'] ?>" id="allergene<?= (int) $allergene['id'] ?>"
+                                        <?= in_array(
+                                            (int) $allergene['id'],
+                                            array_map('intval', $selectedAllergenes),
+                                            true
+                                        ) ? 'checked' : '' ?>>
 
-                                    <label
-                                        class="form-check-label"
-                                        for="allergene<?= (int) $allergene['id'] ?>">
+                                    <label class="form-check-label" for="allergene<?= (int) $allergene['id'] ?>">
 
                                         <?= htmlspecialchars($allergene['nom']) ?>
 
@@ -112,19 +98,16 @@
                     <small class="form-text text-muted">
                         Cochez les allergènes présents dans ce plat.
                     </small>
-                </div>
+
+                </fieldset>
 
                 <div class="d-flex gap-3">
 
-                    <button
-                        type="submit"
-                        class="btn employee-management-btn">
+                    <button type="submit" class="btn employee-management-btn">
                         Enregistrer les modifications
                     </button>
 
-                    <a
-                        href="index.php?url=employe-plats"
-                        class="btn btn-secondary">
+                    <a href="index.php?url=employe-plats" class="btn btn-secondary">
                         Retour
                     </a>
 
