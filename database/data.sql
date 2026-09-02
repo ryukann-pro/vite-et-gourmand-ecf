@@ -16,16 +16,46 @@ INSERT INTO restaurant (nom, description, adresse, telephone, email) VALUES
     'contact@viteetgourmand.fr'
 );
 
--- Utilisateur administrateur José
+-- Comptes de démonstration
+
 INSERT INTO utilisateur (
-    nom, prenom, email, telephone, adresse, mot_de_passe_hash, role_id
-) VALUES (
+    nom,
+    prenom,
+    email,
+    telephone,
+    adresse,
+    mot_de_passe_hash,
+    actif,
+    role_id
+) VALUES
+(
+    'Demo',
+    'Client',
+    'client.demo@vite-et-gourmand.dev',
+    '0600000001',
+    '10 Rue de la Demo, Bordeaux',
+    '$2y$10$z5QF8CiKgjUOX1TZ5s1qauSK35YNOn.I.Qjv.0oMhmS9FSnMnXFRe',
+    1,
+    1
+),
+(
+    'Demo',
+    'Employe',
+    'employe.demo@vite-et-gourmand.dev',
+    '0600000002',
+    '12 Rue Sainte-Catherine, Bordeaux',
+    '$2y$10$c37XLUg6AbvtAoCrpbSpuOuxdYsnZG39S96G5.BdlJ6zkyvngZE/6',
+    1,
+    2
+),
+(
     'Jose',
     'Admin',
     'admin@vitegourmand.fr',
     '0601020304',
     '12 Rue Sainte-Catherine, Bordeaux',
     '$2y$10$fctip2dguIDQqep/YbqJoOr8Ivj.kD/QR1GJoPbkZr0byM6H1lezm',
+    1,
     3
 );
 
