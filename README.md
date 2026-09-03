@@ -7,6 +7,17 @@ Le projet utilise PHP, MySQL et MongoDB.
 
 ---
 
+## Liens utiles
+
+- Dépôt GitHub public :
+  https://github.com/ryukann-pro/vite-et-gourmand-ecf.git
+
+- Application déployée :
+  https://vite-et-gourmand-yoann-c184a5dfcfe5.herokuapp.com/
+
+- Gestion de projet :
+  https://trello.com/invite/b/69e727ac5f9f4a65b7e4119e/ATTIae3b15d5734033c14b4f8a20eb4025cf4D2AFA4F/vite-et-gourmand-ecf-2026
+
 # Installation avec Docker (recommandée)
 
 ## Prérequis
