@@ -94,9 +94,9 @@
     <section class="reviews-section py-5">
 
         <div class="container">
-
+            
             <div class="row g-4 justify-content-center">
-
+            <h2 class="text-center mb-5">Avis de nos clients</h2>
                 <?php if (!empty($reviews)): ?>
 
                     <?php foreach ($reviews as $review): ?>
