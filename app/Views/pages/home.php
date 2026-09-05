@@ -95,6 +95,20 @@
 
         <div class="container">
 
+            <h2 class="text-center mb-3">Avis de nos clients</h2>
+
+            <?php if ($reviewStats['review_count'] > 0): ?>
+                <div class="review-average text-center mb-5">
+                    <span class="review-average-rating">
+                        <?= number_format($reviewStats['average_rating'], 1, ',', ' ') ?> / 5
+                    </span>
+
+                    <span class="review-average-count">
+                        (<?= $reviewStats['review_count'] ?> avis)
+                    </span>
+                </div>
+            <?php endif; ?>
+
             <div class="row g-4 justify-content-center">
 
                 <?php if (!empty($reviews)): ?>

@@ -117,6 +117,7 @@
     </section>
 
     <section class="container menus-list-section">
+        <h2 class="text-center mb-5">Liste des menus</h2>
         <div id="menusContainer" class="row g-5">
 
             <?php foreach ($menus as $menu): ?>
@@ -133,9 +134,9 @@
 
                         <div class="menu-card-body">
 
-                            <h2 class="menu-card-title">
+                            <h3 class="menu-card-title">
                                 <?= htmlspecialchars($menu['titre']) ?>
-                            </h2>
+                            </h3>
 
                             <p class="menu-card-description">
                                 <?= htmlspecialchars($menu['description_courte']) ?>
