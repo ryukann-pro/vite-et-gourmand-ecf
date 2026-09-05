@@ -146,4 +146,25 @@ class ReviewModel
 
     return $stmt->fetchAll();
   }
+
+  public function getReviewsStats(): array
+  {
+    $sql = "
+        SELECT
+            ROUND(AVG(note), 1) AS average_rating,
+            COUNT(*) AS review_count
+        FROM avis
+        WHERE est_valide = 1
+    ";
+
+    $stmt = $this->pdo->query($sql);
+    $stats = $stmt->fetch();
+
+    return [
+      'average_rating' => $stats['average_rating'] !== null
+        ? (float) $stats['average_rating']
+        : 0,
+      'review_count' => (int) $stats['review_count']
+    ];
+  }
 }
