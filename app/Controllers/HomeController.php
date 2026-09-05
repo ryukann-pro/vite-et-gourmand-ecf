@@ -6,7 +6,10 @@ class HomeController
     public function index(): void
     {
         $reviewModel = new ReviewModel();
+
         $reviews = $reviewModel->getValidatedReviews();
+        $reviewStats = $reviewModel->getReviewsStats();
+
         require_once __DIR__ . '/../Views/pages/home.php';
     }
 

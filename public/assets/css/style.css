@@ -488,7 +488,16 @@ TEAM SECTION
     line-height: 1.6;
     color: #333333;
 }
+.review-average-rating {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--bs-primary);
+}
 
+.review-average-count {
+    color: var(--bs-secondary);
+    margin-left: 0.25rem;
+}
 /* =========================
    RESPONSIVE
 ========================= */
