@@ -20,68 +20,83 @@ async function loadMenus() {
 
     const menus = await response.json();
 
-    menusContainer.innerHTML = "";
+    menusContainer.replaceChildren();
+    
     if (menus.length === 0) {
-        menusContainer.innerHTML = `
-    <div class="col-12">
-      <div class="alert alert-info">
-        Aucun menu ne correspond aux filtres sélectionnés.
-      </div>
-    </div>
-  `;
+        const column = document.createElement("div");
+        column.className = "col-12";
+
+        const alert = document.createElement("div");
+        alert.className = "alert alert-info";
+        alert.textContent = "Aucun menu ne correspond aux filtres sélectionnés.";
+
+        column.appendChild(alert);
+        menusContainer.appendChild(column);
+
         return;
     }
 
     menus.forEach(menu => {
+        const column = document.createElement("div");
+        column.className = "col-12 col-md-6 col-xl-4";
 
-        menusContainer.innerHTML += `
-        <div class="col-12 col-md-6 col-xl-4">
-            <article class="menu-card">
+        const article = document.createElement("article");
+        article.className = "menu-card";
 
-                <div class="menu-card-img-wrapper">
-                    <img
-                        src="${baseUrl}/${menu.image_url}"
-                        alt="${menu.texte_alternatif}"
-                        class="menu-card-img"
-                    >
-                </div>
+        const imageWrapper = document.createElement("div");
+        imageWrapper.className = "menu-card-img-wrapper";
 
-                <div class="menu-card-body">
+        const image = document.createElement("img");
+        image.className = "menu-card-img";
+        image.src = `${baseUrl}/${menu.image_url}`;
+        image.alt = menu.texte_alternatif;
 
-                    <h2 class="menu-card-title">
-                        ${menu.titre}
-                    </h2>
+        imageWrapper.appendChild(image);
+        article.appendChild(imageWrapper);
 
-                    <p class="menu-card-description">
-                        ${menu.description_courte}
-                    </p>
+        const body = document.createElement("div");
+        body.className = "menu-card-body";
 
-                    <div class="menu-card-info">
-                        <span>
-                            Min. ${menu.nb_personnes_min} personnes
-                        </span>
+        const title = document.createElement("h2");
+        title.className = "menu-card-title";
+        title.textContent = menu.titre;
 
-                        <span>
-                            ${menu.regime}
-                        </span>
+        const description = document.createElement("p");
+        description.className = "menu-card-description";
+        description.textContent = menu.description_courte;
 
-                        <strong>
-                            ${parseFloat(menu.prix_par_personne).toFixed(0)} € par personne
-                        </strong>
-                    </div>
+        body.appendChild(title);
+        body.appendChild(description);
 
-                    <a
-                        href="index.php?url=menu-detail&id=${menu.id}"
-                        class="btn menu-card-btn"
-                    >
-                        Voir les détails du menu
-                    </a>
+        const info = document.createElement("div");
+        info.className = "menu-card-info";
 
-                </div>
+        const people = document.createElement("span");
+        people.textContent = `Min. ${menu.nb_personnes_min} personnes`;
 
-            </article>
-        </div>
-    `;
+        const regime = document.createElement("span");
+        regime.textContent = menu.regime;
+
+        const price = document.createElement("strong");
+        price.textContent = `${parseFloat(menu.prix_par_personne).toFixed(0)} € par personne`;
+
+        info.appendChild(people);
+        info.appendChild(regime);
+        info.appendChild(price);
+
+        body.appendChild(info);
+
+        const link = document.createElement("a");
+        link.className = "btn menu-card-btn";
+        link.href = `index.php?url=menu-detail&id=${encodeURIComponent(menu.id)}`;
+        link.textContent = "Voir les détails du menu";
+
+        body.appendChild(link);
+
+        article.appendChild(body);
+
+        column.appendChild(article);
+        menusContainer.appendChild(column);
     });
 }
 
