@@ -13,20 +13,24 @@ menuImagesInput.addEventListener("change", () => {
 });
 
 function renderSelectedImages() {
-  selectedImagesList.innerHTML = "";
+  selectedImagesList.replaceChildren();
 
   selectedFiles.forEach((file, index) => {
     const item = document.createElement("div");
     item.className = "d-flex justify-content-between align-items-center border rounded p-2 mb-2";
 
-    item.innerHTML = `
-      <span>${file.name}</span>
-      <button type="button" class="btn btn-sm btn-outline-danger">
-        ✕
-      </button>
-    `;
+    const fileName = document.createElement("span");
+    fileName.textContent = file.name;
 
-    item.querySelector("button").addEventListener("click", () => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn btn-sm btn-outline-danger";
+    button.textContent = "✕";
+
+    item.appendChild(fileName);
+    item.appendChild(button);
+
+    button.addEventListener("click", () => {
       selectedFiles.splice(index, 1);
       updateFileInput();
       renderSelectedImages();
