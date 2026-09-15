@@ -653,12 +653,6 @@ TEAM SECTION
     object-position: center;
 }
 
-/* À utiliser si tu veux voir l’image entière sans recadrage */
-/*
-.menu-card-img {
-    object-fit: contain;
-}
-*/
 
 .menu-card-body {
     padding: 1.5rem;
