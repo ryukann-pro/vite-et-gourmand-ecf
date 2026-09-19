@@ -840,8 +840,19 @@ TEAM SECTION
 
 .menu-detail-badges {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
     gap: 1rem;
+}
+
+.menu-detail-title,
+.menu-detail-price {
+    text-align: center;
+}
+
+.menu-detail-content .d-flex {
+    flex-direction: column;
+    align-items: center !important;
 }
 
 .menu-detail-badge {
@@ -888,24 +899,24 @@ TEAM SECTION
     margin-bottom: 1.5rem;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (min-width: 993px) {
 
     .menu-detail-title,
     .menu-detail-price {
-        text-align: center;
+        text-align: left;
     }
 
     .menu-detail-content .d-flex {
-        flex-direction: column;
-        align-items: center !important;
+        flex-direction: row;
+        align-items: flex-start !important;
     }
 
     .menu-detail-badges {
-        justify-content: center;
-        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
     }
 }
-
 /* ===========================================
             PAGES CONNEXION
 =========================================== */
