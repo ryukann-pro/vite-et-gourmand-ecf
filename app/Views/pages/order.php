@@ -69,8 +69,7 @@ $total = $sousTotal - $reduction + $fraisLivraison;
                                 <label for="villeLivraison" class="form-label">Ville de livraison</label>
                                 <select id="villeLivraison" name="ville_id" class="form-select" required>
                                     <?php foreach ($cities as $city): ?>
-                                        <option
-                                            value="<?= (int) $city['id'] ?>"
+                                        <option value="<?= (int) $city['id'] ?>"
                                             data-distance="<?= (float) $city['distance_km'] ?>">
                                             <?= htmlspecialchars($city['nom']) ?>
                                         </option>
@@ -80,15 +79,9 @@ $total = $sousTotal - $reduction + $fraisLivraison;
 
                             <div class="col-12 col-md-6 mb-4">
                                 <label for="nbPersonnes" class="form-label">Nombre de personnes</label>
-                                <input
-                                    type="number"
-                                    id="nbPersonnes"
-                                    name="nb_personnes"
-                                    class="form-control"
-                                    min="<?= (int) $menu['nb_personnes_min'] ?>"
-                                    max="<?= (int) $menu['stock'] ?>"
-                                    value="<?= (int) $menu['nb_personnes_min'] ?>"
-                                    required>
+                                <input type="number" id="nbPersonnes" name="nb_personnes" class="form-control"
+                                    min="<?= (int) $menu['nb_personnes_min'] ?>" max="<?= (int) $menu['stock'] ?>"
+                                    value="<?= (int) $menu['nb_personnes_min'] ?>" required>
                                 <small class="order-help">
                                     Minimum <?= $nbPersonnesMin ?> personnes pour ce menu
                                 </small>
@@ -105,6 +98,9 @@ $total = $sousTotal - $reduction + $fraisLivraison;
                             <div class="col-12 col-md-6 mb-4">
                                 <label for="heureLivraison" class="form-label">Heure souhaitée</label>
                                 <select id="heureLivraison" name="heure_livraison" class="form-select" required>
+                                    <option value="" selected disabled>
+                                        Choisir une heure
+                                    </option>
                                     <option value="07:30">07:30</option>
                                     <option value="08:00">08:00</option>
                                     <option value="08:30">08:30</option>
@@ -166,9 +162,7 @@ $total = $sousTotal - $reduction + $fraisLivraison;
 
                             <div class="d-flex justify-content-between mb-2">
                                 <span>Prix par personne</span>
-                                <strong
-                                    id="prixUnitaire"
-                                    data-prix="<?= $prixUnitaire ?>"
+                                <strong id="prixUnitaire" data-prix="<?= $prixUnitaire ?>"
                                     data-minimum="<?= $nbPersonnesMin ?>">
                                     <?= number_format($prixUnitaire, 2, ',', ' ') ?> €
                                 </strong>
@@ -235,5 +229,6 @@ $total = $sousTotal - $reduction + $fraisLivraison;
 </main>
 
 <script src="<?= BASE_URL ?>/assets/js/order-summary.js"></script>
+<script src="<?= BASE_URL ?>/assets/js/order-time.js"></script>
 
 <?php require_once __DIR__ . '/../layouts/footer.php'; ?>
