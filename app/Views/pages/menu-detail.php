@@ -24,11 +24,11 @@
 
             </div>
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#menuCarousel" data-bs-slide="prev" aria-label="Image précédente>
+            <button class="carousel-control-prev" type="button" data-bs-target="#menuCarousel" data-bs-slide="prev" aria-label="Image précédente">
               <span class="carousel-control-prev-icon"></span>
             </button>
 
-            <button class="carousel-control-next" type="button" data-bs-target="#menuCarousel" data-bs-slide="next" aria-label="Image suivante>
+            <button class="carousel-control-next" type="button" data-bs-target="#menuCarousel" data-bs-slide="next" aria-label="Image suivante">
               <span class="carousel-control-next-icon"></span>
             </button>
           </div>
