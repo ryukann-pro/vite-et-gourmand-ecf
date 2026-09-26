@@ -19,7 +19,7 @@
                 Horaires hebdomadaires
             </h2>
 
-            <form method="POST" action="index.php?url=employe-horaires">
+            <form method="POST" action="<?= BASE_URL ?>/index.php?url=employe-horaires">
 
                 <?php foreach ($horaires as $horaire): ?>
 

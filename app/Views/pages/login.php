@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="text-end mb-4 text-center">
-                    <a href="index.php?url=mot-de-passe-oublie" class="forgot-password-link">
+                    <a href="<?= BASE_URL ?>/index.php?url=mot-de-passe-oublie" class="forgot-password-link">
                         Mot de passe oublié ?
                     </a>
                 </div>
@@ -56,7 +56,7 @@
                 <p class="register-text mb-0">
                     Vous n’avez pas de compte ?
 
-                    <a href="index.php?url=inscription" class="register-link">
+                    <a href="<?= BASE_URL ?>/index.php?url=inscription" class="register-link">
                         Créer un compte
                     </a>
                 </p>

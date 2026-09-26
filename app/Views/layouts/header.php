@@ -64,15 +64,15 @@ if (session_status() === PHP_SESSION_NONE) {
                     <ul class="navbar-nav gap-lg-4">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?url=accueil">Accueil</a>
+                            <a class="nav-link" href="<?= BASE_URL ?>/index.php?url=accueil">Accueil</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?url=menus">Menus</a>
+                            <a class="nav-link" href="<?= BASE_URL ?>/index.php?url=menus">Menus</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="index.php?url=contact">Contact</a>
+                            <a class="nav-link" href="<?= BASE_URL ?>/index.php?url=contact">Contact</a>
                         </li>
 
                         <?php if (isset($_SESSION['user'])): ?>
@@ -80,7 +80,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <?php if ($_SESSION['user']['role'] === 'Admin'): ?>
 
                                 <li class="nav-item">
-                                    <a href="index.php?url=espace-admin" class="nav-link">
+                                    <a href="<?= BASE_URL ?>/index.php?url=espace-admin" class="nav-link">
                                         Espace admin
                                     </a>
                                 </li>
@@ -88,7 +88,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <?php elseif ($_SESSION['user']['role'] === 'Employé'): ?>
 
                                 <li class="nav-item">
-                                    <a href="index.php?url=espace-employe" class="nav-link">
+                                    <a href="<?= BASE_URL ?>/index.php?url=espace-employe" class="nav-link">
                                         Espace employé
                                     </a>
                                 </li>
@@ -96,7 +96,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <?php else: ?>
 
                                 <li class="nav-item">
-                                    <a href="index.php?url=mon-compte" class="nav-link">
+                                    <a href="<?= BASE_URL ?>/index.php?url=mon-compte" class="nav-link">
                                         Mon compte
                                     </a>
                                 </li>
@@ -104,7 +104,7 @@ if (session_status() === PHP_SESSION_NONE) {
                             <?php endif; ?>
 
                             <li class="nav-item">
-                                <a href="index.php?url=deconnexion" class="nav-link">
+                                <a href="<?= BASE_URL ?>/index.php?url=deconnexion" class="nav-link">
                                     Déconnexion
                                 </a>
                             </li>
@@ -112,7 +112,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <?php else: ?>
 
                             <li class="nav-item">
-                                <a href="index.php?url=connexion" class="nav-link">
+                                <a href="<?= BASE_URL ?>/index.php?url=connexion" class="nav-link">
                                     Connexion
                                 </a>
                             </li>

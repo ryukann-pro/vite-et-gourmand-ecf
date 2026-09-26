@@ -15,7 +15,7 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
                 <h2 class="employee-management-subtitle mb-0">Plats existants</h2>
 
-                <a href="index.php?url=employe-plat-create" class="btn employee-management-btn">
+                <a href="<?= BASE_URL ?>/index.php?url=employe-plat-create" class="btn employee-management-btn">
                     Ajouter un plat
                 </a>
             </div>
@@ -74,11 +74,11 @@
                                 <td>
                                     <div class="d-flex justify-content-end gap-2 flex-wrap">
 
-                                        <a href="index.php?url=employe-plat-edit&id=<?= (int) $plat['id'] ?>"
+                                        <a href="<?= BASE_URL ?>/index.php?url=employe-plat-edit&id=<?= (int) $plat['id'] ?>"
                                             class="btn btn-sm employee-management-secondary-btn">
                                             Modifier
                                         </a>
-                                        <a href="index.php?url=employe-plat-delete&id=<?= (int) $plat['id'] ?>"
+                                        <a href="<?= BASE_URL ?>/index.php?url=employe-plat-delete&id=<?= (int) $plat['id'] ?>"
                                             class="btn btn-sm employee-management-danger-btn"
                                             onclick="return confirm('Supprimer ce plat ?')">
                                             Supprimer

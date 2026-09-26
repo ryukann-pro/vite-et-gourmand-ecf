@@ -95,7 +95,7 @@
                 <p class="login-text mb-0">
                     Vous avez déjà un compte ?
 
-                    <a href="index.php?url=connexion" class="login-link">
+                    <a href="<?= BASE_URL ?>/index.php?url=connexion" class="login-link">
                         Se connecter
                     </a>
                 </p>

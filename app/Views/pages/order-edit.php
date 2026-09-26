@@ -197,7 +197,7 @@
                             </button>
 
                             <a
-                                href="index.php?url=detail-commande&id=<?= (int) $order['id'] ?>"
+                                href="<?= BASE_URL ?>/index.php?url=detail-commande&id=<?= (int) $order['id'] ?>"
                                 class="btn account-secondary-btn">
                                 Retour au détail
                             </a>

@@ -13,7 +13,7 @@
         <div class="row g-4">
 
             <div class="col-12 col-md-6 col-xl-4">
-                <a href="index.php?url=employe-commandes" class="employee-dashboard-card">
+                <a href="<?= BASE_URL ?>/index.php?url=employe-commandes" class="employee-dashboard-card">
                     <i class="bi bi-receipt"></i>
                     <h2>Commandes</h2>
                     <p>Consulter les commandes, filtrer par statut ou client et mettre à jour leur suivi.</p>
@@ -21,7 +21,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-xl-4">
-                <a href="index.php?url=employe-menus" class="employee-dashboard-card">
+                <a href="<?= BASE_URL ?>/index.php?url=employe-menus" class="employee-dashboard-card">
                     <i class="bi bi-card-list"></i>
                     <h2>Menus</h2>
                     <p>Modifier ou supprimer les menus proposés aux clients.</p>
@@ -29,7 +29,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-xl-4">
-                <a href="index.php?url=employe-plats" class="employee-dashboard-card">
+                <a href="<?= BASE_URL ?>/index.php?url=employe-plats" class="employee-dashboard-card">
                     <i class="bi bi-egg-fried"></i>
                     <h2>Plats</h2>
                     <p>Modifier ou supprimer les plats associés aux menus.</p>
@@ -37,7 +37,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-xl-4">
-                <a href="index.php?url=employe-horaires" class="employee-dashboard-card">
+                <a href="<?= BASE_URL ?>/index.php?url=employe-horaires" class="employee-dashboard-card">
                     <i class="bi bi-clock-history"></i>
                     <h2>Horaires</h2>
                     <p>Modifier les horaires d’ouverture du restaurant.</p>
@@ -45,7 +45,7 @@
             </div>
 
             <div class="col-12 col-md-6 col-xl-4">
-                <a href="index.php?url=employe-avis" class="employee-dashboard-card">
+                <a href="<?= BASE_URL ?>/index.php?url=employe-avis" class="employee-dashboard-card">
                     <i class="bi bi-star-fill"></i>
                     <h2>Avis clients</h2>
                     <p>Valider ou refuser les avis envoyés par les utilisateurs.</p>

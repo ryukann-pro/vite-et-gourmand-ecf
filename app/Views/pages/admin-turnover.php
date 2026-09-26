@@ -58,7 +58,7 @@ foreach ($turnoverByMenu as $menuStatistic) {
                 Filtres
             </h2>
 
-            <form method="GET" action="index.php">
+            <form method="GET" action="<?= BASE_URL ?>/index.php">
                 <input
                     type="hidden"
                     name="url"
@@ -125,7 +125,7 @@ foreach ($turnoverByMenu as $menuStatistic) {
 
                     <div class="col-12 col-lg-2 d-flex align-items-end">
                         <a
-                            href="index.php?url=admin-chiffre-affaires"
+                            href="<?= BASE_URL ?>/index.php?url=admin-chiffre-affaires"
                             class="btn btn-outline-secondary w-100">
                             Réinitialiser
                         </a>

@@ -15,7 +15,7 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-4">
                 <h2 class="employee-management-subtitle mb-0">Menus existants</h2>
 
-                <a href="index.php?url=employe-menu-create"
+                <a href="<?= BASE_URL ?>/index.php?url=employe-menu-create"
                     class="btn employee-management-btn">
                     Ajouter un menu
                 </a>
@@ -58,13 +58,13 @@
                                 </td>
                                 <td>
                                     <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                        <a href="index.php?url=employe-menu-edit&id=<?= (int) $menu['id'] ?>"
+                                        <a href="<?= BASE_URL ?>/index.php?url=employe-menu-edit&id=<?= (int) $menu['id'] ?>"
                                             class="btn btn-sm employee-management-secondary-btn">
                                             Modifier
                                         </a>
 
                                         <a
-                                            href="index.php?url=employe-menu-delete&id=<?= (int) $menu['id'] ?>"
+                                            href="<?= BASE_URL ?>/index.php?url=employe-menu-delete&id=<?= (int) $menu['id'] ?>"
                                             class="btn btn-sm employee-management-danger-btn"
                                             onclick="return confirm('Supprimer ce menu ?')">
                                             Supprimer

@@ -123,8 +123,7 @@ $footerHoraires = $horaireModel->getAll();
         id="sessionWarning"
         class="alert alert-warning position-fixed bottom-0 end-0 m-4 d-none"
         role="alert"
-        style="z-index: 9999;"
-    >
+        style="z-index: 9999;">
         <p class="mb-2">
             Votre session va bientôt expirer pour cause d'inactivité.
         </p>
@@ -132,11 +131,14 @@ $footerHoraires = $horaireModel->getAll();
         <button
             type="button"
             id="stayConnected"
-            class="btn btn-sm btn-dark"
-        >
+            class="btn btn-sm btn-dark">
             Rester connecté
         </button>
     </div>
+
+    <script>
+        window.BASE_URL = <?= json_encode(BASE_URL) ?>;
+    </script>
 
     <script src="<?= BASE_URL ?>/assets/js/session-timeout.js"></script>
 

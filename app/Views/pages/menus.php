@@ -157,7 +157,7 @@
                             </div>
 
                             <a
-                                href="index.php?url=menu-detail&id=<?= (int) $menu['id'] ?>"
+                                href="<?= BASE_URL ?>/index.php?url=menu-detail&id=<?= (int) $menu['id'] ?>"
                                 class="btn menu-card-btn">
                                 Voir les détails du menu
                             </a>

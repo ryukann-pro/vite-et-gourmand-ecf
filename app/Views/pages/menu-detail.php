@@ -89,7 +89,7 @@
           </div>
 
           <div class="text-center mt-4">
-            <a href="index.php?url=commande&id=<?= (int) $menu['id'] ?>" class="btn menu-order-btn">
+            <a href="<?= BASE_URL ?>/index.php?url=commande&id=<?= (int) $menu['id'] ?>" class="btn menu-order-btn">
               Commander
             </a>
           </div>

@@ -296,7 +296,7 @@
                 </button>
 
                 <a
-                    href="index.php?url=employe-menus"
+                    href="<?= BASE_URL ?>/index.php?url=employe-menus"
                     class="btn btn-secondary ms-2">
                     Retour
                 </a>

@@ -66,7 +66,7 @@ class ProfileController
                         $adresse
                     );
 
-                    header('Location: index.php?url=mon-compte');
+                    header('Location: ' . BASE_URL . '/index.php?url=mon-compte');
                     exit;
                 }
             }
