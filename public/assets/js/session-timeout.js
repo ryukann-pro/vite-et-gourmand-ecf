@@ -1,5 +1,5 @@
-const SESSION_TIMEOUT = 30 * 60 * 1000;
-const WARNING_BEFORE = 2 * 60 * 1000;
+const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 minutes
+const WARNING_BEFORE = 2 * 60 * 1000;    // avertissement 2 minutes avant
 
 let timeoutId;
 let warningId;
@@ -27,7 +27,7 @@ function showSessionWarning() {
 
 function expireSession() {
     window.location.href =
-        'index.php?url=deconnexion&session=expired';
+    window.BASE_URL + '/index.php?url=deconnexion&session=expired';
 }
 
 function resetSessionTimeout() {

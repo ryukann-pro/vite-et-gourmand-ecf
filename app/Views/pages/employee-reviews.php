@@ -59,12 +59,12 @@
                                 </p>
 
                                 <div class="employee-review-actions">
-                                    <a href="index.php?url=valider-avis&id=<?= (int) $review['id'] ?>"
+                                    <a href="<?= BASE_URL ?>/index.php?url=valider-avis&id=<?= (int) $review['id'] ?>"
                                         class="btn employee-review-validate-btn">
                                         Valider
                                     </a>
 
-                                    <a href="index.php?url=supprimer-avis&id=<?= (int) $review['id'] ?>"
+                                    <a href="<?= BASE_URL ?>/index.php?url=supprimer-avis&id=<?= (int) $review['id'] ?>"
                                         class="btn employee-review-refuse-btn"
                                         onclick="return confirm('Voulez-vous vraiment refuser cet avis ?')">
                                         Refuser

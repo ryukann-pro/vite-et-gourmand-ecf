@@ -25,7 +25,7 @@ class EmployeeReviewController
     $reviewModel = new ReviewModel();
     $reviewModel->validateReview($reviewId);
 
-    header('Location: index.php?url=employe-avis');
+    header('Location: ' . BASE_URL . '/index.php?url=employe-avis');
     exit;
   }
   public function delete(): void
@@ -37,7 +37,7 @@ class EmployeeReviewController
     $reviewModel = new ReviewModel();
     $reviewModel->deleteReview($reviewId);
 
-    header('Location: index.php?url=employe-avis');
+    header('Location: ' . BASE_URL . '/index.php?url=employe-avis');
     exit;
   }
 }

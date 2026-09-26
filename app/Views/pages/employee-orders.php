@@ -49,7 +49,7 @@
                         Rechercher
                     </button>
 
-                    <a href="index.php?url=employe-commandes" class="btn account-secondary-btn w-100">
+                    <a href="<?= BASE_URL ?>/index.php?url=employe-commandes" class="btn account-secondary-btn w-100">
                         Réinitialiser
                     </a>
                 </div>
@@ -108,7 +108,7 @@
                                 </td>
 
                                 <td class="text-end">
-                                    <a href="index.php?url=employe-detail-commande&id=<?= (int) $order['id'] ?>"
+                                    <a href="<?= BASE_URL ?>/index.php?url=employe-detail-commande&id=<?= (int) $order['id'] ?>"
                                         class="btn btn-sm account-btn">
                                         Voir
                                     </a>

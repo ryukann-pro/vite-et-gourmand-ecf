@@ -27,7 +27,7 @@ class Auth
             $_SESSION = [];
             session_destroy();
 
-            header('Location: index.php?url=connexion&session=expired');
+            header('Location: ' . BASE_URL . '/index.php?url=connexion&session=expired');
             exit;
         }
 
@@ -47,7 +47,7 @@ class Auth
         self::checkSessionTimeout();
 
         if (!isset($_SESSION['user'])) {
-            header('Location: index.php?url=connexion');
+            header('Location: ' . BASE_URL . '/index.php?url=connexion');
             exit;
         }
 
@@ -61,7 +61,7 @@ class Auth
             $_SESSION = [];
             session_destroy();
 
-            header('Location: index.php?url=connexion');
+            header('Location: ' . BASE_URL . '/index.php?url=connexion');
             exit;
         }
 
@@ -77,12 +77,12 @@ class Auth
             $_SESSION = [];
             session_destroy();
 
-            header('Location: index.php?url=connexion');
+            header('Location: ' . BASE_URL . '/index.php?url=connexion');
             exit;
         }
 
         if (!$utilisateur->aUnDesRoles($roles)) {
-            header('Location: index.php');
+            header('Location: ' . BASE_URL . '/index.php');
             exit;
         }
     }

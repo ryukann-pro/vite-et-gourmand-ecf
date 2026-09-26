@@ -13,7 +13,7 @@
                     <?= htmlspecialchars($error) ?>
                 </div>
             <?php endif; ?>
-            <form method="POST" action="index.php?url=modifier-profil">
+            <form method="POST" action="<?= BASE_URL ?>/index.php?url=modifier-profil">
 
                 <div class="row">
 
@@ -50,7 +50,7 @@
                         Enregistrer les modifications
                     </button>
 
-                    <a href="index.php?url=mon-compte" class="btn account-secondary-btn">
+                    <a href="<?= BASE_URL ?>/index.php?url=mon-compte" class="btn account-secondary-btn">
                         Retour au compte
                     </a>
 

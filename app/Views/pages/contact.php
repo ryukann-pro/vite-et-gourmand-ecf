@@ -27,7 +27,7 @@
                 </div>
             <?php endif; ?>
 
-            <form method="POST" action="index.php?url=contact">
+            <form method="POST" action="<?= BASE_URL ?>/index.php?url=contact">
 
                 <div class="mb-4">
                     <label for="title" class="form-label">

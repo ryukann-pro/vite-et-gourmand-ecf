@@ -24,7 +24,7 @@
                     Employés existants
                 </h2>
 
-                <a href="index.php?url=admin-creation-employe"
+                <a href="<?= BASE_URL ?>/index.php?url=admin-creation-employe"
                     class="btn admin-employees-btn">
 
                     Créer un employé
@@ -87,14 +87,14 @@
                                     <div class="d-flex justify-content-end gap-2 flex-wrap">
 
                                         <a
-                                            href="index.php?url=admin-modification-employe&id=<?= (int) $employee['id'] ?>"
+                                            href="<?= BASE_URL ?>/index.php?url=admin-modification-employe&id=<?= (int) $employee['id'] ?>"
                                             class="btn btn-sm admin-employees-secondary-btn">
                                             Modifier
                                         </a>
 
                                         <form
                                             method="POST"
-                                            action="index.php?url=admin-statut-employe&id=<?= (int) $employee['id'] ?>"
+                                            action="<?= BASE_URL ?>/index.php?url=admin-statut-employe&id=<?= (int) $employee['id'] ?>"
                                             class="d-inline">
                                             <?php if ((int) $employee['actif'] === 1): ?>
 

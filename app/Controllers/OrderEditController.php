@@ -107,7 +107,7 @@ class OrderEditController
 
                 if ($updated) {
 
-                    header('Location: index.php?url=detail-commande&id=' . $orderId);
+                    header('Location: ' . BASE_URL . '/index.php?url=detail-commande&id=' . $orderId);
                     exit;
                 }
 
