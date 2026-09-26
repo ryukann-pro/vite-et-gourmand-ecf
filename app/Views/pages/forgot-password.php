@@ -27,7 +27,7 @@
         </div>
       <?php endif; ?>
 
-      <form method="POST" action="index.php?url=mot-de-passe-oublie">
+      <form method="POST" action="<?= BASE_URL ?>/index.php?url=mot-de-passe-oublie">
 
         <div class="mb-4">
           <label for="email" class="form-label">

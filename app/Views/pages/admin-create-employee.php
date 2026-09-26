@@ -90,7 +90,7 @@
                     </button>
 
                     <a
-                        href="index.php?url=admin-employes"
+                        href="<?= BASE_URL ?>/index.php?url=admin-employes"
                         class="btn account-secondary-btn">
                         Retour aux employés
                     </a>

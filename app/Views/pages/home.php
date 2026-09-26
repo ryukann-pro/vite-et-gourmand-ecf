@@ -17,7 +17,7 @@
                                 Découvrez un menu qui évolue toute l’année pour s’adapter à toutes vos envies.
                             </p>
 
-                            <a href="index.php?url=menus" class="btn btn-warning hero-btn">
+                            <a href="<?= BASE_URL ?>/index.php?url=menus" class="btn btn-warning hero-btn">
                                 Nos menus
                             </a>
                         </div>
@@ -34,7 +34,7 @@
 
                             <p class="hero-phone mb-4">07 87 69 37 89</p>
 
-                            <a href="index.php?url=contact" class="btn btn-warning hero-btn">
+                            <a href="<?= BASE_URL ?>/index.php?url=contact" class="btn btn-warning hero-btn">
                                 Nous contacter
                             </a>
                         </div>

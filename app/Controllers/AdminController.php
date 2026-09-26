@@ -94,7 +94,7 @@ class AdminController
               );
 
               header(
-                'Location: index.php?url=admin-employes'
+                'Location: ' . BASE_URL . '/index.php?url=admin-employes'
               );
               exit;
             }
@@ -231,7 +231,7 @@ class AdminController
 
           if ($updated) {
             header(
-              'Location: index.php?url=admin-employes'
+              'Location: ' . BASE_URL . '/index.php?url=admin-employes'
             );
             exit;
           }
@@ -284,7 +284,7 @@ class AdminController
       return;
     }
 
-    header('Location: index.php?url=admin-employes');
+    header('Location: ' . BASE_URL . '/index.php?url=admin-employes');
     exit;
   }
 }

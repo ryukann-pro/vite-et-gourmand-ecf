@@ -72,7 +72,7 @@ class EmployeeController
                 );
             }
 
-            header('Location: index.php?url=employe-detail-commande&id=' . $orderId);
+            header('Location: ' . BASE_URL . '/index.php?url=employe-detail-commande&id=' . $orderId);
             exit;
         }
 
@@ -134,7 +134,7 @@ class EmployeeController
                 }
             }
 
-            header('Location: index.php?url=employe-detail-commande&id=' . $orderId);
+            header('Location: ' . BASE_URL . '/index.php?url=employe-detail-commande&id=' . $orderId);
             exit;
         }
 
@@ -180,7 +180,7 @@ class EmployeeController
                 );
             }
 
-            header('Location: index.php?url=employe-horaires');
+            header('Location: ' . BASE_URL . '/index.php?url=employe-horaires');
             exit;
         }
 
@@ -238,7 +238,7 @@ class EmployeeController
                         );
                     }
 
-                    header('Location: index.php?url=employe-plats');
+                    header('Location: ' . BASE_URL . '/index.php?url=employe-plats');
                     exit;
                 }
 
@@ -294,7 +294,7 @@ class EmployeeController
                             (int) $allergeneId
                         );
                     }
-                    header('Location: index.php?url=employe-plats');
+                    header('Location: ' . BASE_URL . '/index.php?url=employe-plats');
                     exit;
                 }
 
@@ -316,7 +316,7 @@ class EmployeeController
         if ($platModel->isUsedInMenu($platId)) {
 
             header(
-                'Location: index.php?url=employe-plats&error=used'
+                'Location: ' . BASE_URL . '/index.php?url=employe-plats&error=used'
             );
 
             exit;
@@ -325,7 +325,7 @@ class EmployeeController
         $platModel->delete($platId);
 
         header(
-            'Location: index.php?url=employe-plats'
+            'Location: ' . BASE_URL . '/index.php?url=employe-plats'
         );
 
         exit;
@@ -417,7 +417,7 @@ class EmployeeController
                     );
 
                     if ($imagesSaved) {
-                        header('Location: index.php?url=employe-menus');
+                        header('Location: ' . BASE_URL . '/index.php?url=employe-menus');
                         exit;
                     }
 
@@ -544,7 +544,7 @@ class EmployeeController
                 }
 
                 if ($error === null) {
-                    header('Location: index.php?url=employe-menus');
+                    header('Location: ' . BASE_URL . '/index.php?url=employe-menus');
                     exit;
                 }
             }
@@ -561,13 +561,13 @@ class EmployeeController
         $menuModel = new MenuModel();
 
         if ($menuModel->isUsedInOrder($menuId)) {
-            header('Location: index.php?url=employe-menus&error=used');
+            header('Location: ' . BASE_URL . '/index.php?url=employe-menus&error=used');
             exit;
         }
 
         $menuModel->deleteMenu($menuId);
 
-        header('Location: index.php?url=employe-menus');
+        header('Location: ' . BASE_URL . '/index.php?url=employe-menus');
         exit;
     }
 }

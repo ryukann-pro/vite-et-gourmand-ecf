@@ -64,16 +64,16 @@ class AuthController
                         ];
                         $_SESSION['last_activity'] = time();
                         if ($utilisateur->aLeRole('Admin')) {
-                            header('Location: index.php?url=espace-admin');
+                            header('Location: ' . BASE_URL . '/index.php?url=espace-admin');
                             exit;
                         }
 
                         if ($utilisateur->aLeRole('Employé')) {
-                            header('Location: index.php?url=espace-employe');
+                            header('Location: ' . BASE_URL . '/index.php?url=espace-employe');
                             exit;
                         }
 
-                        header('Location: index.php?url=mon-compte');
+                        header('Location: ' . BASE_URL . '/index.php?url=mon-compte');
                         exit;
                     }
                 }
@@ -166,7 +166,7 @@ class AuthController
                                 $prenom,
                                 $nom
                             );
-                            header('Location: index.php?url=mon-compte');
+                            header('Location: ' . BASE_URL . '/index.php?url=mon-compte');
                             exit;
                         }
 
@@ -252,11 +252,11 @@ public function logout(): void
     session_destroy();
 
     if (($_GET['session'] ?? '') === 'expired') {
-        header('Location: index.php?url=connexion&session=expired');
+        header('Location: ' . BASE_URL . '/index.php?url=connexion&session=expired');
         exit;
     }
 
-    header('Location: index.php');
+    header('Location: ' . BASE_URL . '/index.php');
     exit;
 }
 
@@ -325,7 +325,7 @@ public function logout(): void
                         );
 
                         header(
-                            'Location: index.php?url=connexion'
+                            'Location: ' . BASE_URL . '/index.php?url=connexion'
                         );
                         exit;
                     }

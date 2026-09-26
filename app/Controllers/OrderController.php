@@ -28,7 +28,7 @@ class OrderController
 
 
         if (!$menu) {
-            header('Location: index.php?url=menus');
+            header('Location: ' . BASE_URL . '/index.php?url=menus');
             exit;
         }
         $menuEntity = new Menu(
@@ -184,7 +184,7 @@ class OrderController
 
                         $mailService->sendOrderConfirmationEmail($order);
 
-                        header('Location: index.php?url=mon-compte');
+                        header('Location: ' . BASE_URL . '/index.php?url=mon-compte');
                         exit;
                     }
 

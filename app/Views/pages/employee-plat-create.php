@@ -117,7 +117,7 @@
                         Créer le plat
                     </button>
 
-                    <a href="index.php?url=employe-plats" class="btn btn-secondary">
+                    <a href="<?= BASE_URL ?>/index.php?url=employe-plats" class="btn btn-secondary">
                         Retour
                     </a>
 

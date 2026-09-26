@@ -190,7 +190,7 @@
             <div class="order-detail-actions">
                 <?php if ((int) $order['statut_id'] === 1): ?>
 
-                    <a href="index.php?url=modifier-commande&id=<?= (int) $order['id'] ?>"
+                    <a href="<?= BASE_URL ?>/index.php?url=modifier-commande&id=<?= (int) $order['id'] ?>"
                         class="btn order-detail-btn order-detail-btn-secondary">
                         Modifier la commande
                     </a>
@@ -198,7 +198,7 @@
                 <?php endif; ?>
                 <?php if ((int) $order['statut_id'] === 1): ?>
 
-                    <a href="index.php?url=annuler-commande&id=<?= (int) $order['id'] ?>"
+                    <a href="<?= BASE_URL ?>/index.php?url=annuler-commande&id=<?= (int) $order['id'] ?>"
                         class="btn order-detail-btn order-detail-btn-danger"
                         onclick="return confirm('Voulez-vous vraiment annuler cette commande ?')">
                         Annuler la commande
@@ -213,7 +213,7 @@
                     Donner un avis
                 </h2>
 
-                <form method="POST" class="review-form" action="index.php?url=laisser-avis&id=<?= (int) $order['id'] ?>">
+                <form method="POST" class="review-form" action="<?= BASE_URL ?>/index.php?url=laisser-avis&id=<?= (int) $order['id'] ?>">
                     <div class="mb-4">
                         <label class="form-label">Note</label>
                         <select name="note" class="form-select" required>

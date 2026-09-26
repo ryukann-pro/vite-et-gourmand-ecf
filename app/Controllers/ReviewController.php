@@ -18,7 +18,7 @@ class ReviewController
         $reviewModel = new ReviewModel();
 
         if (!$reviewModel->canLeaveReview($orderId, $_SESSION['user']['id'])) {
-            header('Location: index.php?url=detail-commande&id=' . $orderId);
+            header('Location: ' . BASE_URL . '/index.php?url=detail-commande&id=' . $orderId);
             exit;
         }
 
@@ -36,7 +36,7 @@ class ReviewController
             }
         }
 
-        header('Location: index.php?url=detail-commande&id=' . $orderId);
+        header('Location: ' . BASE_URL . '/index.php?url=detail-commande&id=' . $orderId);
         exit;
     }
 }

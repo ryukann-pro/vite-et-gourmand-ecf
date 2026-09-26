@@ -15,7 +15,7 @@ async function loadMenus() {
     const prixMax = priceMaxFilter.value;
     const people = peopleFilter.value;
     const response = await fetch(
-        `index.php?url=api-menus&theme=${encodeURIComponent(theme)}&regime=${encodeURIComponent(regime)}&prix_min=${encodeURIComponent(prixMin)}&prix_max=${encodeURIComponent(prixMax)}&personnes=${encodeURIComponent(people)}`
+        `${baseUrl}/index.php?url=api-menus&theme=${encodeURIComponent(theme)}&regime=${encodeURIComponent(regime)}&prix_min=${encodeURIComponent(prixMin)}&prix_max=${encodeURIComponent(prixMax)}&personnes=${encodeURIComponent(people)}`
     );
 
     const menus = await response.json();
@@ -88,7 +88,7 @@ async function loadMenus() {
 
         const link = document.createElement("a");
         link.className = "btn menu-card-btn";
-        link.href = `index.php?url=menu-detail&id=${encodeURIComponent(menu.id)}`;
+        link.href = `${baseUrl}/index.php?url=menu-detail&id=${encodeURIComponent(menu.id)}`;
         link.textContent = "Voir les détails du menu";
 
         body.appendChild(link);

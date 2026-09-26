@@ -7,7 +7,7 @@
             <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
                 <h1 class="account-title mb-0">Mon compte</h1>
 
-                <a href="index.php?url=modifier-profil" class="btn account-btn">
+                <a href="<?= BASE_URL ?>/index.php?url=modifier-profil" class="btn account-btn">
                     Modifier mes informations
                 </a>
             </div>
@@ -76,7 +76,7 @@
 
                                 <td>
                                     <div class="d-flex justify-content-end gap-2 flex-wrap">
-                                        <a href="index.php?url=detail-commande&id=<?= (int) $order['id'] ?>"
+                                        <a href="<?= BASE_URL ?>/index.php?url=detail-commande&id=<?= (int) $order['id'] ?>"
                                             class="btn btn-sm account-btn">
                                             Voir
                                         </a>
