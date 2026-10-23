@@ -1,0 +1,5 @@
+RewriteEngine On
+
+# Forcer HTTPS uniquement derrière le routeur Heroku
+RewriteCond %{HTTP:X-Forwarded-Proto} ^http$ [NC]
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=302,L]
