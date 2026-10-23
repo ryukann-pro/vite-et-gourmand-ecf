@@ -1,5 +1,9 @@
 RewriteEngine On
 
-# Forcer HTTPS uniquement derrière le routeur Heroku
+# 1. Rediriger l'ancien domaine Heroku vers le nouveau domaine
+RewriteCond %{HTTP_HOST} ^vite-et-gourmand-yoann-c184a5dfcfe5\.herokuapp\.com$ [NC]
+RewriteRule ^ https://vite-et-gourmand.ylweb.fr%{REQUEST_URI} [R=302,L]
+
+# 2. Forcer HTTPS sur le nouveau domaine
 RewriteCond %{HTTP:X-Forwarded-Proto} ^http$ [NC]
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
